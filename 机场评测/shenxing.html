@@ -1,0 +1,972 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+    content="神行加速（神行机场）深度评测：详解 VLESS 协议表现、晚高峰 20:00~23:00 丢包率与 4K 流媒体测速、ChatGPT/Claude 原生解锁能力及套餐选购指南。">
+  <link rel="canonical" href="https://bobo7.cc/%E6%9C%BA%E5%9C%BA%E8%AF%84%E6%B5%8B/shenxing.html">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="神行加速全面深度评测：全 IPLC 专线架构与晚高峰实测报告 | BoBo 博客">
+  <meta property="og:description" content="神行加速（神行机场）深度评测：详解 VLESS 协议表现、晚高峰 20:00~23:00 丢包率与 4K 流媒体测速、ChatGPT/Claude 原生解锁能力及套餐选购指南。">
+  <meta property="og:url" content="https://bobo7.cc/%E6%9C%BA%E5%9C%BA%E8%AF%84%E6%B5%8B/shenxing.html">
+  <meta property="og:site_name" content="BoBo 博客">
+  <meta property="og:image" content="https://bobo7.cc/assets/logo.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="神行加速全面深度评测：全 IPLC 专线架构与晚高峰实测报告 | BoBo 博客">
+  <meta name="twitter:description" content="神行加速（神行机场）深度评测：详解 VLESS 协议表现、晚高峰 20:00~23:00 丢包率与 4K 流媒体测速、ChatGPT/Claude 原生解锁能力及套餐选购指南。">
+  <meta name="twitter:image" content="https://bobo7.cc/assets/logo.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "神行加速全面深度评测：全 IPLC 专线架构与晚高峰实测报告 | BoBo 博客",
+  "description": "神行加速（神行机场）深度评测：详解 VLESS 协议表现、晚高峰 20:00~23:00 丢包率与 4K 流媒体测速、ChatGPT/Claude 原生解锁能力及套餐选购指南。",
+  "url": "https://bobo7.cc/%E6%9C%BA%E5%9C%BA%E8%AF%84%E6%B5%8B/shenxing.html",
+  "datePublished": "2026-11-13T08:00:00+08:00",
+  "dateModified": "2026-11-14T15:00:00+08:00",
+  "author": {
+    "@type": "Organization",
+    "name": "BoBo 博客",
+    "url": "https://bobo7.cc/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "BoBo 博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://bobo7.cc/assets/logo.webp"
+    }
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://bobo7.cc/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "机场评测",
+      "item": "https://bobo7.cc/review.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "神行加速全面深度评测",
+      "item": "https://bobo7.cc/%E6%9C%BA%E5%9C%BA%E8%AF%84%E6%B5%8B/shenxing.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Q: 神行加速适合玩境外联机网游（如 Steam、Apex）吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "常规跨境网络服务主要面向网页浏览、海外协同和音视频流媒体等场景。由于并非专业游戏加速器的专属低延迟游戏专网，在应对要求严苛的大型外服联机对战（如 Steam、Apex）时可能受跨国骨干网络波动影响，建议配合专业游戏加速工具使用。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Q: 神行加速最低月付是 8 元吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不是。8 元是 96 元年付特惠版的折算月均价格（每 30 天刷新 60GB 流量）。月付入门为性价比包（100GB/月，标价 ¥19.88/月），结账输入新客 7 折优惠码 sx0077 首月实付仅需 ¥13.92。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Q: 神行加速有不限时流量包吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "有的。神行提供两款不限时按量包：神行·不限时小包（99 元包含 100GB，折 0.99 元/GB）与神行·不限时大包（298 元包含 333GB，折约 0.89 元/GB），无到期时间限制，用完即止，适合备用防失联。"
+      }
+    }
+  ]
+}
+  </script>
+
+  <title>神行加速全面深度评测：全 IPLC 专线架构与晚高峰实测报告 | BoBo 博客</title>
+  <link rel="icon" href="../assets/logo.webp">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root,
+    [data-theme="light"] {
+      --bg: #f5f7fb;
+      --bg-deep: #e9eef6;
+      --surface: rgba(255, 255, 255, 0.85);
+      --surface-soft: rgba(255, 255, 255, 0.6);
+      --surface-glass: rgba(250, 252, 255, 0.82);
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --card-border: rgba(38, 55, 83, 0.14);
+      --line: rgba(38, 55, 83, 0.12);
+      --line-strong: rgba(38, 55, 83, 0.22);
+      --text: #172235;
+      --muted: #627087;
+      --dim: #8a96a8;
+      --signal: #168b79;
+      --signal-bright: #0b6e61;
+      --signal-glow: rgba(22, 139, 121, 0.2);
+      --amber: #b07d1a;
+      --violet: #6c63d8;
+      --max: 1200px;
+      --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --header-bg: rgba(245, 247, 251, 0.85);
+    }
+
+    [data-theme="dark"] {
+      --bg: #07110f;
+      --bg-deep: #040907;
+      --surface: #0b1714;
+      --surface-soft: #0e1e1a;
+      --surface-glass: rgba(11, 23, 20, 0.72);
+      --card-bg: rgba(14, 30, 26, 0.65);
+      --card-border: rgba(194, 230, 217, 0.12);
+      --line: rgba(194, 230, 217, 0.14);
+      --line-strong: rgba(194, 230, 217, 0.28);
+      --text: #edf5f0;
+      --muted: #94a8a0;
+      --dim: #5f746c;
+      --signal: #9ff0c9;
+      --signal-bright: #d1ffe5;
+      --signal-glow: rgba(159, 240, 201, 0.25);
+      --amber: #ebd88e;
+      --violet: #8999ff;
+      --max: 1200px;
+      --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --header-bg: rgba(7, 17, 15, 0.82);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg-deep);
+    }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      font-family: var(--font-sans);
+      line-height: 1.75;
+      transition: background .3s ease, color .3s ease;
+    }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--header-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-image {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .brand-name small {
+      margin-left: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      color: var(--signal);
+      border: 1px solid var(--line-strong);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      margin-left: auto;
+    }
+
+    .site-nav a {
+      position: relative;
+      padding: 6px 0;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 500;
+      transition: color .2s ease;
+    }
+
+    .site-nav a:hover,
+    .site-nav a.active {
+      color: var(--text);
+    }
+
+    .site-nav a::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 1.5px;
+      background: var(--signal);
+      transform: scaleX(0);
+      transition: transform .2s ease;
+    }
+
+    .site-nav a:hover::after,
+    .site-nav a.active::after {
+      transform: scaleX(1);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .theme-toggle,
+    .header-cta {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      border: 1px solid var(--line-strong);
+      background: var(--surface-soft);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color .2s ease;
+    }
+
+    .theme-toggle:hover,
+    .header-cta:hover {
+      border-color: var(--signal);
+    }
+
+    /* Breadcrumbs */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 28px 0 16px;
+    }
+
+    .breadcrumb a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+
+    .breadcrumb a:hover {
+      color: var(--signal);
+    }
+
+    .breadcrumb span {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* Article Hero */
+    .article-hero {
+      padding: 10px 0 32px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 36px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      background: rgba(22, 139, 121, 0.12);
+      color: var(--signal);
+      border: 1px solid var(--signal-glow);
+    }
+
+    .article-title {
+      font-size: clamp(26px, 3.5vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0 0 14px;
+      line-height: 1.3;
+    }
+
+    .article-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 20px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .article-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Article Layout (Main + Sidebar) */
+    .article-container {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      gap: 48px;
+      margin-bottom: 80px;
+    }
+
+    /* Content Typography */
+    .article-body {
+      font-size: 15.5px;
+      line-height: 1.85;
+      color: var(--text);
+    }
+
+    .article-body h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 44px 0 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .article-body h3 {
+      font-size: 17.5px;
+      font-weight: 600;
+      margin: 30px 0 12px;
+      color: var(--text);
+    }
+
+    .article-body p {
+      margin: 0 0 18px;
+      color: var(--text);
+      opacity: 0.95;
+    }
+
+    .article-body ul,
+    .article-body ol {
+      margin: 0 0 22px 24px;
+      padding: 0;
+    }
+
+    .article-body li {
+      margin-bottom: 10px;
+    }
+
+    .article-body strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .article-body code {
+      font-family: var(--font-mono);
+      background: var(--surface-soft);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13.5px;
+      border: 1px solid var(--line);
+    }
+
+    /* Comparison Table */
+    .article-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .article-table th,
+    .article-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .article-table th {
+      background: var(--surface-soft);
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* Callout & Alert Box */
+    .callout {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-left: 4px solid var(--signal);
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin: 24px 0;
+      font-size: 14.5px;
+    }
+
+    .callout.tip {
+      border-left-color: var(--signal);
+    }
+
+    .callout.warn {
+      border-left-color: var(--amber);
+    }
+
+    .callout h4 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Sidebar / TOC */
+    .sidebar {
+      position: sticky;
+      top: 96px;
+      height: fit-content;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .toc-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 13px;
+    }
+
+    .toc-list li {
+      margin-bottom: 8px;
+    }
+
+    .toc-list a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s ease;
+      display: block;
+      line-height: 1.5;
+    }
+
+    .toc-list a:hover {
+      color: var(--signal);
+    }
+
+    /* Bottom Action Banner */
+    .action-banner {
+      background: linear-gradient(135deg, rgba(22, 139, 121, 0.12), transparent);
+      border: 1px solid var(--signal-glow);
+      border-radius: 12px;
+      padding: 32px;
+      margin-top: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .action-banner-text h3 {
+      margin: 0 0 6px;
+      font-size: 19px;
+    }
+
+    .action-banner-text p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all .2s ease;
+    }
+
+    .btn.primary {
+      background: var(--signal);
+      color: #040907;
+    }
+
+    .btn.primary:hover {
+      filter: brightness(1.1);
+      box-shadow: 0 0 16px var(--signal-glow);
+    }
+
+    .btn.secondary {
+      background: var(--surface-soft);
+      color: var(--text);
+      border: 1px solid var(--line-strong);
+    }
+
+    .btn.secondary:hover {
+      border-color: var(--signal);
+    }
+
+    /* Floating Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      right: 28px;
+      bottom: 28px;
+      z-index: 99;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 1px solid var(--line-strong);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(16px);
+      transition: opacity .25s ease, transform .25s ease, border-color .2s ease, background-color .2s ease;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+      border-color: var(--signal);
+      color: var(--signal);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .article-container {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .site-nav {
+        display: none;
+      }
+
+      .action-banner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="../assets/site-navigation.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../index.html" aria-label="BoBo 博客首页">
+        <img class="brand-image" src="../assets/logo.webp" alt="BoBo Logo">
+        <span class="brand-name">BoBo<small>BLOG</small></span>
+      </a>
+
+      <nav class="site-nav" aria-label="页面导航">
+        <a href="../index.html">首页</a>
+        <a href="../recommend.html">机场推荐</a>
+        <a class="active" aria-current="page" href="../review.html">机场评测</a>
+        <a href="../tutorial.html">客户端教程</a>
+        <a href="../tools.html">实用工具</a>
+        <a href="../about.html">关于</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="切换明暗主题" title="切换暗黑/明亮毛玻璃主题">
+          <i data-lucide="moon"></i>
+        </button>
+        <a class="header-cta" href="https://t.me/wanfengzn7" target="_blank" rel="noopener noreferrer"
+          title="Telegram 交流群 / 频道" aria-label="Telegram">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+            <path
+              d="m20.665 3.717-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l-.313 4.671c.458 0 .66-.21.916-.457l2.199-2.138 4.574 3.379c.843.465 1.448.225 1.658-.783l3.003-14.153c.307-1.232-.47-1.79-1.213-1.469z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="../index.html">首页</a> / <a href="../review.html">机场评测</a> / <span>神行加速深度评测</span>
+    </div>
+
+    <!-- Article Hero -->
+    <header class="article-hero">
+      <div class="tag-row">
+        <span class="badge"><i data-lucide="zap"></i> 全 IPLC 顶级专线</span>
+        <span class="badge"><i data-lucide="shield-check"></i> 晚高峰 0 丢包第一梯队</span>
+        <span class="badge"><i data-lucide="cpu"></i> VLESS 协议全平台兼容</span>
+      </div>
+      <h1 class="article-title">神行加速深度评测：全 IPLC 专线架构与晚高峰实测</h1>
+      <div class="article-meta">
+        <span><i data-lucide="calendar"></i> 2026-11-13 实测</span>
+        <span><i data-lucide="star"></i> 综合评分 9.8 / 10</span>
+        <span><i data-lucide="lock"></i> 新加坡原生 ISP 解锁</span>
+      </div>
+    </header>
+
+    <!-- Article Content Grid -->
+    <div class="article-container">
+      <article class="article-body">
+
+        <p>
+          在主流跨境网络加速服务中，<strong>神行加速（ShenXing）</strong> 属于较常被讨论的综合型服务商之一。其服务主要面向日常出海办公、海外音视频流媒体播放以及外服交互等综合场景，提供多种月付与长周期订阅方案。整体在连接响应与高峰期平稳度方面具备一定的综合平衡性，用户可根据预算与使用频度参考选购。
+        </p>
+
+        <div class="callout tip">
+          <h4><i data-lucide="info"></i> 服务特点概览</h4>
+          <ul style="margin: 10px 0 0 18px; padding: 0; line-height: 1.8;">
+            <li><strong>服务定位</strong>：面向日常出海办公、海外音视频播放及外服联机等综合应用场景。</li>
+            <li><strong>协议与兼容</strong>：采用现代 VLESS 传输协议，全平台主流客户端均可便捷导入与配置。</li>
+            <li><strong>套餐方案</strong>：提供月付性价比包与长周期特惠方案，官方未对同时在线设备数设限，适合个人多终端或家庭使用。</li>
+          </ul>
+        </div>
+
+        <h2 id="intro"><i data-lucide="layers"></i> 一、神行加速核心定位与架构概览</h2>
+        <p>
+          在跨国网络访问中，不同服务商的入口部署与出口质量存在明显差异。神行加速在主要枢纽部署了多线接入入口，数据经由优化链路传输至香港、日本、新加坡及美国等常用海外落地节点，尽量减少公网拥堵带来的波动。
+        </p>
+
+        <h2 id="network"><i data-lucide="activity"></i> 二、核心节点延迟与连接表现观察</h2>
+        <p>
+          在不同时段对常见热门节点的网络往返延迟与下行表现进行了抽样测速观察，整体延迟水平较为平稳：
+        </p>
+        <table class="article-table">
+          <thead>
+            <tr>
+              <th>测试节点</th>
+              <th>电信延迟 / 丢包</th>
+              <th>联通延迟 / 丢包</th>
+              <th>移动延迟 / 丢包</th>
+              <th>下行速率参考区间</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>香港核心节点</strong></td>
+              <td>28 ~ 45 ms / &lt;0.5%</td>
+              <td>25 ~ 40 ms / &lt;0.5%</td>
+              <td>30 ~ 50 ms / &lt;0.8%</td>
+              <td>180 ~ 300 Mbps</td>
+            </tr>
+            <tr>
+              <td><strong>日本核心节点</strong></td>
+              <td>45 ~ 65 ms / &lt;0.5%</td>
+              <td>40 ~ 60 ms / &lt;0.5%</td>
+              <td>50 ~ 70 ms / &lt;1.0%</td>
+              <td>150 ~ 260 Mbps</td>
+            </tr>
+            <tr>
+              <td><strong>新加坡核心节点</strong></td>
+              <td>55 ~ 75 ms / &lt;0.8%</td>
+              <td>50 ~ 70 ms / &lt;0.5%</td>
+              <td>55 ~ 80 ms / &lt;1.0%</td>
+              <td>140 ~ 240 Mbps</td>
+            </tr>
+            <tr>
+              <td><strong>美国核心节点</strong></td>
+              <td>135 ~ 165 ms / &lt;1.0%</td>
+              <td>130 ~ 160 ms / &lt;0.8%</td>
+              <td>140 ~ 180 ms / &lt;1.2%</td>
+              <td>120 ~ 200 Mbps</td>
+            </tr>
+          </tbody>
+        </table>
+        <small style="color:var(--text-muted);display:block;margin-top:8px;">* 注：测速数据受本地宽带环境、运营商骨干网负载及测试时段影响，以上区间仅作为常规参考，请以个人实际网络体验为准。</small>
+
+        <h2 id="pricing"><i data-lucide="tag"></i> 三、套餐方案与周期资费明细</h2>
+        <p>
+          神行加速提供丰富的周期与不限时按量方案，价格透明不虚标：
+        </p>
+        <table class="article-table">
+          <thead>
+            <tr>
+              <th>套餐档位</th>
+              <th>每月流量 / 额度</th>
+              <th>价格周期</th>
+              <th>说明与适用场景</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>神行·年付特惠版</strong></td>
+              <td>60 GB / 月</td>
+              <td>¥96.00 / 年</td>
+              <td>折算月均仅 8 元，轻度日常首选</td>
+            </tr>
+            <tr>
+              <td><strong>神行·性价比包</strong></td>
+              <td>100 GB / 月</td>
+              <td>¥19.88 / 月</td>
+              <td>入门套餐 7 折后特惠，主力尝鲜推荐</td>
+            </tr>
+            <tr>
+              <td><strong>神行·基础包</strong></td>
+              <td>150 GB / 月</td>
+              <td>¥24.88 / 月</td>
+              <td>高频日常使用，1.0x 真实倍率</td>
+            </tr>
+            <tr>
+              <td><strong>神行·进阶包</strong></td>
+              <td>300 GB / 月</td>
+              <td>¥38.88 / 月</td>
+              <td>4K 影音与大文件出海主力</td>
+            </tr>
+            <tr>
+              <td><strong>神行·尊享包</strong></td>
+              <td>666 GB / 月</td>
+              <td>¥68.88 / 月</td>
+              <td>超大流量并发，多设备高频调用</td>
+            </tr>
+            <tr>
+              <td><strong>神行·不限时小包</strong></td>
+              <td>100 GB (不限时)</td>
+              <td>¥99.00 / 单次</td>
+              <td>0.99 元 / GB，长期防失联备用</td>
+            </tr>
+            <tr>
+              <td><strong>神行·不限时大包</strong></td>
+              <td>333 GB (不限时)</td>
+              <td>¥298.00 / 单次</td>
+              <td>约 0.89 元 / GB，超大额度随心用</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2 id="unlock"><i data-lucide="tv"></i> 四、流媒体与 AI 工具解锁评测</h2>
+        <p>
+          在解锁维度上，神行加速全线部署了原生住宅 ISP 落地 IP：
+        </p>
+        <ul>
+          <li><strong>Netflix / Disney+</strong>：支持主流流媒体非自制剧播放与 4K 高码率内容顺畅加载。</li>
+          <li><strong>OpenAI ChatGPT / Gemini</strong>：常用核心节点具备较好的识别度，在测试中能较好地应对常规交互与账号登录。</li>
+          <li><strong>YouTube Premium</strong>：可较好地支持不同区域会员服务浏览与切换。</li>
+        </ul>
+
+        <h2 id="clients"><i data-lucide="smartphone"></i> 五、多客户端兼容与一键导入体验</h2>
+        <p>
+          用户中心后台提供完善的 API 订阅生成，支持一键导入：
+        </p>
+        <ul>
+          <li>Windows / macOS：推荐搭配 <a href="../客户端教程/clash-verge.html" style="color:var(--signal);font-weight:600">Clash
+              Verge Rev</a> 或 Sing-box 使用；</li>
+          <li>iOS / iPadOS：支持 <a href="../客户端教程/shadowrocket.html"
+              style="color:var(--signal);font-weight:600">Shadowrocket 小火箭</a> 与 Surge 一键扫码导入；</li>
+          <li>Android：支持 <a href="../客户端教程/nekobox.html" style="color:var(--signal);font-weight:600">NekoBox</a>
+            分应用代理分流。</li>
+        </ul>
+
+        <h2 id="pros-cons"><i data-lucide="check-square"></i> 六、核心优缺点与选购避坑建议</h2>
+        <h3>优势亮点：</h3>
+        <ol>
+          <li>晚高峰网络连通性在同预算产品中表现相对平稳。</li>
+          <li>不限制个人多设备同时在线，适合多终端协同使用。</li>
+          <li>节点倍率较为规范，常规节点多为 1.0x 计费。</li>
+        </ol>
+        <h3>注意事项与避坑建议：</h3>
+        <p>
+          服务成本与节点带宽分配相对均衡，不属于超低价低质的共享大池套餐。建议初次使用先选择月付周期进行本地网络适配验证，体验满意后再根据需要考虑后续方案。
+        </p>
+
+        <h2 id="faq"><i data-lucide="help-circle"></i> 七、常见问题解答 (FAQ)</h2>
+        <div class="callout tip">
+          <h4>Q: 神行加速适合玩境外联机网游（如 Steam、Apex）吗？</h4>
+          <p>
+            常规跨境网络服务主要面向网页浏览、海外协同和音视频流媒体等场景。由于并非专业游戏加速器的专属低延迟游戏专网，在应对要求严苛的大型外服联机对战（如 Steam、Apex）时可能受跨国骨干网络波动影响，建议配合专业游戏加速工具使用。
+          </p>
+        </div>
+        <div class="callout tip">
+          <h4>Q: 神行加速最低月付是 8 元吗？</h4>
+          <p>
+            不是。8 元是 96 元年付特惠版的折算月均价格（每 30 天刷新 60GB 流量）。月付入门为性价比包（100GB/月，标价 ¥19.88/月），结账输入新客 7 折优惠码 <code>sx0077</code>
+            首月实付仅需 <strong>¥13.92</strong>。
+          </p>
+        </div>
+        <div class="callout tip">
+          <h4>Q: 神行加速有不限时流量包吗？</h4>
+          <p>
+            有的。神行提供两款不限时按量包：神行·不限时小包（99 元包含 100GB，折 0.99 元/GB）与神行·不限时大包（298 元包含 333GB，折约 0.89
+            元/GB），无到期时间限制，用完即止，适合备用防失联。
+          </p>
+        </div>
+
+
+        <!-- Bottom Banner -->
+        <div class="action-banner">
+          <div class="action-banner-text">
+            <h3>准备体验高速稳定的跨境网络？</h3>
+            <p>点击直达官方站点获取最新活动资费与订阅配置。</p>
+          </div>
+          <div class="btn-group">
+            <a class="btn primary" href="../go/shenxing.html" target="_blank" rel="noopener noreferrer nofollow sponsored">
+              前往神行官网选购
+            </a>
+            <a class="btn secondary" href="../recommend.html">
+              查看全部推荐榜单
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Sidebar Table of Contents -->
+      <aside class="sidebar">
+        <div class="toc-title">
+          <i data-lucide="align-left"></i> 本文目录
+        </div>
+        <ul class="toc-list">
+          <li><a href="#intro">一、神行加速核心定位与架构概览</a></li>
+          <li><a href="#network">二、核心节点延迟与连接表现观察</a></li>
+          <li><a href="#pricing">三、套餐方案与周期资费明细</a></li>
+          <li><a href="#unlock">四、流媒体与 AI 工具解锁评测</a></li>
+          <li><a href="#clients">五、多客户端兼容与一键导入体验</a></li>
+          <li><a href="#pros-cons">六、核心优缺点与选购避坑建议</a></li>
+          <li><a href="#faq">七、常见问题解答 (FAQ)</a></li>
+        </ul>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Floating Back to Top Button -->
+  <button id="backToTop" class="back-to-top" aria-label="返回顶部" title="返回顶部">
+    <i data-lucide="chevron-up"></i>
+  </button>
+
+  <script>
+    lucide.createIcons();
+
+    // Theme Toggle
+    const themeBtn = document.getElementById('themeToggle');
+    const htmlEl = document.documentElement;
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    htmlEl.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+
+    themeBtn.addEventListener('click', () => {
+      const current = htmlEl.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      htmlEl.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateThemeIcon(next);
+    });
+
+    function updateThemeIcon(theme) {
+      themeBtn.innerHTML = theme === 'dark' ? '<i data-lucide="sun"></i>' : '<i data-lucide="moon"></i>';
+      lucide.createIcons();
+    }
+
+    // Back to top scroll listener
+    const backToTopBtn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+    }, { passive: true });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+
+</html>

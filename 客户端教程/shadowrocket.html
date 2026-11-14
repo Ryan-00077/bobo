@@ -1,0 +1,937 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Shadowrocket 小火箭最新使用教程：从海外 Apple ID 获取与购买、二维码及订阅链接导入、分流规则配置、HTTPS 解密证书安装到节点测速与电量优化全指南。">
+  <link rel="canonical" href="https://bobo7.cc/%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%95%99%E7%A8%8B/shadowrocket.html">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Shadowrocket (小火箭) iOS 深度配置全攻略与进阶实战 | BoBo 博客">
+  <meta property="og:description" content="Shadowrocket 小火箭最新使用教程：从海外 Apple ID 获取与购买、二维码及订阅链接导入、分流规则配置、HTTPS 解密证书安装到节点测速与电量优化全指南。">
+  <meta property="og:url" content="https://bobo7.cc/%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%95%99%E7%A8%8B/shadowrocket.html">
+  <meta property="og:site_name" content="BoBo 博客">
+  <meta property="og:image" content="https://bobo7.cc/assets/logo.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Shadowrocket (小火箭) iOS 深度配置全攻略与进阶实战 | BoBo 博客">
+  <meta name="twitter:description" content="Shadowrocket 小火箭最新使用教程：从海外 Apple ID 获取与购买、二维码及订阅链接导入、分流规则配置、HTTPS 解密证书安装到节点测速与电量优化全指南。">
+  <meta name="twitter:image" content="https://bobo7.cc/assets/logo.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Shadowrocket (小火箭) iOS 深度配置全攻略与进阶实战 | BoBo 博客",
+  "description": "Shadowrocket 小火箭最新使用教程：从海外 Apple ID 获取与购买、二维码及订阅链接导入、分流规则配置、HTTPS 解密证书安装到节点测速与电量优化全指南。",
+  "url": "https://bobo7.cc/%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%95%99%E7%A8%8B/shadowrocket.html",
+  "datePublished": "2026-11-13T08:00:00+08:00",
+  "dateModified": "2026-11-14T15:00:00+08:00",
+  "author": {
+    "@type": "Organization",
+    "name": "BoBo 博客",
+    "url": "https://bobo7.cc/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "BoBo 博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://bobo7.cc/assets/logo.webp"
+    }
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://bobo7.cc/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "客户端教程",
+      "item": "https://bobo7.cc/tutorial.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Shadowrocket (小火箭) iOS 深度配置全攻略与进阶实战 | BoBo 博客",
+      "item": "https://bobo7.cc/%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%95%99%E7%A8%8B/shadowrocket.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Q: 小火箭下载之后换回我自己的国区 Apple ID，还能正常用吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "完全可以正常使用！iOS 系统的机制是：已下载的应用只要不卸载，即可永久正常运行。换回国区账号后丝毫不影响软件功能。仅当后续需要更新大版本时，App Store 会弹窗要求验证下载时使用的海外账号密码。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Q: 为什么我用小火箭测速延迟显示正常，打开 YouTube 依然转圈？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "由于默认的 TCP Ping 仅代表握手建立，部分劣质节点存在“端口通畅但数据转发为零”的情况。请在设置中将测速模式改为 CONNECT 方式，或者在机场推荐榜中更换具备 SLA 保障的优质专线。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Q: 小火箭开启后如何防止国内 App（如微信、淘宝、抖音）被代理减速？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "请确保小火箭首页下方的【全局路由】选为【配置 (Config)】模式，切勿选择【代理 (Proxy)】模式。在【配置】页面使用默认或导入成熟的分流规则集，国内流量走 DIRECT 直连，不消耗机场流量且速度最快。"
+      }
+    }
+  ]
+}
+  </script>
+
+  <title>Shadowrocket (小火箭) iOS 深度配置全攻略与进阶实战 | BoBo 博客</title>
+  <link rel="icon" href="../assets/logo.webp">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root,
+    [data-theme="light"] {
+      --bg: #f5f7fb;
+      --bg-deep: #e9eef6;
+      --surface: rgba(255, 255, 255, 0.85);
+      --surface-soft: rgba(255, 255, 255, 0.6);
+      --surface-glass: rgba(250, 252, 255, 0.82);
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --card-border: rgba(38, 55, 83, 0.14);
+      --line: rgba(38, 55, 83, 0.12);
+      --line-strong: rgba(38, 55, 83, 0.22);
+      --text: #172235;
+      --muted: #627087;
+      --dim: #8a96a8;
+      --signal: #168b79;
+      --signal-bright: #0b6e61;
+      --signal-glow: rgba(22, 139, 121, 0.2);
+      --amber: #b07d1a;
+      --violet: #6c63d8;
+      --max: 1200px;
+      --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --header-bg: rgba(245, 247, 251, 0.85);
+    }
+
+    [data-theme="dark"] {
+      --bg: #07110f;
+      --bg-deep: #040907;
+      --surface: #0b1714;
+      --surface-soft: #0e1e1a;
+      --surface-glass: rgba(11, 23, 20, 0.72);
+      --card-bg: rgba(14, 30, 26, 0.65);
+      --card-border: rgba(194, 230, 217, 0.12);
+      --line: rgba(194, 230, 217, 0.14);
+      --line-strong: rgba(194, 230, 217, 0.28);
+      --text: #edf5f0;
+      --muted: #94a8a0;
+      --dim: #5f746c;
+      --signal: #9ff0c9;
+      --signal-bright: #d1ffe5;
+      --signal-glow: rgba(159, 240, 201, 0.25);
+      --amber: #ebd88e;
+      --violet: #8999ff;
+      --max: 1200px;
+      --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --header-bg: rgba(7, 17, 15, 0.82);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--bg-deep); }
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      font-family: var(--font-sans);
+      line-height: 1.75;
+      transition: background .3s ease, color .3s ease;
+    }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--header-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: -0.02em;
+    }
+    .brand-image {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    .brand-name small {
+      margin-left: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      color: var(--signal);
+      border: 1px solid var(--line-strong);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      margin-left: auto;
+    }
+    .site-nav a {
+      position: relative;
+      padding: 6px 0;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 500;
+      transition: color .2s ease;
+    }
+    .site-nav a:hover,
+    .site-nav a.active {
+      color: var(--text);
+    }
+    .site-nav a::after {
+      content: "";
+      position: absolute;
+      right: 0; bottom: 0; left: 0;
+      height: 1.5px;
+      background: var(--signal);
+      transform: scaleX(0);
+      transition: transform .2s ease;
+    }
+    .site-nav a:hover::after,
+    .site-nav a.active::after {
+      transform: scaleX(1);
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .theme-toggle,
+    .header-cta {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      border: 1px solid var(--line-strong);
+      background: var(--surface-soft);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color .2s ease;
+    }
+    .theme-toggle:hover,
+    .header-cta:hover {
+      border-color: var(--signal);
+    }
+
+    /* Breadcrumbs */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 28px 0 16px;
+    }
+    .breadcrumb a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+    .breadcrumb a:hover {
+      color: var(--signal);
+    }
+    .breadcrumb span {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* Article Hero */
+    .article-hero {
+      padding: 10px 0 32px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 36px;
+    }
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      background: rgba(22, 139, 121, 0.12);
+      color: var(--signal);
+      border: 1px solid var(--signal-glow);
+    }
+    .article-title {
+      font-size: clamp(26px, 3.5vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0 0 14px;
+      line-height: 1.3;
+    }
+    .article-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 20px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .article-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Article Layout (Main + Sidebar) */
+    .article-container {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      gap: 48px;
+      margin-bottom: 80px;
+    }
+
+    /* Content Typography */
+    .article-body {
+      font-size: 15.5px;
+      line-height: 1.85;
+      color: var(--text);
+    }
+    .article-body h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 44px 0 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .article-body h3 {
+      font-size: 17.5px;
+      font-weight: 600;
+      margin: 30px 0 12px;
+      color: var(--text);
+    }
+    .article-body p {
+      margin: 0 0 18px;
+      color: var(--text);
+      opacity: 0.95;
+    }
+    .article-body ul,
+    .article-body ol {
+      margin: 0 0 22px 24px;
+      padding: 0;
+    }
+    .article-body li {
+      margin-bottom: 10px;
+    }
+    .article-body strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .article-body code {
+      font-family: var(--font-mono);
+      background: var(--surface-soft);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13.5px;
+      border: 1px solid var(--line);
+    }
+    pre {
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 0 0 20px;
+    }
+
+    /* Comparison Table */
+    .article-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .article-table th,
+    .article-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+    }
+    .article-table th {
+      background: var(--surface-soft);
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* Callout & Alert Box */
+    .callout {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-left: 4px solid var(--signal);
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin: 24px 0;
+      font-size: 14.5px;
+    }
+    .callout.tip {
+      border-left-color: var(--signal);
+    }
+    .callout.warn {
+      border-left-color: var(--amber);
+    }
+    .callout h4 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Step Card */
+    .step-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 24px 0;
+    }
+    .step-box-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .step-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--signal);
+      color: #040907;
+      font-size: 13px;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .step-box-header h3 {
+      margin: 0;
+      font-size: 17px;
+    }
+
+    /* Sidebar / TOC */
+    .sidebar {
+      position: sticky;
+      top: 96px;
+      height: fit-content;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .toc-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 13px;
+    }
+    .toc-list li {
+      margin-bottom: 8px;
+    }
+    .toc-list a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s ease;
+      display: block;
+      line-height: 1.5;
+    }
+    .toc-list a:hover {
+      color: var(--signal);
+    }
+
+    /* Bottom Action Banner */
+    .action-banner {
+      background: linear-gradient(135deg, rgba(22, 139, 121, 0.12), transparent);
+      border: 1px solid var(--signal-glow);
+      border-radius: 12px;
+      padding: 32px;
+      margin-top: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .action-banner-text h3 {
+      margin: 0 0 6px;
+      font-size: 19px;
+    }
+    .action-banner-text p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all .2s ease;
+    }
+    .btn.primary {
+      background: var(--signal);
+      color: #040907;
+    }
+    .btn.primary:hover {
+      filter: brightness(1.1);
+      box-shadow: 0 0 16px var(--signal-glow);
+    }
+    .btn.secondary {
+      background: var(--surface-soft);
+      color: var(--text);
+      border: 1px solid var(--line-strong);
+    }
+    .btn.secondary:hover {
+      border-color: var(--signal);
+    }
+
+    /* Floating Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      right: 28px;
+      bottom: 28px;
+      z-index: 99;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 1px solid var(--line-strong);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(16px);
+      transition: opacity .25s ease, transform .25s ease, border-color .2s ease, background-color .2s ease;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .back-to-top:hover {
+      border-color: var(--signal);
+      color: var(--signal);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .article-container {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+    }
+    @media (max-width: 640px) {
+      .site-nav {
+        display: none;
+      }
+      .action-banner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="../assets/site-navigation.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../index.html" aria-label="BoBo 博客首页">
+        <img class="brand-image" src="../assets/logo.webp" alt="BoBo Logo">
+        <span class="brand-name">BoBo<small>BLOG</small></span>
+      </a>
+
+      <nav class="site-nav" aria-label="页面导航">
+        <a href="../index.html">首页</a>
+        <a href="../recommend.html">机场推荐</a>
+        <a href="../review.html">机场评测</a>
+        <a class="active" aria-current="page" href="../tutorial.html">客户端教程</a>
+        <a href="../tools.html">实用工具</a>
+        <a href="../about.html">关于</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="切换明暗主题" title="切换暗黑/明亮毛玻璃主题">
+          <i data-lucide="moon"></i>
+        </button>
+        <a class="header-cta" href="https://t.me/wanfengzn7" target="_blank" rel="noopener noreferrer" title="Telegram 交流群 / 频道" aria-label="Telegram">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+            <path d="m20.665 3.717-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l-.313 4.671c.458 0 .66-.21.916-.457l2.199-2.138 4.574 3.379c.843.465 1.448.225 1.658-.783l3.003-14.153c.307-1.232-.47-1.79-1.213-1.469z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="../index.html">首页</a> / <a href="../tutorial.html">客户端教程</a> / <span>Shadowrocket 配置指南</span>
+    </div>
+
+    <!-- Article Hero -->
+    <header class="article-hero">
+      <div class="tag-row">
+        <span class="badge"><i data-lucide="smartphone"></i> iOS / iPadOS 专属神器</span>
+        <span class="badge"><i data-lucide="star"></i> App Store 付费排行榜首</span>
+        <span class="badge"><i data-lucide="zap"></i> 全协议硬件级加速</span>
+      </div>
+      <h1 class="article-title">Shadowrocket (小火箭) 从零入门到精通高阶指南</h1>
+      <div class="article-meta">
+        <span><i data-lucide="calendar"></i> 2026-11-13 更新</span>
+        <span><i data-lucide="shield"></i> 稳定高效低功耗</span>
+        <span><i data-lucide="layers"></i> 支持场景与分流规则</span>
+      </div>
+    </header>
+
+    <!-- Article Content Grid -->
+    <div class="article-container">
+      <article class="article-body">
+        
+    <p>
+      在 iOS 与 iPadOS 苹果生态系统中，<strong>Shadowrocket（俗称小火箭）</strong> 是无可争议的国民级代理应用。它不仅对 Shadowsocks、Vmess、Vless、Trojan、Snell 以及最新的 <strong>Hysteria 2、TUIC</strong> 等主流协议保持毫秒级跟进支持，还拥有极其省电的网络驱动与强大可定制的规则路由系统。
+    </p>
+
+    <div class="callout tip">
+      <h4><i data-lucide="info"></i> 核心产品特性一览</h4>
+      <p>
+        1. <strong>极低耗电</strong>：基于 iOS Network Extension 原生底层开发，后台常驻运行时功耗控制极佳，全天开启不影响电池续航。<br>
+        2. <strong>极简交互</strong>：支持扫码秒导、长按批量测速、根据 Wi-Fi SSID 自动切换节点等贴心功能。<br>
+        3. <strong>本地去广告与抓包</strong>：支持自定义重写（Rewrite）、脚本执行与 HTTPS 流量解密，兼顾网络调试需求。
+      </p>
+    </div>
+
+    <h2 id="intro"><i data-lucide="compass"></i> 一、工具定位与核心功能</h2>
+    <p>
+      小火箭作为 iOS 上的经典独立客户端，其售价为 $2.99 美元。只需一次买断，即可在绑定的同账号所有 iPhone、iPad 以及搭载 M 系列芯片的 Mac 电脑上终身免费下载与更新。相比其它门槛更高的专业网络工具，小火箭在“小白易用性”与“极客可玩性”之间达到了完美的平衡。
+    </p>
+
+    <h2 id="apple-id"><i data-lucide="key"></i> 二、海外 Apple ID 获取与安装防坑</h2>
+    <p>
+      由于国内政策监管要求，Shadowrocket 未在中国大陆区 App Store 上架。用户必须准备一个<strong>非中国大陆地区的 Apple ID</strong>（推荐美区、港区、台区或日区）。
+    </p>
+
+    <div class="callout warn">
+      <h4><i data-lucide="alert-triangle"></i> 重大安全红线警示（千万不要在系统设置登录）</h4>
+      <p>
+        <strong>严禁在 iPhone 的【系统设置】顶部登录任何陌生人或购买的公共 Apple ID！</strong> 若公共账号开启了两步验证或遭锁定，可能导致你的手机被恶意远程锁死。<br>
+        <strong>正确登录方法</strong>：仅打开手机上的 <strong>【App Store】</strong> 软件，点击右上角头像滑动到最底部退出当前账号，然后在 App Store 内部登录海外 ID。下载完毕后立即换回你自己的国区 ID，软件依然可以正常使用与运行。
+      </p>
+    </div>
+
+    <h3>海外账号充值方法</h3>
+    <ul>
+      <li><strong>购买正规礼品卡 (Gift Card)</strong>：可在苹果官网、支付宝境外专区或正规电商平台购买对应币种的 App Store Gift Card，在 App Store 内兑换后购买。</li>
+      <li><strong>绑定境外信用卡 / 虚拟卡</strong>：支持绑定境外 Visa/Mastercard 信用卡或海外 PayPal 账户直接扣费。</li>
+    </ul>
+
+    <h2 id="import"><i data-lucide="plus-circle"></i> 三、节点订阅导入与管理</h2>
+    <div class="step-box">
+      <div class="step-box-header">
+        <span class="step-badge">1</span>
+        <h3>订阅链接一键拉取实操</h3>
+      </div>
+      <ol>
+        <li>登录机场后台，复制专用订阅地址。</li>
+        <li>打开 Shadowrocket，在主界面右上角点击 <strong>【+】号</strong> 进入添加节点页面。</li>
+        <li>在 <strong>【类型 (Type)】</strong> 这一栏中，点击并选择下拉列表中的 <strong>【Subscribe (第三方订阅)】</strong>。</li>
+        <li>在 <strong>【URL】</strong> 输入框内粘贴刚才复制的机场订阅链接，在“备注 (Remark)”处可自定义机场名称（如“我的主力专线”）。</li>
+        <li>点击右上角 <strong>【完成 (Save)】</strong>。此时客户端会自动开始拉取节点，返回主页即可看到清晰排列的节点分组。</li>
+      </ol>
+    </div>
+
+    <h3>节点测速与测速方法选择</h3>
+    <p>
+      在小火箭主界面上方，点击 <strong>“节点连通性测试 (Ping)”</strong>，小火箭会并发对所有节点发送探针并返回实际延迟：
+    </p>
+    <ul>
+      <li><strong>TCP Ping (默认)</strong>：测试与节点服务器入口端口的建立连接耗时，速度最快。</li>
+      <li><strong>ICMP Ping</strong>：传统 Ping 延迟测试。</li>
+      <li><strong>CONNECT Ping (最精准推荐)</strong>：向 Google 或 Cloudflare 发送实际 HTTP HEAD 请求，测试真实出海握手耗时。可在小火箭设置中将测速方法切换为 CONNECT。</li>
+    </ul>
+
+    <h2 id="routing"><i data-lucide="git-merge"></i> 四、分流模式与常用规则集配置</h2>
+    <p>
+      在小火箭主界面的【全局路由】中，提供四种主要工作模式：
+    </p>
+    <table class="article-table">
+      <thead>
+        <tr>
+          <th>路由模式</th>
+          <th>网络行为机制</th>
+          <th>适用场景推荐</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>配置 (Config)</strong></td>
+          <td>依据规则文件分流：国内直连、海外走节点、广告拦截</td>
+          <td><strong>强烈推荐（日常99%时间使用）</strong>，无感分流不耗电</td>
+        </tr>
+        <tr>
+          <td><strong>代理 (Proxy)</strong></td>
+          <td>全设备所有流量强制走当前勾选的节点（类似全局模式）</td>
+          <td>遇到冷门网站被规则误判、或排查规则配置时临时使用</td>
+        </tr>
+        <tr>
+          <td><strong>直连 (Direct)</strong></td>
+          <td>完全不经由代理服务器，等同于关闭小火箭</td>
+          <td>彻底排查节点影响时的对照测试</td>
+        </tr>
+        <tr>
+          <td><strong>场景 (Scene)</strong></td>
+          <td>根据不同 Wi-Fi 名称或蜂窝网络自动选用不同路由规则</td>
+          <td>极客玩家进阶定制</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      推荐在底部导航栏点击 <strong>【配置】</strong>，点击右上角加号添加业界成熟的 <code>ACL4SSR</code> 或 <code>lhie1</code> 规则文件，实现更加细粒度的大陆白名单分流、去广告与流媒体解锁。
+    </p>
+
+    <h2 id="https-mitm"><i data-lucide="lock"></i> 五、HTTPS 解密与证书安装 (进阶)</h2>
+    <p>
+      若要利用小火箭强大的 URL 重定向、脚本劫持或高级去广告功能，需要解密 HTTPS 流量：
+    </p>
+    <ol>
+      <li>在小火箭底部点击 <strong>【配置】</strong>，点击当前选中的配置文件右侧叹号，选择 <strong>【HTTPS 解密】</strong>。</li>
+      <li>勾选开启 HTTPS 解密，点击 <strong>“生成新的 CA 证书”</strong>，并点击 <strong>“安装证书到系统”</strong>。</li>
+      <li>打开 iPhone <strong>【系统设置】 -> 【通用】 -> 【VPN 与设备管理】</strong>，找到刚才下载的 Shadowrocket CA 描述文件并点击安装。</li>
+      <li>返回 <strong>【设置】 -> 【通用】 -> 【关于本机】 -> 滑到最底部【证书信任设置】</strong>，将该根证书的开关打开完全信任。</li>
+    </ol>
+
+    <h2 id="scene"><i data-lucide="sliders"></i> 六、场景模式自动化切换</h2>
+    <p>
+      利用场景模式，你可以设定：当手机连入家庭路由器 Wi-Fi 时，自动使用直连或软路由节点；当离开家切换为中国电信 5G 蜂窝数据时，自动切换为低延迟香港 IEPL 专线；当检测到公司企业 Wi-Fi 时，自动切换至美国备用节点。所有过程由 iOS 自动化完成，无需手动干预。
+    </p>
+
+    <h2 id="troubleshooting"><i data-lucide="alert-circle"></i> 七、断网排障与常见报错修复</h2>
+    <table class="article-table">
+      <thead>
+        <tr>
+          <th>遇到问题</th>
+          <th>产生原因</th>
+          <th>排查与修复流程</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>顶部显示 VPN 标志但网页无法打不开</td>
+          <td>当前选中的节点已失效或该节点端口被封锁</td>
+          <td>先在列表点击“连通性测试”，换一个延迟为绿色的节点；若所有节点全超时，检查机场账号是否欠费或订阅链接已失效。</td>
+        </tr>
+        <tr>
+          <td>提示“无法添加 VPN 配置”</td>
+          <td>iOS 系统网络权限被限制或冲突</td>
+          <td>在系统设置中找到 Shadowrocket，确认“无线数据”勾选了“WLAN 与蜂窝网络”；重启一次手机重试。</td>
+        </tr>
+        <tr>
+          <td>打开微信发不出图片或延迟极高</td>
+          <td>路由模式误选为【代理 (Proxy)】模式</td>
+          <td>将全局路由切换回【配置 (Config)】模式，国内流量即可秒开直连。</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="faq"><i data-lucide="help-circle"></i> 八、高频问题解答 (FAQ)</h2>
+    <div class="callout tip">
+      <h4>Q: 小火箭下载之后换回我自己的国区 Apple ID，还能正常用吗？</h4>
+      <p>
+        完全可以正常使用！iOS 系统的机制是：已下载的应用只要不卸载，即可永久正常运行。换回国区账号后丝毫不影响软件功能。仅当后续需要更新大版本时，App Store 会弹窗要求验证下载时使用的海外账号密码。
+      </p>
+    </div>
+    <div class="callout tip">
+      <h4>Q: 为什么我用小火箭测速延迟显示正常，打开 YouTube 依然转圈？</h4>
+      <p>
+        由于默认的 TCP Ping 仅代表握手建立，部分劣质节点存在“端口通畅但数据转发为零”的情况。请在设置中将测速模式改为 CONNECT 方式，或者在机场推荐榜中更换具备 SLA 保障的优质专线。
+      </p>
+    </div>
+    <div class="callout tip">
+      <h4>Q: 小火箭开启后如何防止国内 App（如微信、淘宝、抖音）被代理减速？</h4>
+      <p>
+        请确保小火箭首页下方的【全局路由】选为【配置 (Config)】模式，切勿选择【代理 (Proxy)】模式。在【配置】页面使用默认或导入成熟的分流规则集，国内流量走 DIRECT 直连，不消耗机场流量且速度最快。
+      </p>
+    </div>
+  
+
+        <!-- Bottom Banner -->
+        <div class="action-banner">
+          <div class="action-banner-text">
+            <h3>准备好体验顺畅跨境网络了吗？</h3>
+            <p>搭配经过晚高峰实测严选的高速专线，解锁 4K 流媒体与 AI 高频调用。</p>
+          </div>
+          <div class="btn-group">
+            <a class="btn primary" href="https://apps.apple.com/app/shadowrocket/id932747118" target="_blank" rel="noopener noreferrer">
+              前往 App Store 查看详情
+            </a>
+            <a class="btn secondary" href="../recommend.html">
+              查看精选机场推荐
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Sidebar Table of Contents -->
+      <aside class="sidebar">
+        <div class="toc-title">
+          <i data-lucide="align-left"></i> 本文目录
+        </div>
+        <ul class="toc-list">
+          <li><a href="#intro">一、工具定位与核心功能</a></li>
+          <li><a href="#apple-id">二、海外 Apple ID 获取与安装防坑</a></li>
+          <li><a href="#import">三、节点订阅导入与管理</a></li>
+          <li><a href="#routing">四、分流模式与常用规则集配置</a></li>
+          <li><a href="#https-mitm">五、HTTPS 解密与证书安装 (进阶)</a></li>
+          <li><a href="#scene">六、场景模式自动化切换</a></li>
+          <li><a href="#troubleshooting">七、断网排障与常见报错修复</a></li>
+          <li><a href="#faq">八、高频问题解答 (FAQ)</a></li>
+        </ul>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Floating Back to Top Button -->
+  <button id="backToTop" class="back-to-top" aria-label="返回顶部" title="返回顶部">
+    <i data-lucide="chevron-up"></i>
+  </button>
+
+  <script>
+    lucide.createIcons();
+
+    // Theme Toggle
+    const themeBtn = document.getElementById('themeToggle');
+    const htmlEl = document.documentElement;
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    htmlEl.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+
+    themeBtn.addEventListener('click', () => {
+      const current = htmlEl.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      htmlEl.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateThemeIcon(next);
+    });
+
+    function updateThemeIcon(theme) {
+      themeBtn.innerHTML = theme === 'dark' ? '<i data-lucide="sun"></i>' : '<i data-lucide="moon"></i>';
+      lucide.createIcons();
+    }
+
+    // Back to top scroll listener
+    const backToTopBtn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+    }, { passive: true });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

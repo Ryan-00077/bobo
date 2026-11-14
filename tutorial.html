@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BoBo 博客 - 全平台主流代理客户端（Clash Verge、Shadowrocket、Sing-box、Surge）下载与订阅配置教程。">
+  <link rel="canonical" href="https://bobo7.cc/tutorial.html">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="客户端教程 | BoBo 博客">
+  <meta property="og:description" content="BoBo 博客 - 全平台主流代理客户端（Clash Verge、Shadowrocket、Sing-box、Surge）下载与订阅配置教程。">
+  <meta property="og:url" content="https://bobo7.cc/tutorial.html">
+  <meta property="og:site_name" content="BoBo 博客">
+  <meta property="og:image" content="https://bobo7.cc/assets/logo.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="客户端教程 | BoBo 博客">
+  <meta name="twitter:description" content="BoBo 博客 - 全平台主流代理客户端（Clash Verge、Shadowrocket、Sing-box、Surge）下载与订阅配置教程。">
+  <meta name="twitter:image" content="https://bobo7.cc/assets/logo.webp">
+
+  <title>客户端教程 | BoBo 博客</title>
+  <link rel="icon" href="assets/logo.webp">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root,
+    [data-theme="light"] {
+      --bg: #f5f7fb;
+      --bg-deep: #e9eef6;
+      --surface: rgba(255, 255, 255, 0.85);
+      --surface-soft: rgba(255, 255, 255, 0.6);
+      --surface-glass: rgba(250, 252, 255, 0.82);
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --card-border: rgba(38, 55, 83, 0.14);
+      --line: rgba(38, 55, 83, 0.12);
+      --line-strong: rgba(38, 55, 83, 0.22);
+      --text: #172235;
+      --muted: #627087;
+      --dim: #8a96a8;
+      --signal: #168b79;
+      --signal-bright: #0b6e61;
+      --signal-glow: rgba(22, 139, 121, 0.2);
+      --amber: #b07d1a;
+      --violet: #6c63d8;
+      --max: 1200px;
+      --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      --font-serif: Georgia, "Noto Serif SC", serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --header-bg: rgba(245, 247, 251, 0.85);
+    }
+
+    [data-theme="dark"] {
+      --bg: #07110f;
+      --bg-deep: #040907;
+      --surface: #0b1714;
+      --surface-soft: #0e1e1a;
+      --surface-glass: rgba(11, 23, 20, 0.72);
+      --card-bg: rgba(14, 30, 26, 0.65);
+      --card-border: rgba(194, 230, 217, 0.12);
+      --line: rgba(194, 230, 217, 0.14);
+      --line-strong: rgba(194, 230, 217, 0.28);
+      --text: #edf5f0;
+      --muted: #94a8a0;
+      --dim: #5f746c;
+      --signal: #9ff0c9;
+      --signal-bright: #d1ffe5;
+      --signal-glow: rgba(159, 240, 201, 0.25);
+      --amber: #ebd88e;
+      --violet: #8999ff;
+      --max: 1200px;
+      --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      --font-serif: Georgia, "Noto Serif SC", serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --header-bg: rgba(7, 17, 15, 0.82);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--bg-deep); }
+    body {
+      min-width: 320px;
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--text);
+      background: var(--bg);
+      font-family: var(--font-sans);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    a, button { font: inherit; }
+    h1, h2, h3, h4, p { margin: 0; }
+    .wrap { width: min(var(--max), calc(100% - 48px)); margin: 0 auto; }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid var(--line);
+      background: var(--header-bg);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      transition: all 0.25s ease;
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 74px;
+      gap: 24px;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 12px; white-space: nowrap; }
+    .brand-image { width: 34px; height: 34px; object-fit: cover; border-radius: 8px; }
+    .brand-name { font-family: var(--font-serif); font-size: 18px; font-weight: 700; line-height: 1.1; }
+    .brand-name small { display: block; margin-top: 2px; color: var(--muted); font-family: var(--font-sans); font-size: 9px; font-weight: 600; letter-spacing: .16em; }
+
+    .site-nav { display: flex; align-items: center; gap: 28px; margin-left: auto; }
+    .site-nav a {
+      position: relative;
+      padding: 6px 0;
+      color: var(--muted);
+      font-size: 13.5px;
+      font-weight: 500;
+      transition: color .2s ease;
+    }
+    .site-nav a::after {
+      content: "";
+      position: absolute;
+      right: 0; bottom: 0; left: 0;
+      height: 1.5px;
+      background: var(--signal);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform .24s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .site-nav a:hover, .site-nav a.active { color: var(--text); }
+    .site-nav a:hover::after, .site-nav a.active::after { transform: scaleX(1); transform-origin: left; }
+
+    .header-actions { display: flex; align-items: center; gap: 12px; }
+    .theme-toggle, .header-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      border: 1px solid var(--line-strong);
+      background: var(--surface-soft);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .theme-toggle:hover, .header-cta:hover { color: var(--signal); border-color: var(--signal); transform: translateY(-2px); }
+
+    /* Page Hero */
+    .page-hero { padding: 64px 0 36px; text-align: center; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      background: var(--surface-soft);
+      color: var(--signal);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      margin-bottom: 20px;
+    }
+    .eyebrow i { width: 6px; height: 6px; border-radius: 50%; background: var(--signal); display: inline-block; }
+    .page-title {
+      font-family: var(--font-serif);
+      font-size: clamp(30px, 4vw, 44px);
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    .page-desc { max-width: 680px; margin: 0 auto; font-size: 15px; color: var(--muted); line-height: 1.7; }
+
+    /* Client Grid */
+    .client-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 24px;
+      margin: 40px 0 70px;
+    }
+    .client-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform .2s ease, border-color .2s ease;
+    }
+    .client-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--signal);
+    }
+    .client-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .client-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--surface-soft);
+      border: 1px solid var(--line-strong);
+      color: var(--signal);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .client-name { font-size: 18px; font-weight: 700; color: var(--text); }
+    .client-platform { font-size: 12px; color: var(--dim); margin-top: 3px; }
+    .client-desc { font-size: 13.5px; color: var(--muted); line-height: 1.6; margin-bottom: 20px; }
+
+    .step-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 24px;
+      font-size: 13px;
+      color: var(--muted);
+      border-top: 1px dashed var(--line);
+      padding-top: 16px;
+    }
+    .step-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+    .step-num {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--surface-soft);
+      border: 1px solid var(--line-strong);
+      color: var(--signal);
+      font-size: 10px;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 38px;
+      padding: 0 16px;
+      border-radius: 8px;
+      border: 1px solid var(--line-strong);
+      color: var(--text);
+      background: var(--surface-soft);
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s ease;
+      width: 100%;
+    }
+    .button.primary {
+      border-color: var(--signal);
+      background: var(--signal);
+      color: #040907;
+    }
+    .button.primary:hover {
+      background: var(--signal-bright);
+      transform: translateY(-2px);
+    }
+
+    .card-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .tutorial-link {
+      display: block;
+      text-align: center;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 4px 0;
+      transition: color 0.2s ease;
+    }
+
+    .tutorial-link:hover {
+      color: var(--signal);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    /* FAQ Section */
+    .faq-section {
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 40px;
+      margin-bottom: 80px;
+    }
+    .faq-title { font-size: 22px; font-weight: 700; margin-bottom: 24px; color: var(--text); }
+    .faq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+    .faq-item h4 { font-size: 15px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+    .faq-item p { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--line);
+      background: var(--surface-soft);
+      padding: 38px 0;
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .footer-brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; }
+    .footer-brand img { width: 22px; height: 22px; border-radius: 6px; }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; font-size: 13.5px; color: var(--muted); }
+    .footer-links a:hover { color: var(--text); }
+  </style>
+  <link rel="stylesheet" href="assets/site-navigation.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "主流代理客户端全平台配置教程 - BoBo 博客",
+  "url": "https://bobo7.cc/tutorial.html",
+  "description": "涵盖 Windows、macOS、iOS、Android 全平台主流代理客户端配置与分流规则指南。",
+  "publisher": {
+    "@type": "Organization",
+    "name": "BoBo 博客"
+  }
+}
+  </script>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html" aria-label="BoBo 博客首页">
+        <img class="brand-image" src="assets/logo.webp" alt="BoBo Logo">
+        <span class="brand-name">BoBo<small>BLOG</small></span>
+      </a>
+
+      <nav class="site-nav" aria-label="页面导航">
+        <a href="index.html">首页</a>
+        <a href="recommend.html">机场推荐</a>
+        <a href="review.html">机场评测</a>
+        <a class="active" aria-current="page" href="tutorial.html">客户端教程</a>
+        <a href="tools.html">实用工具</a>
+        <a href="about.html">关于</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="切换明暗主题" title="切换暗黑/明亮毛玻璃主题">
+          <i data-lucide="moon"></i>
+        </button>
+        <a class="header-cta" href="https://t.me/wanfengzn7" target="_blank" rel="noopener noreferrer" title="Telegram 交流群 / 频道" aria-label="Telegram">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+            <path d="m20.665 3.717-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l-.313 4.671c.458 0 .66-.21.916-.457l2.199-2.138 4.574 3.379c.843.465 1.448.225 1.658-.783l3.003-14.153c.307-1.232-.47-1.79-1.213-1.469z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="page-hero">
+      <div class="eyebrow"><i></i> CLIENTS & CONFIG / 全平台客户端指南</div>
+      <h1 class="page-title">主流代理客户端下载与配置教程</h1>
+      <p class="page-desc">
+        无论你是 Windows、macOS 办公，还是 iPhone、Android 移动端追剧，这里为你整理了当前主流安全客户端的官方开源下载渠道与零门槛订阅配置步骤。
+      </p>
+    </div>
+
+    <!-- Client Cards -->
+    <div class="client-grid">
+      <!-- Clash Verge Rev -->
+      <article class="client-card">
+        <div>
+          <div class="client-header">
+            <div class="client-icon"><i data-lucide="monitor"></i></div>
+            <div>
+              <div class="client-name">Clash Verge Rev</div>
+              <div class="client-platform">Windows / macOS / Linux · 桌面首选</div>
+            </div>
+          </div>
+          <p class="client-desc">
+            基于 Clash.Meta (Mihomo) 内核的现代化客户端。界面优雅、中文支持友好，内置智能规则分流与 TUN 虚拟网卡模式。
+          </p>
+          <ul class="step-list">
+            <li><span class="step-num">1</span>在官网或 GitHub Releases 下载安装包</li>
+            <li><span class="step-num">2</span>在“订阅”界面粘贴机场提供的 Clash 订阅链接</li>
+            <li><span class="step-num">3</span>右键选中配置并开启“系统代理”即可顺畅翻越</li>
+          </ul>
+        </div>
+        <div class="card-actions">
+          <a class="tutorial-link" href="客户端教程/clash-verge.html">查看详细图文教程</a>
+          <a class="button primary" href="https://github.com/clash-verge-rev/clash-verge-rev/releases" target="_blank" rel="noopener noreferrer">
+            GitHub 官方下载 <i data-lucide="download"></i>
+          </a>
+        </div>
+      </article>
+
+      <!-- Shadowrocket -->
+      <article class="client-card">
+        <div>
+          <div class="client-header">
+            <div class="client-icon"><i data-lucide="smartphone"></i></div>
+            <div>
+              <div class="client-name">Shadowrocket (小火箭)</div>
+              <div class="client-platform">iOS (苹果手机 / iPad) · 必备神器</div>
+            </div>
+          </div>
+          <p class="client-desc">
+            iOS 平台最经典的代理工具，支持扫码导入订阅、规则分流、节点测速与场景模式。需使用外区 Apple ID 在 App Store 购买下载。
+          </p>
+          <ul class="step-list">
+            <li><span class="step-num">1</span>登录美区/港区 Apple ID 在 App Store 安装</li>
+            <li><span class="step-num">2</span>打开小火箭，点击右上角【+】扫描或粘贴节点订阅</li>
+            <li><span class="step-num">3</span>选择延迟最低节点，轻触顶端开关连接</li>
+          </ul>
+        </div>
+        <div class="card-actions">
+          <a class="tutorial-link" href="客户端教程/shadowrocket.html">查看详细图文教程</a>
+          <a class="button primary" href="https://apps.apple.com/us/app/shadowrocket/id932747118" target="_blank" rel="noopener noreferrer">
+            App Store 详情
+          </a>
+        </div>
+      </article>
+
+      <!-- Sing-box -->
+      <article class="client-card">
+        <div>
+          <div class="client-header">
+            <div class="client-icon"><i data-lucide="box"></i></div>
+            <div>
+              <div class="client-name">Sing-box</div>
+              <div class="client-platform">全平台通用 · 新一代通用代理内核</div>
+            </div>
+          </div>
+          <p class="client-desc">
+            由官方团队打造的新一代通用网络框架。极低内存与 CPU 占用，原生支持 Hysteria 2、TUIC、Vless、Shadowsocks 几乎全协议。
+          </p>
+          <ul class="step-list">
+            <li><span class="step-num">1</span>前往 Sing-box 官方跨平台客户端下载</li>
+            <li><span class="step-num">2</span>导入服务商提供的 Sing-box 格式配置链接</li>
+            <li><span class="step-num">3</span>启用并开启“TUN 模式”实现全局智能代理</li>
+          </ul>
+        </div>
+        <div class="card-actions">
+          <a class="tutorial-link" href="客户端教程/sing-box.html">查看详细图文教程</a>
+          <a class="button primary" href="https://sing-box.sagernet.org/" target="_blank" rel="noopener noreferrer">
+            Sing-box 官网
+          </a>
+        </div>
+      </article>
+
+      <!-- Surge -->
+      <article class="client-card">
+        <div>
+          <div class="client-header">
+            <div class="client-icon"><i data-lucide="zap"></i></div>
+            <div>
+              <div class="client-name">Surge</div>
+              <div class="client-platform">macOS / iOS · 顶级高级网络开发神器</div>
+            </div>
+          </div>
+          <p class="client-desc">
+            苹果生态下的天花板级网络工具。具备无可挑剔的抓包调试、全自动智能策略组、零延迟切换与极高品质稳定性。
+          </p>
+          <ul class="step-list">
+            <li><span class="step-num">1</span>在官网或 Mac/iOS App Store 下载 Surge</li>
+            <li><span class="step-num">2</span>通过机场面板一键托管导入 Surge 托管配置</li>
+            <li><span class="step-num">3</span>享受苹果生态丝滑无感的全自动化跨境网络</li>
+          </ul>
+        </div>
+        <div class="card-actions">
+          <a class="tutorial-link" href="客户端教程/surge.html">查看详细图文教程</a>
+          <a class="button primary" href="https://nssurge.com/" target="_blank" rel="noopener noreferrer">
+            Surge 官方站点
+          </a>
+        </div>
+      </article>
+
+      <!-- V2rayN / V2rayNG -->
+      <article class="client-card">
+        <div>
+          <div class="client-header">
+            <div class="client-icon"><i data-lucide="cpu"></i></div>
+            <div>
+              <div class="client-name">V2rayN / V2rayNG</div>
+              <div class="client-platform">Windows / Android · 经典老牌工具</div>
+            </div>
+          </div>
+          <p class="client-desc">
+            最广为人知的通用老牌开源客户端，协议兼容度极强，支持 Xray、V2fly、Sing-box 双核心无缝自由切换。
+          </p>
+          <ul class="step-list">
+            <li><span class="step-num">1</span>在 GitHub 下载最新的 v2rayN-With-Core 整合包</li>
+            <li><span class="step-num">2</span>在“订阅分组”中添加机场提供的 V2ray 订阅地址</li>
+            <li><span class="step-num">3</span>更新订阅后在托盘右键设置“自动配置系统代理”</li>
+          </ul>
+        </div>
+        <div class="card-actions">
+          <a class="tutorial-link" href="客户端教程/v2rayn.html">查看详细图文教程</a>
+          <a class="button primary" href="https://github.com/2dust/v2rayN/releases" target="_blank" rel="noopener noreferrer">
+            GitHub 官方下载 <i data-lucide="download"></i>
+          </a>
+        </div>
+      </article>
+
+      <!-- NekoBox / NekoRay -->
+      <article class="client-card">
+        <div>
+          <div class="client-header">
+            <div class="client-icon"><i data-lucide="cat"></i></div>
+            <div>
+              <div class="client-name">NekoBox (NEX)</div>
+              <div class="client-platform">Android / Windows · 极客强力分流</div>
+            </div>
+          </div>
+          <p class="client-desc">
+            基于 Sing-box / Xray 的强大开源客户端。内置丰富的路由规则、分应用代理功能与一键自签证书支持。
+          </p>
+          <ul class="step-list">
+            <li><span class="step-num">1</span>Android 设备安装 NekoBox (Google Play / GitHub)</li>
+            <li><span class="step-num">2</span>右上角菜单选择“从剪贴板导入”或扫描二维码</li>
+            <li><span class="step-num">3</span>点击右下角浮动按钮启动 VPN 代理连接</li>
+          </ul>
+        </div>
+        <div class="card-actions">
+          <a class="tutorial-link" href="客户端教程/nekobox.html">查看详细图文教程</a>
+          <a class="button primary" href="https://github.com/MatsuriDayo/NekoBoxForAndroid/releases" target="_blank" rel="noopener noreferrer">
+            GitHub 官方下载 <i data-lucide="download"></i>
+          </a>
+        </div>
+      </article>
+    </div>
+
+    <!-- FAQ -->
+    <div class="faq-section">
+      <h2 class="faq-title">新手配置常见问题排查 (FAQ)</h2>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h4>Q1: 为什么导入机场订阅时提示“更新失败”或网络超时？</h4>
+          <p>
+            这通常是因为本地直连无法访问机场的订阅下发域名。可以先开启客户端的“节点测试”或先连接一个免配置备用节点，或者将订阅链接中的域名转为防污染备用镜像再重新拉取。
+          </p>
+        </div>
+        <div class="faq-item">
+          <h4>Q2: 连上节点后，为什么国内微信、淘宝打不开？</h4>
+          <p>
+            说明您的客户端开启了“全局代理 (Global)”模式。请将路由模式切换为“规则分流 (Rule)”模式，客户端就会自动实现国内直连、海外翻越，互不冲突。
+          </p>
+        </div>
+        <div class="faq-item">
+          <h4>Q3: 什么是 TUN 模式？为什么有些软件必须开它？</h4>
+          <p>
+            普通系统代理仅拦截浏览器等遵循系统 HTTP 代理的流量，而终端命令行 (Git/SSH)、微软应用商店、海外游戏等不会走普通代理。开启 TUN 虚拟网卡模式后，系统全盘所有应用网络流量都将被强行接管加速。
+          </p>
+        </div>
+        <div class="faq-item">
+          <h4>Q4: 手机端小火箭 (Shadowrocket) 无法下载怎么办？</h4>
+          <p>
+            中国大陆区 App Store 不提供此类应用。您可以在苹果手机上登出当前 Apple ID，登录一个美区/港区的 Apple ID，即可搜索购买下载。
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="wrap footer-inner">
+      <div class="footer-brand">
+        <img src="assets/logo.webp" alt="BoBo Logo"> BoBo
+      </div>
+      <div class="footer-links">
+        <a href="recommend.html">机场推荐</a>
+        <a href="review.html">机场评测</a>
+        <a href="tutorial.html">客户端教程</a>
+        <a href="tools.html">实用工具</a>
+        <a href="about.html">关于我们</a>
+        <a href="https://t.me/wanfengzn7" target="_blank" rel="noopener noreferrer">联系支持</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop" aria-label="返回顶部" title="返回顶部">
+    <i data-lucide="arrow-up"></i>
+  </button>
+
+  <script>
+    const themeToggleBtn = document.getElementById("themeToggle");
+    themeToggleBtn.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme") || "light";
+      const next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      themeToggleBtn.innerHTML = next === "dark" ? '<i data-lucide="sun"></i>' : '<i data-lucide="moon"></i>';
+      if (window.lucide) window.lucide.createIcons();
+    });
+
+    // Back to Top Logic
+    const backToTopBtn = document.getElementById("backToTop");
+    if (backToTopBtn) {
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+          backToTopBtn.classList.add("visible");
+        } else {
+          backToTopBtn.classList.remove("visible");
+        }
+      }, { passive: true });
+
+      backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      });
+    }
+
+    if (window.lucide) window.lucide.createIcons();
+  </script>
+</body>
+
+</html>
+

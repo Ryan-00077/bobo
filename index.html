@@ -1,0 +1,2360 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BoBo 博客 - 独立客观的跨境网络与节点实测报告。">
+  <link rel="canonical" href="https://bobo7.cc/">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="BoBo | 独立客观的跨境网络与节点实测报告">
+  <meta property="og:description" content="BoBo 博客 - 独立客观的跨境网络与节点实测报告。">
+  <meta property="og:url" content="https://bobo7.cc/">
+  <meta property="og:site_name" content="BoBo 博客">
+  <meta property="og:image" content="https://bobo7.cc/assets/logo.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BoBo | 独立客观的跨境网络与节点实测报告">
+  <meta name="twitter:description" content="BoBo 博客 - 独立客观的跨境网络与节点实测报告。">
+  <meta name="twitter:image" content="https://bobo7.cc/assets/logo.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "BoBo 博客",
+  "url": "https://bobo7.cc/",
+  "description": "BoBo 博客 - 独立客观的跨境网络与节点实测报告。",
+  "publisher": {
+    "@type": "Organization",
+    "name": "BoBo 博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://bobo7.cc/assets/logo.webp"
+    }
+  }
+}
+  </script>
+
+  <title>BoBo | 独立客观的跨境网络与节点实测报告</title>
+  <link rel="icon" href="assets/logo.webp">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    /* ==========================================================================
+       1. Design Tokens & Theme Variables (Dark & Light Glass)
+       ========================================================================== */
+    :root,
+    [data-theme="light"] {
+      --bg: #f5f7fb;
+      --bg-deep: #e9eef6;
+      --surface: rgba(255, 255, 255, 0.85);
+      --surface-soft: rgba(255, 255, 255, 0.6);
+      --surface-glass: rgba(250, 252, 255, 0.82);
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --card-border: rgba(38, 55, 83, 0.14);
+      --line: rgba(38, 55, 83, 0.12);
+      --line-strong: rgba(38, 55, 83, 0.22);
+      --text: #172235;
+      --muted: #627087;
+      --dim: #8a96a8;
+      --signal: #168b79;
+      --signal-bright: #0b6e61;
+      --signal-glow: rgba(22, 139, 121, 0.2);
+      --amber: #b07d1a;
+      --violet: #6c63d8;
+      --max: 1200px;
+      --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      --font-serif: Georgia, "Noto Serif SC", serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --header-bg: rgba(245, 247, 251, 0.85);
+    }
+
+    [data-theme="dark"] {
+      --bg: #07110f;
+      --bg-deep: #040907;
+      --surface: #0b1714;
+      --surface-soft: #0e1e1a;
+      --surface-glass: rgba(11, 23, 20, 0.72);
+      --card-bg: rgba(14, 30, 26, 0.65);
+      --card-border: rgba(194, 230, 217, 0.12);
+      --line: rgba(194, 230, 217, 0.14);
+      --line-strong: rgba(194, 230, 217, 0.28);
+      --text: #edf5f0;
+      --muted: #94a8a0;
+      --dim: #5f746c;
+      --signal: #9ff0c9;
+      --signal-bright: #d1ffe5;
+      --signal-glow: rgba(159, 240, 201, 0.25);
+      --amber: #ebd88e;
+      --violet: #8999ff;
+      --max: 1200px;
+      --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      --font-serif: Georgia, "Noto Serif SC", serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --header-bg: rgba(7, 17, 15, 0.82);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg-deep);
+    }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--text);
+      background: var(--bg);
+      font-family: var(--font-sans);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* Ambient noise & background gradient */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      pointer-events: none;
+      background: linear-gradient(108deg, rgba(0, 0, 0, .2), transparent 48%),
+        radial-gradient(ellipse 80% 55% at 50% -15%, rgba(85, 162, 136, .12), transparent 72%);
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      pointer-events: none;
+      opacity: 0.14;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.65'/%3E%3C/svg%3E");
+      mix-blend-mode: soft-light;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a,
+    button {
+      font: inherit;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    p {
+      margin: 0;
+    }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    /* ==========================================================================
+       2. Header & Navigation
+       ========================================================================== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid var(--line);
+      background: var(--header-bg);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      transition: all 0.25s ease;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 74px;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      white-space: nowrap;
+    }
+
+    .brand-image {
+      display: block;
+      width: 34px;
+      height: 34px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 0 0 1px rgba(213, 222, 255, .18), 0 7px 22px rgba(111, 127, 255, .16);
+    }
+
+    .brand-name {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0;
+      line-height: 1.1;
+    }
+
+    .brand-name small {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-family: var(--font-sans);
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: .16em;
+    }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      margin-left: auto;
+    }
+
+    .site-nav a {
+      position: relative;
+      padding: 6px 0;
+      color: var(--muted);
+      font-size: 13.5px;
+      font-weight: 500;
+      transition: color .2s ease;
+    }
+
+    .site-nav a::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 1.5px;
+      background: var(--signal);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform .24s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .site-nav a:hover,
+    .site-nav a.active {
+      color: var(--text);
+    }
+
+    .site-nav a:hover::after,
+    .site-nav a.active::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      border: 1px solid var(--line-strong);
+      background: var(--surface-soft);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      color: var(--signal);
+      border-color: var(--signal);
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 40px;
+      padding: 0 16px;
+      border-radius: 8px;
+      border: 1px solid var(--line-strong);
+      color: var(--text);
+      background: var(--surface-soft);
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s ease;
+    }
+
+    .header-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      border: 1px solid var(--line-strong);
+      color: var(--muted);
+      background: var(--surface-soft);
+      cursor: pointer;
+      transition: all .2s ease;
+    }
+
+    .button:hover {
+      border-color: var(--signal);
+      color: var(--signal-bright);
+      transform: translateY(-2px);
+    }
+
+    .header-cta:hover {
+      border-color: var(--signal);
+      color: var(--signal);
+      transform: translateY(-2px);
+    }
+
+    .button.primary {
+      border-color: var(--signal);
+      color: #040907;
+      background: var(--signal);
+      box-shadow: 0 8px 24px var(--signal-glow);
+    }
+
+    .button.primary:hover {
+      background: var(--signal-bright);
+      color: #040907;
+      box-shadow: 0 10px 28px rgba(159, 240, 201, .35);
+    }
+
+    .button svg,
+    .header-cta svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    /* ==========================================================================
+       3. Hero Section & Interactive Canvas
+       ========================================================================== */
+    .hero {
+      position: relative;
+      min-height: 660px;
+      padding: 100px 0 80px;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      opacity: .45;
+      background-image: linear-gradient(rgba(157, 232, 197, .08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(157, 232, 197, .08) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(to bottom, black 0%, rgba(0, 0, 0, .85) 60%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 0%, rgba(0, 0, 0, .85) 60%, transparent 100%);
+    }
+
+    .hero-arc {
+      position: absolute;
+      z-index: -1;
+      left: 50%;
+      bottom: -230px;
+      width: min(1120px, 104vw);
+      height: 440px;
+      border: 1px solid rgba(156, 239, 201, .22);
+      border-radius: 50% 50% 0 0;
+      transform: translateX(-50%);
+      box-shadow: 0 0 0 44px rgba(159, 240, 201, .026),
+        0 0 0 88px rgba(159, 240, 201, .018),
+        0 -8px 54px rgba(66, 204, 147, .1);
+    }
+
+    .hero-arc::before,
+    .hero-arc::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(137, 153, 255, .15);
+      border-radius: 50% 50% 0 0;
+    }
+
+    .hero-arc::before {
+      inset: 36px;
+    }
+
+    .hero-arc::after {
+      inset: 104px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--muted);
+      font-size: 12.5px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow i {
+      display: block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--signal);
+      box-shadow: 0 0 0 4px rgba(159, 240, 201, .12), 0 0 17px var(--signal);
+    }
+
+    /* Particle Title Canvas */
+    .particle-title {
+      position: relative;
+      width: min(100%, 940px);
+      height: 160px;
+      margin: 18px auto 0;
+      overflow: hidden;
+      touch-action: none;
+    }
+
+    .particle-title canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      cursor: crosshair;
+    }
+
+    .particle-title__fallback {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: var(--text);
+      font-family: var(--font-serif);
+      font-size: clamp(2.35rem, 5.2vw, 4.25rem);
+      font-weight: 600;
+      line-height: 1.15;
+    }
+
+    .particle-title__fallback em {
+      color: var(--signal);
+      font-style: normal;
+      text-shadow: 0 0 30px var(--signal-glow);
+    }
+
+    .particle-title.is-ready .particle-title__fallback {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .hero-copy {
+      max-width: 660px;
+      margin: 22px auto 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.9;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 38px;
+      color: var(--dim);
+      font-size: 11px;
+      letter-spacing: .1em;
+      font-weight: 600;
+    }
+
+    .hero-meta span {
+      display: block;
+      width: 34px;
+      height: 1px;
+      background: var(--line-strong);
+    }
+
+    .hero-pulse {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--signal);
+      box-shadow: 0 0 0 7px rgba(159, 240, 201, .06), 0 0 30px var(--signal);
+      transform: translateX(-50%);
+      animation: pulse 2.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      50% {
+        box-shadow: 0 0 0 13px rgba(159, 240, 201, .02), 0 0 44px var(--signal);
+      }
+    }
+
+    /* ==========================================================================
+       4. Model Strip Marquee
+       ========================================================================== */
+    .model-strip {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--surface);
+      overflow: hidden;
+    }
+
+    .model-marquee {
+      display: flex;
+      align-items: center;
+      min-height: 84px;
+    }
+
+    .model-intro {
+      flex: 0 0 170px;
+      color: var(--dim);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      line-height: 1.4;
+    }
+
+    .model-list {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .model-list::-webkit-scrollbar {
+      display: none;
+    }
+
+    .model-list span {
+      color: var(--muted);
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: color .2s ease, transform .2s ease;
+      cursor: default;
+    }
+
+    .model-list span:hover {
+      color: var(--signal);
+      transform: translateY(-1px);
+    }
+
+    /* ==========================================================================
+       5. Reason Cards Section (01-04)
+       ========================================================================== */
+    .intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr);
+      gap: 56px;
+      align-items: end;
+      padding: 120px 0 90px;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--signal);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .14em;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 32px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    .intro h2 {
+      margin-top: 20px;
+      font-family: var(--font-serif);
+      font-size: 42px;
+      font-weight: 600;
+      line-height: 1.25;
+    }
+
+    .intro-text {
+      color: var(--muted);
+      font-size: 15.5px;
+      line-height: 1.9;
+    }
+
+    .reasons {
+      border-top: 1px solid var(--line);
+      margin-bottom: 90px;
+    }
+
+    .reason {
+      display: grid;
+      grid-template-columns: 120px minmax(180px, .75fr) minmax(280px, 1.25fr) 56px;
+      gap: 28px;
+      align-items: center;
+      min-height: 180px;
+      border-bottom: 1px solid var(--line);
+      transition: background .24s ease, padding .24s ease;
+      padding: 24px 0;
+    }
+
+    .reason:hover {
+      padding-right: 20px;
+      padding-left: 20px;
+      background: rgba(148, 226, 190, 0.04);
+    }
+
+    .reason-number {
+      color: var(--signal);
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .reason-title {
+      font-family: var(--font-serif);
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 1.25;
+    }
+
+    .reason-copy {
+      color: var(--muted);
+      font-size: 14.5px;
+      line-height: 1.85;
+    }
+
+    .reason-icon {
+      display: grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      border-radius: 10px;
+      border: 1px solid var(--line-strong);
+      color: var(--signal);
+      background: var(--surface-soft);
+      transition: all 0.24s ease;
+    }
+
+    .reason:hover .reason-icon {
+      border-color: var(--signal);
+      background: rgba(159, 240, 201, 0.12);
+      transform: rotate(7deg) scale(1.05);
+    }
+
+    .reason:nth-child(2) .reason-number,
+    .reason:nth-child(2) .reason-icon {
+      color: var(--amber);
+    }
+
+    .reason:nth-child(2):hover .reason-icon {
+      border-color: var(--amber);
+      background: rgba(235, 216, 142, .12);
+    }
+
+    .reason:nth-child(3) .reason-number,
+    .reason:nth-child(3) .reason-icon {
+      color: var(--violet);
+    }
+
+    .reason:nth-child(3):hover .reason-icon {
+      border-color: var(--violet);
+      background: rgba(184, 192, 255, .12);
+    }
+
+    /* ==========================================================================
+       6. Model Plaza & Interactive Expandable Cards (卡片展开核心效果)
+       ========================================================================== */
+    .model-plaza-section {
+      padding: 90px 0 110px;
+      border-top: 1px solid var(--line);
+    }
+
+    .plaza-header {
+      margin-bottom: 36px;
+    }
+
+    .plaza-header h2 {
+      font-family: var(--font-serif);
+      font-size: 38px;
+      font-weight: 600;
+      margin-top: 14px;
+    }
+
+    .plaza-header p {
+      color: var(--muted);
+      font-size: 15px;
+      margin-top: 10px;
+      max-width: 700px;
+    }
+
+    /* Filter Toolbar */
+    .filter-card {
+      padding: 20px 24px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: var(--surface-glass);
+      backdrop-filter: blur(12px);
+      margin-bottom: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .filter-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .filter-label {
+      width: 64px;
+      flex-shrink: 0;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--dim);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .filter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .chip:hover {
+      color: var(--text);
+      border-color: var(--line-strong);
+    }
+
+    .chip.active {
+      background: var(--signal);
+      color: #040907;
+      border-color: var(--signal);
+      font-weight: 600;
+      box-shadow: 0 4px 14px var(--signal-glow);
+    }
+
+    .search-box {
+      position: relative;
+      flex: 1;
+      max-width: 360px;
+      margin-left: auto;
+    }
+
+    .search-box input {
+      width: 100%;
+      height: 38px;
+      padding: 0 14px 0 36px;
+      border-radius: 8px;
+      border: 1px solid var(--line-strong);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 13px;
+      outline: none;
+      transition: border-color .2s ease;
+    }
+
+    .search-box input:focus {
+      border-color: var(--signal);
+    }
+
+    .search-box svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 15px;
+      height: 15px;
+      color: var(--dim);
+      pointer-events: none;
+    }
+
+    /* Model Cards Grid */
+    .models-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 20px;
+    }
+
+    /* The Expandable Model Card */
+    .model-card {
+      position: relative;
+      border-radius: 16px;
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+      transition: border-color 0.24s ease, box-shadow 0.24s ease, transform 0.24s ease;
+      overflow: hidden;
+    }
+
+    .model-card:hover {
+      border-color: var(--line-strong);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.22);
+    }
+
+    .model-card.is-expanded {
+      border-color: var(--signal);
+      box-shadow: 0 16px 48px var(--signal-glow);
+    }
+
+    /* Card Top Bar (Always Visible) */
+    .card-summary {
+      padding: 20px 22px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .card-header-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .model-badge-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .badge-provider {
+      background: rgba(137, 153, 255, 0.15);
+      color: var(--violet);
+      border: 1px solid rgba(137, 153, 255, 0.25);
+    }
+
+    .badge-rate {
+      background: rgba(159, 240, 201, 0.14);
+      color: var(--signal);
+      border: 1px solid rgba(159, 240, 201, 0.25);
+      font-family: var(--font-mono);
+    }
+
+    .badge-vision {
+      background: rgba(235, 216, 142, 0.15);
+      color: var(--amber);
+      border: 1px solid rgba(235, 216, 142, 0.25);
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      font-family: var(--font-sans);
+    }
+
+    .card-subtitle {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    /* Price Preview Line */
+    .price-preview {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px dashed var(--line);
+    }
+
+    .price-preview-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .price-preview-label {
+      font-size: 11px;
+      color: var(--dim);
+      font-weight: 500;
+    }
+
+    .price-preview-val {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 2px;
+    }
+
+    .price-preview-val small {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .expand-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--signal);
+      font-size: 12.5px;
+      font-weight: 600;
+      transition: transform .2s ease;
+    }
+
+    .expand-trigger svg {
+      width: 14px;
+      height: 14px;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .model-card.is-expanded .expand-trigger svg {
+      transform: rotate(180deg);
+    }
+
+    /* Card Expandable Body (CSS Grid Animation) */
+    .card-collapsible {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+      border-top: 0px solid var(--line);
+    }
+
+    .model-card.is-expanded .card-collapsible {
+      grid-template-rows: 1fr;
+      border-top-width: 1px;
+    }
+
+    .card-expand-content {
+      overflow: hidden;
+    }
+
+    .card-expand-inner {
+      padding: 20px 22px 24px;
+      background: var(--surface);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    /* Detailed Token Matrix Table */
+    .token-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+      font-family: var(--font-mono);
+    }
+
+    .token-table th {
+      text-align: left;
+      padding: 6px 0;
+      color: var(--dim);
+      font-size: 10.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .token-table td {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(194, 230, 217, 0.06);
+      color: var(--muted);
+    }
+
+    .token-table td.strong {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .token-table .official-strike {
+      color: var(--dim);
+      text-decoration: line-through;
+      margin-right: 6px;
+      font-size: 11px;
+    }
+
+    .token-table .discount-tag {
+      display: inline-block;
+      font-size: 9px;
+      padding: 1px 4px;
+      border-radius: 4px;
+      background: rgba(159, 240, 201, 0.15);
+      color: var(--signal);
+      font-weight: 700;
+      margin-left: 4px;
+    }
+
+    /* Parameter Meta Tags */
+    .model-params-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      background: var(--surface-soft);
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+    }
+
+    .param-box {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .param-box-name {
+      font-size: 10.5px;
+      color: var(--dim);
+      font-weight: 600;
+    }
+
+    .param-box-val {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 2px;
+    }
+
+    /* Snippet Box */
+    .snippet-box {
+      position: relative;
+      background: var(--bg-deep);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+
+    .snippet-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .snippet-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--dim);
+    }
+
+    .copy-button {
+      background: transparent;
+      border: none;
+      color: var(--signal);
+      font-size: 11px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      transition: background 0.15s ease;
+    }
+
+    .copy-button:hover {
+      background: rgba(159, 240, 201, 0.1);
+    }
+
+    .snippet-code {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      color: #94a8a0;
+      white-space: pre;
+      overflow-x: auto;
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    /* ==========================================================================
+       7. Pricing Disclosure & Table
+       ========================================================================== */
+    .pricing-disclosure {
+      padding: 90px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .pricing-disclosure__heading {
+      display: grid;
+      grid-template-columns: minmax(0, .8fr) minmax(320px, 1.2fr);
+      gap: 48px;
+      align-items: end;
+      margin-bottom: 34px;
+    }
+
+    .pricing-disclosure h2 {
+      margin-top: 16px;
+      font-family: var(--font-serif);
+      font-size: 40px;
+      font-weight: 600;
+    }
+
+    .pricing-disclosure__intro {
+      color: var(--muted);
+      font-size: 14.5px;
+      line-height: 1.9;
+    }
+
+    .pricing-table-wrap {
+      overflow-x: auto;
+      border-top: 1px solid var(--line-strong);
+      border-bottom: 1px solid var(--line-strong);
+    }
+
+    .pricing-table {
+      width: 100%;
+      min-width: 720px;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .pricing-table th,
+    .pricing-table td {
+      padding: 16px 14px;
+      border-bottom: 1px solid var(--line);
+      font-size: 13.5px;
+    }
+
+    .pricing-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .pricing-table th {
+      color: var(--dim);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .pricing-table td {
+      color: var(--muted);
+    }
+
+    .pricing-table td:first-child {
+      color: var(--text);
+      font-family: var(--font-serif);
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .pricing-table .price {
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+
+    .pricing-disclosure__note {
+      margin-top: 16px;
+      color: var(--dim);
+      font-size: 12.5px;
+      line-height: 1.8;
+    }
+
+    /* ==========================================================================
+       8. Service Section & Animated Radar Signal Panel
+       ========================================================================== */
+    .service {
+      padding: 120px 0;
+    }
+
+    .service-panel {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(340px, .85fr);
+      gap: 60px;
+      align-items: center;
+      padding: 70px;
+      border: 1px solid var(--line-strong);
+      border-radius: 20px;
+      overflow: hidden;
+      background: linear-gradient(121deg, rgba(19, 46, 39, .72), rgba(7, 17, 15, .4) 57%, rgba(42, 40, 76, .3));
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .3);
+    }
+
+    .service-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: .55;
+      background-image: linear-gradient(rgba(159, 240, 201, .05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(159, 240, 201, .05) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: linear-gradient(90deg, black, transparent 82%);
+      -webkit-mask-image: linear-gradient(90deg, black, transparent 82%);
+    }
+
+    .service-copy,
+    .signal-panel {
+      position: relative;
+      z-index: 1;
+    }
+
+    .service-copy h2 {
+      font-family: var(--font-serif);
+      font-size: 40px;
+      font-weight: 600;
+      line-height: 1.25;
+      margin-top: 16px;
+    }
+
+    .service-copy p {
+      margin-top: 20px;
+      color: #b0c1b9;
+      font-size: 15px;
+      line-height: 1.9;
+    }
+
+    .service-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    /* Signal Orbit Radar */
+    .signal-panel {
+      position: relative;
+      min-height: 330px;
+      border: 1px solid rgba(205, 232, 220, .2);
+      border-radius: 14px;
+      background: rgba(3, 10, 8, .65);
+      overflow: hidden;
+    }
+
+    .signal-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: .5;
+      background: repeating-linear-gradient(0deg, transparent 0 19px, rgba(153, 234, 196, .07) 20px 21px);
+    }
+
+    .signal-top {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--line);
+      color: var(--dim);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: .12em;
+    }
+
+    .signal-status {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--signal);
+    }
+
+    .signal-status i {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 9px currentColor;
+    }
+
+    .signal-orbit {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 200px;
+      height: 200px;
+      border: 1px solid rgba(159, 240, 201, .29);
+      border-radius: 50%;
+      transform: translate(-50%, -43%);
+      animation: orbit 18s linear infinite;
+    }
+
+    .signal-orbit::before,
+    .signal-orbit::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(137, 153, 255, .27);
+      border-radius: 50%;
+    }
+
+    .signal-orbit::before {
+      inset: 24px;
+    }
+
+    .signal-orbit::after {
+      inset: 54px;
+    }
+
+    @keyframes orbit {
+      to {
+        transform: translate(-50%, -43%) rotate(360deg);
+      }
+    }
+
+    .signal-core {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      display: grid;
+      place-items: center;
+      width: 80px;
+      height: 80px;
+      border: 1px solid rgba(196, 211, 255, .38);
+      border-radius: 12px;
+      background: #0a1715;
+      box-shadow: 0 0 42px rgba(145, 157, 255, .18), 0 0 0 14px rgba(159, 240, 201, .03);
+      transform: translate(-50%, -43%);
+    }
+
+    .signal-core img {
+      width: 58px;
+      height: 58px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .signal-node {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: #b4c7bd;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: .08em;
+    }
+
+    .signal-node::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--signal);
+      box-shadow: 0 0 12px rgba(159, 240, 201, .7);
+    }
+
+    .signal-node.one {
+      top: 92px;
+      right: 34px;
+    }
+
+    .signal-node.two {
+      bottom: 68px;
+      left: 32px;
+    }
+
+    .signal-node.three {
+      bottom: 46px;
+      right: 48px;
+      color: #aeb9ff;
+    }
+
+    .signal-node.three::before {
+      background: #aeb9ff;
+      box-shadow: 0 0 12px rgba(174, 185, 255, .7);
+    }
+
+    /* ==========================================================================
+       9. Footer
+       ========================================================================== */
+    footer {
+      border-top: 1px solid var(--line);
+      background: var(--bg-deep);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+      min-height: 100px;
+      color: var(--dim);
+      font-size: 12.5px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #aebeb7;
+      font-family: var(--font-serif);
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .footer-brand img {
+      width: 24px;
+      height: 24px;
+      border-radius: 5px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 20px;
+    }
+
+    .footer-links a {
+      color: var(--dim);
+      transition: color .2s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--signal);
+    }
+
+    /* Scroll Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity .7s cubic-bezier(0.16, 1, 0.3, 1), transform .7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Toast Notification for Copy */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border-radius: 10px;
+      border: 1px solid var(--signal);
+      background: #071714;
+      color: var(--signal-bright);
+      font-size: 13.5px;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* ==========================================================================
+       10. Responsive Breakpoints
+       ========================================================================== */
+    @media (max-width: 900px) {
+      .site-nav {
+        display: none;
+      }
+
+      .intro {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 80px 0 60px;
+      }
+
+      .reason {
+        grid-template-columns: 80px minmax(140px, .8fr) minmax(200px, 1.2fr) 48px;
+        gap: 18px;
+      }
+
+      .pricing-disclosure__heading {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .service-panel {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 44px 30px;
+      }
+
+      .signal-panel {
+        max-width: 500px;
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      .models-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .wrap {
+        width: calc(100% - 32px);
+      }
+
+      .hero {
+        min-height: 580px;
+        padding: 60px 0 40px;
+      }
+
+      .hero h1 {
+        font-size: 36px;
+      }
+
+      .particle-title {
+        height: 130px;
+      }
+
+      .reason {
+        grid-template-columns: 1fr 48px;
+        gap: 12px;
+      }
+
+      .reason-number {
+        grid-column: 1 / -1;
+      }
+
+      .reason-copy {
+        grid-column: 1;
+      }
+
+      .reason-icon {
+        grid-column: 2;
+        grid-row: 2;
+      }
+
+      .filter-card {
+        padding: 16px;
+      }
+
+      .search-box {
+        max-width: 100%;
+        margin-left: 0;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+    }
+
+    /* Back to Top Floating Button */
+    .back-to-top {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 90;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--line-strong);
+      background: var(--surface-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(16px);
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+      color: var(--signal);
+      border-color: var(--signal);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px var(--signal-glow);
+    }
+
+    .back-to-top svg {
+      width: 18px;
+      height: 18px;
+      transition: transform 0.2s ease;
+    }
+
+    .back-to-top:hover svg {
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Sticky Navbar -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#top" aria-label="BoBo 博客首页">
+        <img class="brand-image" src="assets/logo.webp" alt="BoBo Logo">
+        <span class="brand-name">BoBo<small>BLOG</small></span>
+      </a>
+
+      <nav class="site-nav" aria-label="页面导航">
+        <a class="active" href="index.html">首页</a>
+        <a href="recommend.html">机场推荐</a>
+        <a href="review.html">机场评测</a>
+        <a href="tutorial.html">客户端教程</a>
+        <a href="tools.html">实用工具</a>
+        <a href="about.html">关于</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="切换明暗主题" title="切换暗黑/明亮毛玻璃主题">
+          <i data-lucide="moon"></i>
+        </button>
+        <a class="header-cta" href="https://t.me/wanfengzn7" target="_blank" rel="noopener noreferrer" title="Telegram 交流群 / 频道"
+          aria-label="Telegram">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+            <path
+              d="m20.665 3.717-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l-.313 4.671c.458 0 .66-.21.916-.457l2.199-2.138 4.574 3.379c.843.465 1.448.225 1.658-.783l3.003-14.153c.307-1.232-.47-1.79-1.213-1.469z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section class="hero" id="top">
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="hero-arc" aria-hidden="true"></div>
+
+      <div class="wrap hero-content reveal">
+        <p class="eyebrow"><i></i> 独立客观的跨境网络与节点实测报告</p>
+
+        <!-- Canvas Particle Interactive Title -->
+        <h1 class="particle-title" data-particle-text="一次接入，连接全球的能力。">
+          <span class="particle-title__fallback">一次接入，连接全球<br><em>的能力。</em></span>
+          <canvas aria-hidden="true"></canvas>
+        </h1>
+
+        <p class="hero-copy">
+          让复杂的协议选择、节点测速与套餐对比变得一目了然。<br>
+          持续追踪全网主流机场真实表现，提供客观中立的选购指南。
+        </p>
+
+        <div class="hero-actions">
+          <a class="button primary" href="recommend.html">机场推荐 <i data-lucide="arrow-right"></i></a>
+          <a class="button" href="tutorial.html">客户端教程 <i data-lucide="book-open"></i></a>
+          <a class="button" href="about.html">为什么选择我们 <i data-lucide="shield-check"></i></a>
+        </div>
+
+        <p class="hero-meta">
+          <span></span> DIRECT ACCESS / VERIFIED LINKS <span></span>
+        </p>
+      </div>
+
+      <div class="hero-pulse" aria-hidden="true"></div>
+    </section>
+
+    <!-- Mainstream Clients Strip Marquee -->
+    <section class="model-strip" aria-label="支持的主流第三方客户端">
+      <div class="wrap model-marquee">
+        <p class="model-intro">COMPATIBLE<br>CLIENT APPS</p>
+        <div class="model-list">
+          <span>Clash</span>
+          <span>Shadowrocket</span>
+          <span>Nextin</span>
+          <span>Sing-box</span>
+          <span>V2ray</span>
+          <span>NekoBox</span>
+          <span>Surge</span>
+          <span>Quantumult X</span>
+          <span>Stash</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Section (01-04 Reason Cards) -->
+    <section class="intro wrap reveal" id="why">
+      <div>
+        <p class="section-label">WHY BOBO</p>
+        <h2>线路参数越来越杂，挑选机场不该如此折腾。</h2>
+      </div>
+      <p class="intro-text">
+        无论是日常流畅追剧、跨境电商运营，还是高频调用海外 AI 工具，真正重要的是稳定不掉线。我们剔除虚假宣传，为你筛选真正经得起晚高峰考验的专线机场。
+      </p>
+    </section>
+
+    <section class="reasons wrap" aria-label="核心优势与评测标准">
+      <article class="reason reveal" id="access">
+        <div class="reason-number">01</div>
+        <h3 class="reason-title">全端兼容</h3>
+        <p class="reason-copy">告别繁琐的手动配置与协议报错。我们优先筛选原生支持 Clash、Shadowrocket 与 Surge 的优质节点，一键导入即可畅连港台新日美等核心地区。</p>
+        <div class="reason-icon"><i data-lucide="layers"></i></div>
+      </article>
+
+      <article class="reason reveal" id="price">
+        <div class="reason-number">02</div>
+        <h3 class="reason-title">透明价格</h3>
+        <p class="reason-copy">拒绝虚标带宽与隐形倍率扣费。榜单收录机场均公开标注真实流量单价与节点倍率，支持月付试错与按量计费，帮你把每一分预算花在刀刃上。</p>
+        <div class="reason-icon"><i data-lucide="wallet-cards"></i></div>
+      </article>
+
+      <article class="reason reveal" id="risk">
+        <div class="reason-number">03</div>
+        <h3 class="reason-title">纯净防封</h3>
+        <p class="reason-copy">避免万人共用脏 IP 导致 ChatGPT 降智、流媒体锁区或账号风控的困扰。严选高纯净度原生落地与多线 BGP 入口，保障核心业务全天候稳定在线。</p>
+        <div class="reason-icon"><i data-lucide="shield-check"></i></div>
+      </article>
+
+      <article class="reason reveal" id="reassurance">
+        <div class="reason-number">04</div>
+        <h3 class="reason-title">真实实测</h3>
+        <p class="reason-copy">把枯燥的晚高峰丢包率测试、三网延迟对比与跑路风险排查交给我们，你只需按预算与使用场景直接抄作业，轻松锁定高性价比主力机场。</p>
+        <div class="reason-icon"><i data-lucide="activity"></i></div>
+      </article>
+    </section>
+
+    <!-- Service Architecture & Radar Signal Section -->
+    <section class="service" id="service">
+      <div class="wrap service-panel">
+        <div class="service-copy reveal">
+          <p class="section-label">REAL-TIME NODE MONITOR</p>
+          <h2>把精力留给真正重要的事。</h2>
+          <p>
+            我们围绕跨境办公、流媒体解锁与 AI 研发场景提供实测参考。<br>
+            监测晚高峰丢包与线路波动，清晰对比节点延迟、流量单价与跑路风险。
+          </p>
+          <div class="service-actions">
+            <a class="button primary" href="recommend.html">
+              查看机场推荐榜单 <i data-lucide="arrow-right"></i>
+            </a>
+            <a class="button" href="javascript:void(0)" onclick="bookmarkBlog()">
+              收藏博客 <i data-lucide="bookmark"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Animated Signal Radar Panel -->
+        <div class="signal-panel reveal" aria-label="网络实测信号雷达面板">
+          <div class="signal-top">
+            <span>NETWORK TELEMETRY</span>
+            <span class="signal-status"><i></i> ONLINE</span>
+          </div>
+          <div class="signal-orbit" aria-hidden="true"></div>
+          <div class="signal-core">
+            <img src="assets/logo.webp" alt="博客 Logo">
+          </div>
+          <span class="signal-node one">MULTI-REGION</span>
+          <span class="signal-node two">ALL CLIENTS</span>
+          <span class="signal-node three">CLEAN IP</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="wrap footer-inner">
+      <div class="footer-brand">
+        <img src="assets/logo.webp" alt="BoBo Logo"> BoBo
+      </div>
+      <div class="footer-links">
+        <a href="recommend.html">机场推荐</a>
+        <a href="review.html">机场评测</a>
+        <a href="tutorial.html">客户端教程</a>
+        <a href="tools.html">实用工具</a>
+        <a href="about.html">关于我们</a>
+        <a href="https://t.me/wanfengzn7" target="_blank" rel="noopener noreferrer">联系支持</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <i data-lucide="check-circle-2"></i>
+    <span id="toastMsg">已复制到剪贴板</span>
+  </div>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop" aria-label="返回顶部" title="返回顶部">
+    <i data-lucide="arrow-up"></i>
+  </button>
+
+  <!-- ==========================================================================
+       11. Core JavaScript: Canvas Particle Engine, Card Expansion, & Filters
+       ========================================================================== -->
+  <script>
+    // --- 1. Model Dataset Definition ---
+    const MODELS_DATA = [
+      {
+        id: "claude-3-7-sonnet",
+        name: "Claude 3.7 Sonnet (Hybrid)",
+        provider: "Anthropic",
+        category: "Anthropic",
+        rateCategory: "discount",
+        rate: 0.85,
+        desc: "Anthropic 旗舰前沿模型，支持原生混合思考（Hybrid Reasoning）与深度编码推理。",
+        inputPrice: "$2.55",
+        outputPrice: "$12.75",
+        officialInput: "$3.00",
+        officialOutput: "$15.00",
+        cacheWrite: "$3.19",
+        cacheRead: "$0.26",
+        context: "200,000 Tokens",
+        maxOutput: "64,000 Tokens",
+        features: ["Vision", "Hybrid Thinking", "Artifacts", "Tool Use"]
+      },
+      {
+        id: "deepseek-r1",
+        name: "DeepSeek-R1 (Full 671B)",
+        provider: "DeepSeek",
+        category: "DeepSeek",
+        rateCategory: "discount",
+        rate: 0.70,
+        desc: "开源推理王者，极高性价比深度思维链模型，数学与代码能力直逼 o1。",
+        inputPrice: "$0.38",
+        outputPrice: "$1.53",
+        officialInput: "$0.55",
+        officialOutput: "$2.19",
+        cacheWrite: "$0.38",
+        cacheRead: "$0.10",
+        context: "64,000 Tokens",
+        maxOutput: "8,000 Tokens",
+        features: ["Chain of Thought", "Open Source", "Extreme Value"]
+      },
+      {
+        id: "gpt-4o",
+        name: "GPT-4o (Omni)",
+        provider: "OpenAI",
+        category: "OpenAI",
+        rateCategory: "standard",
+        rate: 1.0,
+        desc: "OpenAI 旗舰全能多模态模型，高并发低延迟响应，支持文本与高清图表深度理解。",
+        inputPrice: "$2.50",
+        outputPrice: "$10.00",
+        officialInput: "$2.50",
+        officialOutput: "$10.00",
+        cacheWrite: "$1.25",
+        cacheRead: "$1.25",
+        context: "128,000 Tokens",
+        maxOutput: "16,384 Tokens",
+        features: ["Vision", "Audio Input", "Function Call", "High QPS"]
+      },
+      {
+        id: "o3-mini",
+        name: "o3-mini (Reasoning)",
+        provider: "OpenAI",
+        category: "OpenAI",
+        rateCategory: "standard",
+        rate: 1.0,
+        desc: "专为科学与逻辑推导设计的高效小核思考模型，支持高/中/低思维强度调节。",
+        inputPrice: "$1.10",
+        outputPrice: "$4.40",
+        officialInput: "$1.10",
+        officialOutput: "$4.40",
+        cacheWrite: "$0.55",
+        cacheRead: "$0.55",
+        context: "200,000 Tokens",
+        maxOutput: "100,000 Tokens",
+        features: ["Structured Reasoning", "Math & Code", "Lightweight"]
+      },
+      {
+        id: "gemini-2.5-pro",
+        name: "Gemini 2.5 Pro (Experimental)",
+        provider: "Google",
+        category: "Google",
+        rateCategory: "dedicated",
+        rate: 1.0,
+        desc: "Google 超长上下文标杆，原生百万 Token 支持整本书、长视频与庞大工程仓库解析。",
+        inputPrice: "$1.25",
+        outputPrice: "$5.00",
+        officialInput: "$1.25",
+        officialOutput: "$5.00",
+        cacheWrite: "$0.31",
+        cacheRead: "$0.31",
+        context: "1,000,000 Tokens",
+        maxOutput: "8,192 Tokens",
+        features: ["1M Context", "Video Reasoning", "Audio/Multimodal"]
+      },
+      {
+        id: "grok-3",
+        name: "Grok 3 (DeepSearch)",
+        provider: "xAI",
+        category: "xAI",
+        rateCategory: "dedicated",
+        rate: 1.2,
+        desc: "xAI 全新旗舰算力集群模型，具备极其真实直白的事实问答与深度网络检索推理。",
+        inputPrice: "$3.00",
+        outputPrice: "$15.00",
+        officialInput: "$2.50",
+        officialOutput: "$12.50",
+        cacheWrite: "-",
+        cacheRead: "-",
+        context: "131,072 Tokens",
+        maxOutput: "8,192 Tokens",
+        features: ["X Realtime Data", "DeepSearch", "Uncensored Reasoning"]
+      }
+    ];
+
+    // --- 2. Render Model Cards & Expand Handlers ---
+    const modelsGrid = document.getElementById("modelsGrid");
+
+    function renderModels(filterPlatform = "all", filterRate = "all", searchQuery = "") {
+      if (!modelsGrid) return;
+      const q = searchQuery.toLowerCase().trim();
+      const filtered = MODELS_DATA.filter(m => {
+        const matchPlatform = filterPlatform === "all" || m.category === filterPlatform;
+        const matchRate = filterRate === "all" || m.rateCategory === filterRate;
+        const matchSearch = !q || m.name.toLowerCase().includes(q) || m.id.toLowerCase().includes(q);
+        return matchPlatform && matchRate && matchSearch;
+      });
+
+      if (filtered.length === 0) {
+        modelsGrid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--dim);">
+            <i data-lucide="search-x" style="width: 38px; height: 38px; margin: 0 auto 12px; display: block; opacity: 0.5;"></i>
+            未找到符合条件的 AI 模型，请尝试切换筛选标签或搜索关键字。
+          </div>
+        `;
+        if (window.lucide) window.lucide.createIcons();
+        return;
+      }
+
+      modelsGrid.innerHTML = filtered.map(model => `
+        <div class="model-card" id="card-${model.id}">
+          <!-- Summary Header (Click to toggle) -->
+          <div class="card-summary" onclick="toggleCard('${model.id}')">
+            <div class="card-header-line">
+              <div class="model-badge-group">
+                <span class="badge badge-provider">${model.provider}</span>
+                <span class="badge badge-rate">${model.rate}x 计费</span>
+                ${model.features.includes("Vision") ? '<span class="badge badge-vision"><i data-lucide="eye" style="width:11px;height:11px;"></i> 视觉</span>' : ''}
+              </div>
+              <span class="expand-trigger">
+                详情 <i data-lucide="chevron-down"></i>
+              </span>
+            </div>
+
+            <h3 class="card-title">${model.name}</h3>
+            <p class="card-subtitle">${model.desc}</p>
+
+            <div class="price-preview">
+              <div class="price-preview-item">
+                <span class="price-preview-label">输入费率 (每百万 Token)</span>
+                <span class="price-preview-val">${model.inputPrice} <small>/ 1M</small></span>
+              </div>
+              <div class="price-preview-item" style="text-align: right;">
+                <span class="price-preview-label">输出费率 (每百万 Token)</span>
+                <span class="price-preview-val">${model.outputPrice} <small>/ 1M</small></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Expandable Collapsible Container -->
+          <div class="card-collapsible">
+            <div class="card-expand-content">
+              <div class="card-expand-inner">
+                <!-- Detailed Token Rate Table -->
+                <div>
+                  <table class="token-table">
+                    <thead>
+                      <tr>
+                        <th>类型</th>
+                        <th>本站折后价</th>
+                        <th>官方原价</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Prompt 输入</td>
+                        <td class="strong">${model.inputPrice}</td>
+                        <td><span class="official-strike">${model.officialInput}</span><span class="discount-tag">实惠</span></td>
+                      </tr>
+                      <tr>
+                        <td>Completion 输出</td>
+                        <td class="strong">${model.outputPrice}</td>
+                        <td><span class="official-strike">${model.officialOutput}</span></td>
+                      </tr>
+                      <tr>
+                        <td>缓存写入 (Cache Write)</td>
+                        <td class="strong">${model.cacheWrite}</td>
+                        <td>-</td>
+                      </tr>
+                      <tr>
+                        <td>缓存读取 (Cache Read)</td>
+                        <td class="strong">${model.cacheRead}</td>
+                        <td><span class="discount-tag">省 90%</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Parameters Box -->
+                <div class="model-params-grid">
+                  <div class="param-box">
+                    <span class="param-box-name">最大上下文</span>
+                    <span class="param-box-val">${model.context}</span>
+                  </div>
+                  <div class="param-box">
+                    <span class="param-box-name">单次最大输出</span>
+                    <span class="param-box-val">${model.maxOutput}</span>
+                  </div>
+                </div>
+
+                <!-- API Integration Snippet -->
+                <div class="snippet-box">
+                  <div class="snippet-header">
+                    <span class="snippet-title">OpenAI 格式 cURL 调用代码</span>
+                    <button class="copy-button" onclick="event.stopPropagation(); copyCurlSnippet('${model.id}')">
+                      <i data-lucide="copy" style="width:12px;height:12px;"></i> 复制
+                    </button>
+                  </div>
+                  <pre class="snippet-code">curl https://transfer-station.cn/v1/chat/completions \\
+  -H "Authorization: Bearer sk-YOUR_KEY" \\
+  -d '{"model": "${model.id}", "messages": [{"role":"user","content":"Hi"}]}'</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join("");
+
+      if (window.lucide) window.lucide.createIcons();
+    }
+
+    // Toggle Card Expand Accordion
+    window.toggleCard = function (id) {
+      const card = document.getElementById(`card-${id}`);
+      if (!card) return;
+      const isExpanded = card.classList.contains("is-expanded");
+      card.classList.toggle("is-expanded", !isExpanded);
+    };
+
+    // Filter Listeners
+    let currentPlatform = "all";
+    let currentRate = "all";
+    let currentSearch = "";
+
+    document.getElementById("platformFilters")?.addEventListener("click", e => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      document.querySelectorAll("#platformFilters .chip").forEach(c => c.classList.remove("active"));
+      btn.classList.add("active");
+      currentPlatform = btn.dataset.value;
+      renderModels(currentPlatform, currentRate, currentSearch);
+    });
+
+    document.getElementById("rateFilters")?.addEventListener("click", e => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      document.querySelectorAll("#rateFilters .chip").forEach(c => c.classList.remove("active"));
+      btn.classList.add("active");
+      currentRate = btn.dataset.value;
+      renderModels(currentPlatform, currentRate, currentSearch);
+    });
+
+    document.getElementById("modelSearch")?.addEventListener("input", e => {
+      currentSearch = e.target.value;
+      renderModels(currentPlatform, currentRate, currentSearch);
+    });
+
+    // --- 3. Particle Title Canvas Engine (Reverse Engineered 1:1) ---
+    (() => {
+      const container = document.querySelector(".particle-title");
+      const canvas = container?.querySelector("canvas");
+      const fallback = container?.querySelector(".particle-title__fallback");
+      if (!container || !canvas || !fallback) return;
+
+      const ctx = canvas.getContext("2d");
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const pointer = { x: 0, y: 0, active: false };
+      let particles = [];
+      let width = 0;
+      let height = 0;
+      let dpr = 1;
+      let frame = 0;
+      let resizeFrame = 0;
+      let gatherStart = performance.now();
+
+      const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
+      const ease = val => 1 - Math.pow(1 - val, 3);
+      const hex = str => {
+        const raw = str.replace("#", "");
+        const norm = raw.length === 3 ? raw.split("").map(c => c + c).join("") : raw;
+        const n = parseInt(norm, 16);
+        return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+      };
+      const mix = (a, b, amt) => ({
+        r: Math.round(a.r + (b.r - a.r) * amt),
+        g: Math.round(a.g + (b.g - a.g) * amt),
+        b: Math.round(a.b + (b.b - a.b) * amt)
+      });
+
+      const rebuild = () => {
+        const rect = container.getBoundingClientRect();
+        width = Math.floor(rect.width);
+        height = Math.floor(rect.height);
+        if (!width || !height) return;
+
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        const probe = document.createElement("canvas");
+        const probeCtx = probe.getContext("2d", { willReadFrequently: true });
+        const size = clamp(width > 700 ? 64 : width > 430 ? 46 : 34, 28, 68);
+        const text = container.dataset.particleText || "一次接入，连接全球 AI 能力。";
+        probeCtx.font = `600 ${size}px "Noto Sans SC", "Microsoft YaHei", sans-serif`;
+
+        const maxWidth = width * 0.94;
+        let measured = probeCtx.measureText(text).width;
+        let finalSize = size;
+        if (measured > maxWidth) {
+          finalSize = Math.max(24, (size * maxWidth) / measured);
+          probeCtx.font = `600 ${finalSize}px "Noto Sans SC", "Microsoft YaHei", sans-serif`;
+          measured = probeCtx.measureText(text).width;
+        }
+
+        const textHeight = Math.ceil(finalSize * 1.2);
+        probe.width = Math.ceil(measured + 24);
+        probe.height = textHeight + 24;
+        probeCtx.clearRect(0, 0, probe.width, probe.height);
+        probeCtx.font = `600 ${finalSize}px "Noto Sans SC", "Microsoft YaHei", sans-serif`;
+        probeCtx.textAlign = "left";
+        probeCtx.textBaseline = "middle";
+        probeCtx.fillStyle = "#ffffff";
+        probeCtx.fillText(text, 12, probe.height / 2);
+
+        const imgData = probeCtx.getImageData(0, 0, probe.width, probe.height).data;
+        const step = width < 520 ? 2 : 3;
+        const isDark = document.documentElement.getAttribute("data-theme") !== "light";
+        const base = isDark ? hex("#20314b") : hex("#5d7181");
+        const accent = isDark ? hex("#9ff0c9") : hex("#168b79");
+        const targets = [];
+
+        for (let y = 0; y < probe.height; y += step) {
+          for (let x = 0; x < probe.width; x += step) {
+            if (imgData[(y * probe.width + x) * 4 + 3] > 45) {
+              targets.push({
+                x: width / 2 - probe.width / 2 + x,
+                y: height / 2 - probe.height / 2 + y
+              });
+            }
+          }
+        }
+
+        particles = targets.map((t, i) => {
+          const seed = ((i * 9301 + 49297) % 233280) / 233280;
+          const angle = seed * Math.PI * 2;
+          const dist = reduced ? 0 : 120 * (0.5 + seed);
+          const c = mix(base, accent, clamp(t.x / width + 0.22, 0, 1));
+          return {
+            x: t.x + Math.cos(angle) * dist,
+            y: t.y + Math.sin(angle) * dist,
+            targetX: t.x,
+            targetY: t.y,
+            color: `rgb(${c.r},${c.g},${c.b})`,
+            size: width < 520 ? 1.55 + seed * 1.1 : 1.45 + seed * 1.3,
+            delay: seed * 420,
+            seed
+          };
+        });
+
+        gatherStart = performance.now();
+        container.classList.add("is-ready");
+        if (!frame) frame = requestAnimationFrame(render);
+      };
+
+      const render = now => {
+        ctx.clearRect(0, 0, width, height);
+        let complete = true;
+
+        particles.forEach(p => {
+          const progress = reduced ? 1 : clamp((now - gatherStart - p.delay) / 1400, 0, 1);
+          const eased = ease(progress);
+          let x = p.x + (p.targetX - p.x) * eased;
+          let y = p.y + (p.targetY - p.y) * eased;
+
+          if (!reduced && progress >= 1) {
+            x += Math.sin(now * 0.001 + p.seed * 18) * 0.35;
+            y += Math.cos(now * 0.0012 + p.seed * 12) * 0.35;
+          }
+
+          if (!reduced && pointer.active) {
+            const dx = x - pointer.x;
+            const dy = y - pointer.y;
+            const dist = Math.hypot(dx, dy);
+            if (dist > 0 && dist < 110) {
+              const force = Math.pow(1 - dist / 110, 2) * 26;
+              x += (dx / dist) * force;
+              y += (dy / dist) * force;
+            }
+          }
+
+          if (progress < 1) complete = false;
+
+          ctx.globalAlpha = 0.35 + progress * 0.65;
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.arc(x, y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        ctx.globalAlpha = 1;
+        frame = requestAnimationFrame(render);
+      };
+
+      const onPointerMove = e => {
+        const rect = canvas.getBoundingClientRect();
+        pointer.x = e.clientX - rect.left;
+        pointer.y = e.clientY - rect.top;
+        pointer.active = true;
+      };
+
+      canvas.addEventListener("pointermove", onPointerMove);
+      canvas.addEventListener("pointerenter", onPointerMove);
+      canvas.addEventListener("pointerleave", () => { pointer.active = false; });
+
+      const resizeObserver = new ResizeObserver(() => {
+        cancelAnimationFrame(resizeFrame);
+        resizeFrame = requestAnimationFrame(rebuild);
+      });
+      resizeObserver.observe(container);
+
+      window.rebuildParticles = rebuild;
+      rebuild();
+    })();
+
+    // --- 4. Theme Toggle ---
+    const themeToggleBtn = document.getElementById("themeToggle");
+    themeToggleBtn.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme") || "light";
+      const next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      themeToggleBtn.innerHTML = next === "dark" ? '<i data-lucide="sun"></i>' : '<i data-lucide="moon"></i>';
+      if (window.lucide) window.lucide.createIcons();
+      if (window.rebuildParticles) window.rebuildParticles();
+    });
+
+    // --- 5. Clipboard & Toast ---
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      const msgEl = document.getElementById("toastMsg");
+      msgEl.textContent = msg;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2200);
+    }
+
+    window.copyCurlSnippet = function (modelId) {
+      const cmd = `curl https://transfer-station.cn/v1/chat/completions -H "Authorization: Bearer sk-YOUR_KEY" -d '{"model": "${modelId}", "messages": [{"role":"user","content":"Hello"}]}'`;
+      navigator.clipboard.writeText(cmd).then(() => showToast(`已复制 ${modelId} 的调用命令`));
+    };
+
+    window.copyApiUrl = function () {
+      navigator.clipboard.writeText("https://transfer-station.cn/v1").then(() => showToast("已复制 API 接口 BaseURL"));
+    };
+
+    window.bookmarkBlog = function () {
+      // 1. 自动将当前网址复制到剪贴板
+      const url = window.location.href;
+      navigator.clipboard.writeText(url).catch(() => {});
+
+      // 2. 识别系统并给出精准的物理快捷键提示
+      const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+      const shortcut = isMac ? '⌘ + D' : 'Ctrl + D';
+
+      showToast(`网址已复制！请按 ${shortcut} 即可加入浏览器收藏`);
+    };
+
+    // --- 6. Scroll Reveal Observer ---
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+    } else {
+      document.querySelectorAll(".reveal").forEach((el) => el.classList.add("visible"));
+    }
+
+    // --- 7. Back to Top Logic ---
+    const backToTopBtn = document.getElementById("backToTop");
+    if (backToTopBtn) {
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+          backToTopBtn.classList.add("visible");
+        } else {
+          backToTopBtn.classList.remove("visible");
+        }
+      }, { passive: true });
+
+      backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      });
+    }
+
+    // Initial render
+    renderModels();
+    if (window.lucide) window.lucide.createIcons();
+  </script>
+</body>
+
+</html>

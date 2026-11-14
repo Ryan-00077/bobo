@@ -1,0 +1,971 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Clash Verge Rev 保姆级深度配置教程：涵盖 Windows/macOS/Linux 桌面端从零安装选型、Mihomo 内核协议支持、订阅拉取与自动更新、规则分流、TUN 虚拟网卡全流量接管及高频排错方案。">
+  <link rel="canonical" href="https://bobo7.cc/%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%95%99%E7%A8%8B/clash-verge.html">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Clash Verge Rev 深度图文配置教程与高阶调优指南 | BoBo 博客">
+  <meta property="og:description" content="Clash Verge Rev 保姆级深度配置教程：涵盖 Windows/macOS/Linux 桌面端从零安装选型、Mihomo 内核协议支持、订阅拉取与自动更新、规则分流、TUN 虚拟网卡全流量接管及高频排错方案。">
+  <meta property="og:url" content="https://bobo7.cc/%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%95%99%E7%A8%8B/clash-verge.html">
+  <meta property="og:site_name" content="BoBo 博客">
+  <meta property="og:image" content="https://bobo7.cc/assets/logo.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Clash Verge Rev 深度图文配置教程与高阶调优指南 | BoBo 博客">
+  <meta name="twitter:description" content="Clash Verge Rev 保姆级深度配置教程：涵盖 Windows/macOS/Linux 桌面端从零安装选型、Mihomo 内核协议支持、订阅拉取与自动更新、规则分流、TUN 虚拟网卡全流量接管及高频排错方案。">
+  <meta name="twitter:image" content="https://bobo7.cc/assets/logo.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Clash Verge Rev 深度图文配置教程与高阶调优指南 | BoBo 博客",
+  "description": "Clash Verge Rev 保姆级深度配置教程：涵盖 Windows/macOS/Linux 桌面端从零安装选型、Mihomo 内核协议支持、订阅拉取与自动更新、规则分流、TUN 虚拟网卡全流量接管及高频排错方案。",
+  "url": "https://bobo7.cc/%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%95%99%E7%A8%8B/clash-verge.html",
+  "datePublished": "2026-11-13T08:00:00+08:00",
+  "dateModified": "2026-11-14T15:00:00+08:00",
+  "author": {
+    "@type": "Organization",
+    "name": "BoBo 博客",
+    "url": "https://bobo7.cc/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "BoBo 博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://bobo7.cc/assets/logo.webp"
+    }
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://bobo7.cc/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "客户端教程",
+      "item": "https://bobo7.cc/tutorial.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Clash Verge Rev 深度图文配置教程与高阶调优指南 | BoBo 博客",
+      "item": "https://bobo7.cc/%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%95%99%E7%A8%8B/clash-verge.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Q: Clash Verge Rev 与传统的 Clash for Windows (CFW) 有何区别？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "CFW 早在 2023 年底已彻底停止维护，其底层采用已废弃的旧版核心，存在无法解析新协议（Hysteria 2 / TUIC）和内存泄漏风险。Clash Verge Rev 采用现代架构与 Mihomo 活跃核心，各方面体验均全面超越老旧客户端。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Q: 开启代理后为什么国内有些银行网站提示异地登录？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "请确认客户端顶部的分流模式处于【规则 (Rule)】模式，切勿长期开启【全局 (Global)】模式。在规则模式下，国内顶级域名与大陆 IP 段均由本地直连，完全不受代理影响。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Q: 开启系统代理后浏览器可以上网，但 Telegram 或命令行终端无法连接怎么办？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "很多命令行工具（如 git、curl）以及部分桌面软件不会自动跟随 Windows/macOS 系统代理设置。可以在 Clash Verge Rev 的【设置】中开启【TUN 模式】（虚拟网卡接管所有系统流量），即可无感代理命令行、海外联机游戏与 UDP 流量。"
+      }
+    }
+  ]
+}
+  </script>
+
+  <title>Clash Verge Rev 深度图文配置教程与高阶调优指南 | BoBo 博客</title>
+  <link rel="icon" href="../assets/logo.webp">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root,
+    [data-theme="light"] {
+      --bg: #f5f7fb;
+      --bg-deep: #e9eef6;
+      --surface: rgba(255, 255, 255, 0.85);
+      --surface-soft: rgba(255, 255, 255, 0.6);
+      --surface-glass: rgba(250, 252, 255, 0.82);
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --card-border: rgba(38, 55, 83, 0.14);
+      --line: rgba(38, 55, 83, 0.12);
+      --line-strong: rgba(38, 55, 83, 0.22);
+      --text: #172235;
+      --muted: #627087;
+      --dim: #8a96a8;
+      --signal: #168b79;
+      --signal-bright: #0b6e61;
+      --signal-glow: rgba(22, 139, 121, 0.2);
+      --amber: #b07d1a;
+      --violet: #6c63d8;
+      --max: 1200px;
+      --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --header-bg: rgba(245, 247, 251, 0.85);
+    }
+
+    [data-theme="dark"] {
+      --bg: #07110f;
+      --bg-deep: #040907;
+      --surface: #0b1714;
+      --surface-soft: #0e1e1a;
+      --surface-glass: rgba(11, 23, 20, 0.72);
+      --card-bg: rgba(14, 30, 26, 0.65);
+      --card-border: rgba(194, 230, 217, 0.12);
+      --line: rgba(194, 230, 217, 0.14);
+      --line-strong: rgba(194, 230, 217, 0.28);
+      --text: #edf5f0;
+      --muted: #94a8a0;
+      --dim: #5f746c;
+      --signal: #9ff0c9;
+      --signal-bright: #d1ffe5;
+      --signal-glow: rgba(159, 240, 201, 0.25);
+      --amber: #ebd88e;
+      --violet: #8999ff;
+      --max: 1200px;
+      --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --header-bg: rgba(7, 17, 15, 0.82);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--bg-deep); }
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      font-family: var(--font-sans);
+      line-height: 1.75;
+      transition: background .3s ease, color .3s ease;
+    }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--header-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: -0.02em;
+    }
+    .brand-image {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    .brand-name small {
+      margin-left: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      color: var(--signal);
+      border: 1px solid var(--line-strong);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      margin-left: auto;
+    }
+    .site-nav a {
+      position: relative;
+      padding: 6px 0;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 500;
+      transition: color .2s ease;
+    }
+    .site-nav a:hover,
+    .site-nav a.active {
+      color: var(--text);
+    }
+    .site-nav a::after {
+      content: "";
+      position: absolute;
+      right: 0; bottom: 0; left: 0;
+      height: 1.5px;
+      background: var(--signal);
+      transform: scaleX(0);
+      transition: transform .2s ease;
+    }
+    .site-nav a:hover::after,
+    .site-nav a.active::after {
+      transform: scaleX(1);
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .theme-toggle,
+    .header-cta {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      border: 1px solid var(--line-strong);
+      background: var(--surface-soft);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color .2s ease;
+    }
+    .theme-toggle:hover,
+    .header-cta:hover {
+      border-color: var(--signal);
+    }
+
+    /* Breadcrumbs */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 28px 0 16px;
+    }
+    .breadcrumb a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+    .breadcrumb a:hover {
+      color: var(--signal);
+    }
+    .breadcrumb span {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* Article Hero */
+    .article-hero {
+      padding: 10px 0 32px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 36px;
+    }
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      background: rgba(22, 139, 121, 0.12);
+      color: var(--signal);
+      border: 1px solid var(--signal-glow);
+    }
+    .article-title {
+      font-size: clamp(26px, 3.5vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0 0 14px;
+      line-height: 1.3;
+    }
+    .article-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 20px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .article-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Article Layout (Main + Sidebar) */
+    .article-container {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      gap: 48px;
+      margin-bottom: 80px;
+    }
+
+    /* Content Typography */
+    .article-body {
+      font-size: 15.5px;
+      line-height: 1.85;
+      color: var(--text);
+    }
+    .article-body h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 44px 0 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .article-body h3 {
+      font-size: 17.5px;
+      font-weight: 600;
+      margin: 30px 0 12px;
+      color: var(--text);
+    }
+    .article-body p {
+      margin: 0 0 18px;
+      color: var(--text);
+      opacity: 0.95;
+    }
+    .article-body ul,
+    .article-body ol {
+      margin: 0 0 22px 24px;
+      padding: 0;
+    }
+    .article-body li {
+      margin-bottom: 10px;
+    }
+    .article-body strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .article-body code {
+      font-family: var(--font-mono);
+      background: var(--surface-soft);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13.5px;
+      border: 1px solid var(--line);
+    }
+    pre {
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 0 0 20px;
+    }
+
+    /* Comparison Table */
+    .article-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .article-table th,
+    .article-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+    }
+    .article-table th {
+      background: var(--surface-soft);
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* Callout & Alert Box */
+    .callout {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-left: 4px solid var(--signal);
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin: 24px 0;
+      font-size: 14.5px;
+    }
+    .callout.tip {
+      border-left-color: var(--signal);
+    }
+    .callout.warn {
+      border-left-color: var(--amber);
+    }
+    .callout h4 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Step Card */
+    .step-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 24px 0;
+    }
+    .step-box-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .step-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--signal);
+      color: #040907;
+      font-size: 13px;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .step-box-header h3 {
+      margin: 0;
+      font-size: 17px;
+    }
+
+    /* Sidebar / TOC */
+    .sidebar {
+      position: sticky;
+      top: 96px;
+      height: fit-content;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .toc-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 13px;
+    }
+    .toc-list li {
+      margin-bottom: 8px;
+    }
+    .toc-list a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s ease;
+      display: block;
+      line-height: 1.5;
+    }
+    .toc-list a:hover {
+      color: var(--signal);
+    }
+
+    /* Bottom Action Banner */
+    .action-banner {
+      background: linear-gradient(135deg, rgba(22, 139, 121, 0.12), transparent);
+      border: 1px solid var(--signal-glow);
+      border-radius: 12px;
+      padding: 32px;
+      margin-top: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .action-banner-text h3 {
+      margin: 0 0 6px;
+      font-size: 19px;
+    }
+    .action-banner-text p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all .2s ease;
+    }
+    .btn.primary {
+      background: var(--signal);
+      color: #040907;
+    }
+    .btn.primary:hover {
+      filter: brightness(1.1);
+      box-shadow: 0 0 16px var(--signal-glow);
+    }
+    .btn.secondary {
+      background: var(--surface-soft);
+      color: var(--text);
+      border: 1px solid var(--line-strong);
+    }
+    .btn.secondary:hover {
+      border-color: var(--signal);
+    }
+
+    /* Floating Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      right: 28px;
+      bottom: 28px;
+      z-index: 99;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 1px solid var(--line-strong);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(16px);
+      transition: opacity .25s ease, transform .25s ease, border-color .2s ease, background-color .2s ease;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .back-to-top:hover {
+      border-color: var(--signal);
+      color: var(--signal);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .article-container {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+    }
+    @media (max-width: 640px) {
+      .site-nav {
+        display: none;
+      }
+      .action-banner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="../assets/site-navigation.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../index.html" aria-label="BoBo 博客首页">
+        <img class="brand-image" src="../assets/logo.webp" alt="BoBo Logo">
+        <span class="brand-name">BoBo<small>BLOG</small></span>
+      </a>
+
+      <nav class="site-nav" aria-label="页面导航">
+        <a href="../index.html">首页</a>
+        <a href="../recommend.html">机场推荐</a>
+        <a href="../review.html">机场评测</a>
+        <a class="active" aria-current="page" href="../tutorial.html">客户端教程</a>
+        <a href="../tools.html">实用工具</a>
+        <a href="../about.html">关于</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="切换明暗主题" title="切换暗黑/明亮毛玻璃主题">
+          <i data-lucide="moon"></i>
+        </button>
+        <a class="header-cta" href="https://t.me/wanfengzn7" target="_blank" rel="noopener noreferrer" title="Telegram 交流群 / 频道" aria-label="Telegram">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+            <path d="m20.665 3.717-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l-.313 4.671c.458 0 .66-.21.916-.457l2.199-2.138 4.574 3.379c.843.465 1.448.225 1.658-.783l3.003-14.153c.307-1.232-.47-1.79-1.213-1.469z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="../index.html">首页</a> / <a href="../tutorial.html">客户端教程</a> / <span>Clash Verge Rev 配置指南</span>
+    </div>
+
+    <!-- Article Hero -->
+    <header class="article-hero">
+      <div class="tag-row">
+        <span class="badge"><i data-lucide="monitor"></i> Windows / macOS / Linux</span>
+        <span class="badge"><i data-lucide="check-circle-2"></i> 桌面全能首选</span>
+        <span class="badge"><i data-lucide="zap"></i> 原生支持 Mihomo 内核</span>
+      </div>
+      <h1 class="article-title">Clash Verge Rev 深度安装配置与全场景网络调优指南</h1>
+      <div class="article-meta">
+        <span><i data-lucide="calendar"></i> 2026-11-13 更新</span>
+        <span><i data-lucide="shield"></i> 纯净开源无广告</span>
+        <span><i data-lucide="terminal"></i> 支持 Hysteria 2 / TUIC</span>
+      </div>
+    </header>
+
+    <!-- Article Content Grid -->
+    <div class="article-container">
+      <article class="article-body">
+        
+    <p>
+      在原 Clash 核心与诸多第三方 GUI 相继停止维护后，<strong>Clash Verge Rev</strong> 迅速成为目前 Windows、macOS 以及 Linux 桌面平台最受赞誉的新一代主力代理客户端。其底层深度整合了持续演进的 <strong>Clash.Meta（现称 Mihomo）</strong> 核心，在保持优雅现代的 Tauri / React 界面视觉风格的同时，提供极其强大的协议扩展能力、极其稳健的虚拟网卡流量捕获以及丰富的规则扩展脚本。
+    </p>
+
+    <div class="callout tip">
+      <h4><i data-lucide="info"></i> 核心升级亮点总结</h4>
+      <p>
+        1. <strong>全协议支持</strong>：原生支持 Hysteria 2、TUIC v5、Vless (Reality)、Trojan、Shadowsocks-2022 等全套抗封锁低延迟协议。<br>
+        2. <strong>原生内核切换</strong>：无需复杂替换命令，界面内即可自由切换 Alpha / 稳定版 Mihomo 内核。<br>
+        3. <strong>TUN 模式一键部署</strong>：内置 Windows Wintun 驱动与 macOS System Extension，彻底解决终端、开发环境与大型联机游戏无法走代理的痛点。
+      </p>
+    </div>
+
+    <h2 id="intro"><i data-lucide="cpu"></i> 一、核心定位与内核优势</h2>
+    <p>
+      传统 Clash 内核早已停止维护，无法识别新一代机场常用的 <code>hysteria2</code>、<code>tuic</code> 等 UDP 加速协议。而 Clash Verge Rev 基于 Mihomo 深度构建，具备如下技术优势：
+    </p>
+    <ul>
+      <li><strong>轻量级资源开销</strong>：前端基于 Rust (Tauri) 开发，内存占用通常仅在 40MB～90MB 之间，远低于传统 Electron 客户端。</li>
+      <li><strong>更精准的规则集 (Rule-Providers)</strong>：支持远程实时更新的 GeoIP 与 GeoSite 数据库，针对国内外主流域名与 IP 地址段保持毫秒级分流。</li>
+      <li><strong>智能策略回退 (Fallback / URL-Test)</strong>：当某条国际专线网络产生丢包或断连时，客户端可在 1 秒内无感切至备用线路。</li>
+    </ul>
+
+    <h2 id="download"><i data-lucide="download"></i> 二、客户端架构选型与安装</h2>
+    <p>
+      前往官方开源发布仓库下载时，请务必根据自己的操作系统与处理器架构选择对应版本，避免因架构不匹配导致内核启动失败或性能折损：
+    </p>
+    <table class="article-table">
+      <thead>
+        <tr>
+          <th>操作系统平台</th>
+          <th>推荐软件包格式</th>
+          <th>架构适用说明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Windows (x64)</td>
+          <td><code>Clash.Verge_x.x.x_x64-setup.exe</code></td>
+          <td>主流 Intel / AMD 64位台式机与笔记本，支持自动更新与服务安装</td>
+        </tr>
+        <tr>
+          <td>Windows 便携版</td>
+          <td><code>Clash.Verge_x.x.x_x64_portable.zip</code></td>
+          <td>解压即用，无管理员权限要求，配置文件与程序在同一目录</td>
+        </tr>
+        <tr>
+          <td>macOS (Apple Silicon)</td>
+          <td><code>Clash.Verge_x.x.x_aarch64.dmg</code></td>
+          <td>适用于苹果 M1 / M2 / M3 / M4 系列芯片机型，续航与性能最优</td>
+        </tr>
+        <tr>
+          <td>macOS (Intel)</td>
+          <td><code>Clash.Verge_x.x.x_x64.dmg</code></td>
+          <td>适用于 2020 年及之前生产的搭载 Intel 处理器的老款 Mac</td>
+        </tr>
+        <tr>
+          <td>Linux 桌面端</td>
+          <td><code>.deb</code> / <code>.AppImage</code> / <code>.rpm</code></td>
+          <td>适配 Ubuntu / Debian / Fedora / Arch 等各种发行版环境</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout warn">
+      <h4><i data-lucide="alert-triangle"></i> macOS 初次打开提示“已损坏”或“无法验证开发者”？</h4>
+      <p>
+        由于开源软件未购买苹果昂贵的企业签名证书，初次安装后若提示拦截，请打开系统【终端 (Terminal)】并执行如下命令放行：<br>
+        <code>sudo xattr -r -d com.apple.quarantine /Applications/Clash\ Verge.app</code>
+      </p>
+    </div>
+
+    <h2 id="subscription"><i data-lucide="link"></i> 三、订阅拉取与自动更新机制</h2>
+    <div class="step-box">
+      <div class="step-box-header">
+        <span class="step-badge">1</span>
+        <h3>订阅链接导入与配置生效</h3>
+      </div>
+      <ol>
+        <li>登录你的机场服务商面板，复制 <strong>Clash 格式订阅链接</strong>。若机场直接提供订阅转换，请优先选用 Mihomo 格式。</li>
+        <li>启动 Clash Verge Rev，点击左侧菜单栏的 <strong>【订阅 (Profiles)】</strong>。</li>
+        <li>将订阅链接完整粘贴到上方输入框内，点击右侧的 <strong>【导入 (Save)】</strong> 按钮。</li>
+        <li>程序将自动从远端服务器下载配置文件，下载完毕后列表中会出现该机场卡片。</li>
+        <li><strong>关键步骤</strong>：使用鼠标左键单击该配置卡片，卡片左侧出现亮色指示条即表示该配置已正式激活！</li>
+      </ol>
+    </div>
+
+    <p>
+      为了避免节点信息过期，建议在配置卡片上右键点击，选择 <strong>【编辑配置】</strong>，将 <strong>“自动更新间隔”</strong> 设置为 <code>720</code> 分钟（12小时）或 <code>1440</code> 分钟（24小时），保证节点信息与倍率自动同步。
+    </p>
+
+    <h2 id="routing"><i data-lucide="git-branch"></i> 四、分流模式与策略组选择</h2>
+    <p>
+      点击左侧菜单栏的 <strong>【代理 (Proxies)】</strong> 即可看到策略组列表。Clash 的核心精髓就在于分流策略：
+    </p>
+    <ul>
+      <li><strong>规则模式 (Rule) - 日常首选</strong>：客户端通过内置规则库对访问域名进行判断。国内服务（微信、B站、淘宝、网易云等）自动直连；国外受限服务（Google、YouTube、GitHub、OpenAI 等）自动经由节点代理，兼顾访问速度与流量节约。</li>
+      <li><strong>全局模式 (Global)</strong>：强制本机所有出站流量经过所选单一节点。适合遇到冷门国外网站被误判直连、或者特定学术连接测试时临时使用。</li>
+      <li><strong>直连模式 (Direct)</strong>：彻底绕过所有代理节点，等同于关闭代理客户端。</li>
+    </ul>
+
+    <p>
+      在策略组内，通常会提供 <code>自动选择 (URL-Test)</code>、<code>手动节点选择</code>、<code>OpenAI / ChatGPT</code> 以及 <code>流媒体解锁</code> 等独立策略组。点击右上角闪电图标可发起<strong>节点批量延迟测试</strong>，挑选数字绿色、延迟在 30ms～120ms 的优质专线节点。
+    </p>
+
+    <h2 id="tun-mode"><i data-lucide="shield-check"></i> 五、TUN 虚拟网卡与全局流量接管</h2>
+    <p>
+      普通的“系统代理”仅修改 Windows / macOS 系统底层的 HTTP/HTTPS 代理设置。很多专业工具（如 Windows 终端 CMD / PowerShell、Git Clone、WSL2 子系统、Docker 容器以及 Unity / Unreal 联机游戏）根本不读取系统代理，导致常常出现 <code>Connection timed out</code> 报错。
+    </p>
+    <div class="step-box">
+      <div class="step-box-header">
+        <span class="step-badge">2</span>
+        <h3>一键启用 TUN 模式全方位接管</h3>
+      </div>
+      <ol>
+        <li>在左侧点击 <strong>【设置 (Settings)】</strong>。</li>
+        <li>找到 <strong>“内核模式 / 服务模式 (Service Mode)”</strong>，点击右侧的 <strong>“安装 (Install)”</strong>。Windows 弹出 UAC 提升授权时请点击“是”。</li>
+        <li>服务模式状态变为绿色的 <code>Installed</code> / <code>Active</code> 后，找到 <strong>“TUN 模式 (TUN Mode)”</strong> 开关并将其打开。</li>
+        <li>此时电脑网络适配器中会生成一张名为 <code>Mihomo</code> 的虚拟网卡，本机所有 TCP/UDP 数据包（包括 ping 与游戏连接）均被完整接管并自动分流！</li>
+      </ol>
+    </div>
+
+    <h2 id="dns-fakeip"><i data-lucide="database"></i> 六、DNS 解析机制与防污染</h2>
+    <p>
+      Clash Verge Rev 默认采用高效的 <strong>Fake-IP 模式</strong>。其工作原理为：当应用发起域名查询请求时，Mihomo 立即分配一个局域网伪造 IP（如 <code>198.18.0.x</code>）返回给本地应用，真正发起 TCP/TLS 连接时，才将域名包裹在代理协议中发送至境外远端节点解析。
+    </p>
+    <p>
+      这种设计不仅避免了本地 DNS 查询遭受运营商 DNS 投毒与污染，还直接消除了数次跨洋 DNS 往返延迟，让网页首包响应速度提高 30% 以上。
+    </p>
+
+    <h2 id="scenarios"><i data-lucide="sparkles"></i> 七、典型应用场景实战</h2>
+    <h3>1. OpenAI / ChatGPT / Claude 专属无阻分流</h3>
+    <p>
+      AI 工具对于 IP 纯净度与地理位置极其敏感。在【代理】页面中找到 <code>OpenAI</code> 或 <code>ChatGPT</code> 专属策略组，手动将其固定指向美国（US）、日本（JP）或新加坡（SG）的原生纯净 IP 节点，避免使用自动选择导致会话切换被风控封锁。
+    </p>
+
+    <h3>2. 局域网共享代理（让同 Wi-Fi 下的主机与电视走代理）</h3>
+    <p>
+      在【设置】中勾选 <strong>“允许来自局域网的连接 (Allow LAN)”</strong>。随后查看当前电脑在内网的 IPv4 地址（如 <code>192.168.1.100</code>），即可在 PS5、Switch 游戏机或苹果 Apple TV 电视盒子的网络代理中填入该 IP 与端口 <code>7890</code>，实现全家设备共享高速节点。
+    </p>
+
+    <h2 id="troubleshooting"><i data-lucide="wrench"></i> 八、高频疑难排错速查手册</h2>
+    <table class="article-table">
+      <thead>
+        <tr>
+          <th>故障现象</th>
+          <th>根本原因排查</th>
+          <th>权威解决方案</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>关闭客户端后电脑无法上网</td>
+          <td>软件异常退出或崩溃，导致系统代理残留</td>
+          <td>重新启动客户端并在设置中手动开关一次“系统代理”，或打开 Windows 系统设置搜索“代理”，关闭“使用代理服务器”。</td>
+        </tr>
+        <tr>
+          <td>TUN 模式开启提示失败</td>
+          <td>缺少 Wintun 驱动或杀毒软件拦截</td>
+          <td>右键以管理员身份运行 Clash Verge Rev，在设置中卸载并重新安装“服务模式”。</td>
+        </tr>
+        <tr>
+          <td>端口冲突 7890 无法启动内核</td>
+          <td>其他代理软件（如 v2rayN、Fiddler）占用了混合端口</td>
+          <td>在客户端设置中将 Mixed Port 从 7890 更改为 7897 或其他未被占用的端口。</td>
+        </tr>
+        <tr>
+          <td>订阅拉取报错 Connect Error</td>
+          <td>机场订阅域名遭受本地运营商阻断</td>
+          <td>先开启手机热点或在已有可用节点时，勾选“通过代理拉取订阅”后重试。</td>
+        </tr>
+        <tr>
+          <td>UWP 应用（如 Windows 商店）无法连接</td>
+          <td>Windows 系统内置的 UWP 沙箱隔离机制限制回环</td>
+          <td>点击客户端设置中的 <strong>【UWP 工具 (Loopback)】</strong>，点击“Exempt All”全部放行并保存。</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="faq"><i data-lucide="help-circle"></i> 九、常见核心问题解答 (FAQ)</h2>
+    <div class="callout tip">
+      <h4>Q: Clash Verge Rev 与传统的 Clash for Windows (CFW) 有何区别？</h4>
+      <p>
+        CFW 早在 2023 年底已彻底停止维护，其底层采用已废弃的旧版核心，存在无法解析新协议（Hysteria 2 / TUIC）和内存泄漏风险。Clash Verge Rev 采用现代架构与 Mihomo 活跃核心，各方面体验均全面超越老旧客户端。
+      </p>
+    </div>
+    <div class="callout tip">
+      <h4>Q: 开启代理后为什么国内有些银行网站提示异地登录？</h4>
+      <p>
+        请确认客户端顶部的分流模式处于【规则 (Rule)】模式，切勿长期开启【全局 (Global)】模式。在规则模式下，国内顶级域名与大陆 IP 段均由本地直连，完全不受代理影响。
+      </p>
+    </div>
+    <div class="callout tip">
+      <h4>Q: 开启系统代理后浏览器可以上网，但 Telegram 或命令行终端无法连接怎么办？</h4>
+      <p>
+        很多命令行工具（如 git、curl）以及部分桌面软件不会自动跟随 Windows/macOS 系统代理设置。可以在 Clash Verge Rev 的【设置】中开启【TUN 模式】（虚拟网卡接管所有系统流量），即可无感代理命令行、海外联机游戏与 UDP 流量。
+      </p>
+    </div>
+  
+
+        <!-- Bottom Banner -->
+        <div class="action-banner">
+          <div class="action-banner-text">
+            <h3>准备好体验顺畅跨境网络了吗？</h3>
+            <p>搭配经过晚高峰实测严选的高速专线，解锁 4K 流媒体与 AI 高频调用。</p>
+          </div>
+          <div class="btn-group">
+            <a class="btn primary" href="https://github.com/clash-verge-rev/clash-verge-rev/releases" target="_blank" rel="noopener noreferrer">
+              前往 GitHub 官方下载
+            </a>
+            <a class="btn secondary" href="../recommend.html">
+              查看精选机场推荐
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Sidebar Table of Contents -->
+      <aside class="sidebar">
+        <div class="toc-title">
+          <i data-lucide="align-left"></i> 本文目录
+        </div>
+        <ul class="toc-list">
+          <li><a href="#intro">一、核心定位与内核优势</a></li>
+          <li><a href="#download">二、客户端架构选型与安装</a></li>
+          <li><a href="#subscription">三、订阅拉取与更新机制</a></li>
+          <li><a href="#routing">四、分流模式与策略组选择</a></li>
+          <li><a href="#tun-mode">五、TUN 虚拟网卡与全局接管</a></li>
+          <li><a href="#dns-fakeip">六、DNS 解析机制与防污染</a></li>
+          <li><a href="#scenarios">七、典型应用场景实战（AI / 游戏）</a></li>
+          <li><a href="#troubleshooting">八、高频疑难排错速查手册</a></li>
+          <li><a href="#faq">九、常见核心问题解答 (FAQ)</a></li>
+        </ul>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Floating Back to Top Button -->
+  <button id="backToTop" class="back-to-top" aria-label="返回顶部" title="返回顶部">
+    <i data-lucide="chevron-up"></i>
+  </button>
+
+  <script>
+    lucide.createIcons();
+
+    // Theme Toggle
+    const themeBtn = document.getElementById('themeToggle');
+    const htmlEl = document.documentElement;
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    htmlEl.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+
+    themeBtn.addEventListener('click', () => {
+      const current = htmlEl.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      htmlEl.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateThemeIcon(next);
+    });
+
+    function updateThemeIcon(theme) {
+      themeBtn.innerHTML = theme === 'dark' ? '<i data-lucide="sun"></i>' : '<i data-lucide="moon"></i>';
+      lucide.createIcons();
+    }
+
+    // Back to top scroll listener
+    const backToTopBtn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+    }, { passive: true });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

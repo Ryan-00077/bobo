@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="关于 BoBo 博客 - 独立客观的跨境网络评测原则、实测标准与 Telegram 官方交流社群。">
+  <link rel="canonical" href="https://bobo7.cc/about.html">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="关于我们 | BoBo 博客">
+  <meta property="og:description" content="关于 BoBo 博客 - 独立客观的跨境网络评测原则、实测标准与 Telegram 官方交流社群。">
+  <meta property="og:url" content="https://bobo7.cc/about.html">
+  <meta property="og:site_name" content="BoBo 博客">
+  <meta property="og:image" content="https://bobo7.cc/assets/logo.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="关于我们 | BoBo 博客">
+  <meta name="twitter:description" content="关于 BoBo 博客 - 独立客观的跨境网络评测原则、实测标准与 Telegram 官方交流社群。">
+  <meta name="twitter:image" content="https://bobo7.cc/assets/logo.webp">
+
+  <title>关于我们 | BoBo 博客</title>
+  <link rel="icon" href="assets/logo.webp">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root,
+    [data-theme="light"] {
+      --bg: #f5f7fb;
+      --bg-deep: #e9eef6;
+      --surface: rgba(255, 255, 255, 0.85);
+      --surface-soft: rgba(255, 255, 255, 0.6);
+      --surface-glass: rgba(250, 252, 255, 0.82);
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --card-border: rgba(38, 55, 83, 0.14);
+      --line: rgba(38, 55, 83, 0.12);
+      --line-strong: rgba(38, 55, 83, 0.22);
+      --text: #172235;
+      --muted: #627087;
+      --dim: #8a96a8;
+      --signal: #168b79;
+      --signal-bright: #0b6e61;
+      --signal-glow: rgba(22, 139, 121, 0.2);
+      --amber: #b07d1a;
+      --violet: #6c63d8;
+      --max: 1200px;
+      --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      --font-serif: Georgia, "Noto Serif SC", serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --header-bg: rgba(245, 247, 251, 0.85);
+    }
+
+    [data-theme="dark"] {
+      --bg: #07110f;
+      --bg-deep: #040907;
+      --surface: #0b1714;
+      --surface-soft: #0e1e1a;
+      --surface-glass: rgba(11, 23, 20, 0.72);
+      --card-bg: rgba(14, 30, 26, 0.65);
+      --card-border: rgba(194, 230, 217, 0.12);
+      --line: rgba(194, 230, 217, 0.14);
+      --line-strong: rgba(194, 230, 217, 0.28);
+      --text: #edf5f0;
+      --muted: #94a8a0;
+      --dim: #5f746c;
+      --signal: #9ff0c9;
+      --signal-bright: #d1ffe5;
+      --signal-glow: rgba(159, 240, 201, 0.25);
+      --amber: #ebd88e;
+      --violet: #8999ff;
+      --max: 1200px;
+      --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      --font-serif: Georgia, "Noto Serif SC", serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --header-bg: rgba(7, 17, 15, 0.82);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg-deep);
+    }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--text);
+      background: var(--bg);
+      font-family: var(--font-sans);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a,
+    button {
+      font: inherit;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    p {
+      margin: 0;
+    }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid var(--line);
+      background: var(--header-bg);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      transition: all 0.25s ease;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 74px;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      white-space: nowrap;
+    }
+
+    .brand-image {
+      width: 34px;
+      height: 34px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .brand-name {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .brand-name small {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-family: var(--font-sans);
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: .16em;
+    }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      margin-left: auto;
+    }
+
+    .site-nav a {
+      position: relative;
+      padding: 6px 0;
+      color: var(--muted);
+      font-size: 13.5px;
+      font-weight: 500;
+      transition: color .2s ease;
+    }
+
+    .site-nav a::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 1.5px;
+      background: var(--signal);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform .24s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .site-nav a:hover,
+    .site-nav a.active {
+      color: var(--text);
+    }
+
+    .site-nav a:hover::after,
+    .site-nav a.active::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .theme-toggle,
+    .header-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      border: 1px solid var(--line-strong);
+      background: var(--surface-soft);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .theme-toggle:hover,
+    .header-cta:hover {
+      color: var(--signal);
+      border-color: var(--signal);
+      transform: translateY(-2px);
+    }
+
+    /* Page Hero */
+    .page-hero {
+      padding: 64px 0 36px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      background: var(--surface-soft);
+      color: var(--signal);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      margin-bottom: 20px;
+    }
+
+    .eyebrow i {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--signal);
+      display: inline-block;
+    }
+
+    .page-title {
+      font-family: var(--font-serif);
+      font-size: clamp(30px, 4vw, 44px);
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+
+    .page-desc {
+      max-width: 680px;
+      margin: 0 auto;
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* Content Layout */
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      margin: 40px 0 80px;
+    }
+
+    .content-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 36px;
+    }
+
+    .content-box h2 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+
+    .content-box p {
+      font-size: 14.5px;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .principles-list {
+      list-style: none;
+      padding: 0;
+      margin: 24px 0 0;
+    }
+
+    .principles-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .p-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(22, 139, 121, 0.1);
+      color: var(--signal);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .p-text h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .p-text p {
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Contact & Community Sidebar */
+    .community-box {
+      background: var(--surface-soft);
+      border: 1px solid var(--line-strong);
+      border-radius: 14px;
+      padding: 32px;
+      height: fit-content;
+    }
+
+    .community-box h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+
+    .community-box p {
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .tg-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      margin-bottom: 16px;
+      transition: all .2s;
+    }
+
+    .tg-card:hover {
+      border-color: var(--signal);
+      transform: translateY(-2px);
+    }
+
+    .tg-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #2aabee;
+      color: #fff;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .tg-info h4 {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .tg-info span {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 40px;
+      padding: 0 20px;
+      border-radius: 8px;
+      border: 1px solid var(--line-strong);
+      color: var(--text);
+      background: var(--surface-soft);
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s ease;
+      width: 100%;
+    }
+
+    .button.primary {
+      border-color: var(--signal);
+      background: var(--signal);
+      color: #040907;
+    }
+
+    .button.primary:hover {
+      background: var(--signal-bright);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 860px) {
+      .about-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--line);
+      background: var(--surface-soft);
+      padding: 38px 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+    }
+
+    .footer-brand img {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      font-size: 13.5px;
+      color: var(--muted);
+    }
+
+    .footer-links a:hover {
+      color: var(--text);
+    }
+  </style>
+  <link rel="stylesheet" href="assets/site-navigation.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "关于 BoBo 博客",
+  "url": "https://bobo7.cc/about.html",
+  "description": "BoBo 博客团队背景、独立评测原则与联系方式。",
+  "publisher": {
+    "@type": "Organization",
+    "name": "BoBo 博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://bobo7.cc/assets/logo.webp"
+    }
+  }
+}
+  </script>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html" aria-label="BoBo 博客首页">
+        <img class="brand-image" src="assets/logo.webp" alt="BoBo Logo">
+        <span class="brand-name">BoBo<small>BLOG</small></span>
+      </a>
+
+      <nav class="site-nav" aria-label="页面导航">
+        <a href="index.html">首页</a>
+        <a href="recommend.html">机场推荐</a>
+        <a href="review.html">机场评测</a>
+        <a href="tutorial.html">客户端教程</a>
+        <a href="tools.html">实用工具</a>
+        <a class="active" aria-current="page" href="about.html">关于</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="切换明暗主题" title="切换暗黑/明亮毛玻璃主题">
+          <i data-lucide="moon"></i>
+        </button>
+        <a class="header-cta" href="https://t.me/wanfengzn7" target="_blank" rel="noopener noreferrer" title="Telegram 交流群 / 频道"
+          aria-label="Telegram">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+            <path
+              d="m20.665 3.717-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l-.313 4.671c.458 0 .66-.21.916-.457l2.199-2.138 4.574 3.379c.843.465 1.448.225 1.658-.783l3.003-14.153c.307-1.232-.47-1.79-1.213-1.469z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="page-hero">
+      <div class="eyebrow"><i></i> ABOUT BOBO / 独立实测声明</div>
+      <h1 class="page-title">关于 BoBo 博客与我们的测评原则</h1>
+      <p class="page-desc">
+        我们坚持独立客观的实测立场。打破信息差，拒绝假冒专线与充值软文，专注为跨境工作者提供最硬核、最真实的网络节点选购参考。
+      </p>
+    </div>
+
+    <div class="about-layout">
+      <!-- Left Content -->
+      <div class="content-box">
+        <h2>为什么建立 BoBo 博客？</h2>
+        <p>
+          在跨境办公、外贸出海、流媒体观影与 AI 研发成为刚需的今天，市面上的网络节点服务却鱼龙混杂：
+          动辄宣称“千兆 IPLC”、“全网最低价”，一到晚高峰 20:00 却丢包 30% 以上、看 1080P 都频繁转圈；更甚者，打着超低年付套餐的幌子收取大量用户预付款后卷款跑路。
+        </p>
+        <p>
+          BoBo 博客正是为了解决这一痛点而诞生。我们自费订阅、定期抽检、三网压测，用客观中立的数据代替玄学吹捧，让每一位普通用户都能避开暗坑，用最合理的价格选到经得起考验的稳定主力梯子。
+        </p>
+
+        <h2 style="margin-top: 36px;">我们的核心测评原则</h2>
+        <ul class="principles-list">
+          <li>
+            <div class="p-icon"><i data-lucide="shield-check"></i></div>
+            <div class="p-text">
+              <h4>1. 真实自费，拒绝利益绑架</h4>
+              <p>所有测试节点均由博主自费购买匿名账号进行多点复测，坚决不为劣质小作坊发虚假推荐，杜绝拿钱洗地。</p>
+            </div>
+          </li>
+          <li>
+            <div class="p-icon"><i data-lucide="clock"></i></div>
+            <div class="p-text">
+              <h4>2. 重点聚焦晚高峰压测</h4>
+              <p>非高峰期的网络跑分毫无参考价值。我们只以每晚 20:00-23:00 的丢包率、延迟波动与 4K 秒开速度作为核心评级标准。</p>
+            </div>
+          </li>
+          <li>
+            <div class="p-icon"><i data-lucide="alert-triangle"></i></div>
+            <div class="p-text">
+              <h4>3. 跑路与波动实时预警</h4>
+              <p>对运营不满 1 年的新机场保持审慎态度；一旦监测到某机场大面积断连超 48 小时或客服失联，第一时间在榜单标注警示并降权下架。</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Right Community & Contact Sidebar -->
+      <div class="community-box">
+        <h3>加入 Telegram 官方交流群</h3>
+        <p>
+          获取第一手节点测速报告、突发断连情报、晚高峰预警与优惠码发放，欢迎加入我们的 TG 社群：
+        </p>
+
+        <a class="tg-card" href="https://t.me/wanfengzn7" target="_blank" rel="noopener noreferrer">
+          <div class="tg-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+              <path
+                d="m20.665 3.717-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l-.313 4.671c.458 0 .66-.21.916-.457l2.199-2.138 4.574 3.379c.843.465 1.448.225 1.658-.783l3.003-14.153c.307-1.232-.47-1.79-1.213-1.469z" />
+            </svg>
+          </div>
+          <div class="tg-info">
+            <h4>BoBo 官方通知频道</h4>
+            <span>@BoBoChannel · 节点情报第一站</span>
+          </div>
+        </a>
+
+        <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--line);">
+          <div style="font-size: 13px; color: var(--dim); margin-bottom: 12px;">商务合作 / 勘误反馈</div>
+          <a class="button" href="mailto:support@transfer-station.cn">
+            发送邮件联系我们 <i data-lucide="mail"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="wrap footer-inner">
+      <div class="footer-brand">
+        <img src="assets/logo.webp" alt="BoBo Logo"> BoBo
+      </div>
+      <div class="footer-links">
+        <a href="recommend.html">机场推荐</a>
+        <a href="review.html">机场评测</a>
+        <a href="tutorial.html">客户端教程</a>
+        <a href="tools.html">实用工具</a>
+        <a href="about.html">关于我们</a>
+        <a href="https://t.me/wanfengzn7" target="_blank" rel="noopener noreferrer">联系支持</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop" aria-label="返回顶部" title="返回顶部">
+    <i data-lucide="arrow-up"></i>
+  </button>
+
+  <script>
+    const themeToggleBtn = document.getElementById("themeToggle");
+    themeToggleBtn.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme") || "light";
+      const next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      themeToggleBtn.innerHTML = next === "dark" ? '<i data-lucide="sun"></i>' : '<i data-lucide="moon"></i>';
+      if (window.lucide) window.lucide.createIcons();
+    });
+
+    // Back to Top Logic
+    const backToTopBtn = document.getElementById("backToTop");
+    if (backToTopBtn) {
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+          backToTopBtn.classList.add("visible");
+        } else {
+          backToTopBtn.classList.remove("visible");
+        }
+      }, { passive: true });
+
+      backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      });
+    }
+
+    if (window.lucide) window.lucide.createIcons();
+  </script>
+</body>
+
+</html>

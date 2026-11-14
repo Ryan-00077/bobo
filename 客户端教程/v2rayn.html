@@ -1,0 +1,922 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="v2rayN 深度图文配置教程：Windows 端经典开源老牌神器从零安装选型、With-Core 整合包配置、Xray 与 Sing-box 双内核无缝切换、路由绕过大陆分流及常见断网故障排查。">
+  <link rel="canonical" href="https://bobo7.cc/%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%95%99%E7%A8%8B/v2rayn.html">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="v2rayN Windows 经典全能客户端保姆级实战指南 | BoBo 博客">
+  <meta property="og:description" content="v2rayN 深度图文配置教程：Windows 端经典开源老牌神器从零安装选型、With-Core 整合包配置、Xray 与 Sing-box 双内核无缝切换、路由绕过大陆分流及常见断网故障排查。">
+  <meta property="og:url" content="https://bobo7.cc/%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%95%99%E7%A8%8B/v2rayn.html">
+  <meta property="og:site_name" content="BoBo 博客">
+  <meta property="og:image" content="https://bobo7.cc/assets/logo.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="v2rayN Windows 经典全能客户端保姆级实战指南 | BoBo 博客">
+  <meta name="twitter:description" content="v2rayN 深度图文配置教程：Windows 端经典开源老牌神器从零安装选型、With-Core 整合包配置、Xray 与 Sing-box 双内核无缝切换、路由绕过大陆分流及常见断网故障排查。">
+  <meta name="twitter:image" content="https://bobo7.cc/assets/logo.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "v2rayN Windows 经典全能客户端保姆级实战指南 | BoBo 博客",
+  "description": "v2rayN 深度图文配置教程：Windows 端经典开源老牌神器从零安装选型、With-Core 整合包配置、Xray 与 Sing-box 双内核无缝切换、路由绕过大陆分流及常见断网故障排查。",
+  "url": "https://bobo7.cc/%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%95%99%E7%A8%8B/v2rayn.html",
+  "datePublished": "2026-11-13T08:00:00+08:00",
+  "dateModified": "2026-11-14T15:00:00+08:00",
+  "author": {
+    "@type": "Organization",
+    "name": "BoBo 博客",
+    "url": "https://bobo7.cc/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "BoBo 博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://bobo7.cc/assets/logo.webp"
+    }
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://bobo7.cc/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "客户端教程",
+      "item": "https://bobo7.cc/tutorial.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "v2rayN Windows 经典全能客户端保姆级实战指南 | BoBo 博客",
+      "item": "https://bobo7.cc/%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%95%99%E7%A8%8B/v2rayn.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Q: 批量测速时，“Ping 延迟”和“真连接延迟”看哪个？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "请以“真连接延迟 (Test Connection)”为准！普通 Ping 只代表你到国内中转入口的延迟，而真连接延迟是向境外真实服务器发送 HTTP 握手得到的往返耗时，只有真连接测试出绿字，才说明该节点真正具备翻越与出海能力。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Q: 为什么节点测速全部超时（-1ms），但手机上能正常连接？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "请检查当前电脑的系统时间与国际标准时间偏差是否超过 90 秒（VMess 协议对时间同步要求极严）。打开 Windows 系统设置同步一次时钟，或检查第三方杀毒安全软件是否拦截了核心进程。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Q: v2rayN 如何开启类似 Clash 的自动规则分流？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "点击 v2rayN 底部任务栏的【路由】，选择【绕过大陆 (Whitelist)】或导入预设的自定义路由规则。国内网站会自动走直连，仅被墙网站与境外 IP 走代理节点，既节省流量又保证国内网站高速访问。"
+      }
+    }
+  ]
+}
+  </script>
+
+  <title>v2rayN Windows 经典全能客户端保姆级实战指南 | BoBo 博客</title>
+  <link rel="icon" href="../assets/logo.webp">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root,
+    [data-theme="light"] {
+      --bg: #f5f7fb;
+      --bg-deep: #e9eef6;
+      --surface: rgba(255, 255, 255, 0.85);
+      --surface-soft: rgba(255, 255, 255, 0.6);
+      --surface-glass: rgba(250, 252, 255, 0.82);
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --card-border: rgba(38, 55, 83, 0.14);
+      --line: rgba(38, 55, 83, 0.12);
+      --line-strong: rgba(38, 55, 83, 0.22);
+      --text: #172235;
+      --muted: #627087;
+      --dim: #8a96a8;
+      --signal: #168b79;
+      --signal-bright: #0b6e61;
+      --signal-glow: rgba(22, 139, 121, 0.2);
+      --amber: #b07d1a;
+      --violet: #6c63d8;
+      --max: 1200px;
+      --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --header-bg: rgba(245, 247, 251, 0.85);
+    }
+
+    [data-theme="dark"] {
+      --bg: #07110f;
+      --bg-deep: #040907;
+      --surface: #0b1714;
+      --surface-soft: #0e1e1a;
+      --surface-glass: rgba(11, 23, 20, 0.72);
+      --card-bg: rgba(14, 30, 26, 0.65);
+      --card-border: rgba(194, 230, 217, 0.12);
+      --line: rgba(194, 230, 217, 0.14);
+      --line-strong: rgba(194, 230, 217, 0.28);
+      --text: #edf5f0;
+      --muted: #94a8a0;
+      --dim: #5f746c;
+      --signal: #9ff0c9;
+      --signal-bright: #d1ffe5;
+      --signal-glow: rgba(159, 240, 201, 0.25);
+      --amber: #ebd88e;
+      --violet: #8999ff;
+      --max: 1200px;
+      --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --header-bg: rgba(7, 17, 15, 0.82);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--bg-deep); }
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      font-family: var(--font-sans);
+      line-height: 1.75;
+      transition: background .3s ease, color .3s ease;
+    }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--header-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: -0.02em;
+    }
+    .brand-image {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    .brand-name small {
+      margin-left: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      color: var(--signal);
+      border: 1px solid var(--line-strong);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      margin-left: auto;
+    }
+    .site-nav a {
+      position: relative;
+      padding: 6px 0;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 500;
+      transition: color .2s ease;
+    }
+    .site-nav a:hover,
+    .site-nav a.active {
+      color: var(--text);
+    }
+    .site-nav a::after {
+      content: "";
+      position: absolute;
+      right: 0; bottom: 0; left: 0;
+      height: 1.5px;
+      background: var(--signal);
+      transform: scaleX(0);
+      transition: transform .2s ease;
+    }
+    .site-nav a:hover::after,
+    .site-nav a.active::after {
+      transform: scaleX(1);
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .theme-toggle,
+    .header-cta {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      border: 1px solid var(--line-strong);
+      background: var(--surface-soft);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color .2s ease;
+    }
+    .theme-toggle:hover,
+    .header-cta:hover {
+      border-color: var(--signal);
+    }
+
+    /* Breadcrumbs */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 28px 0 16px;
+    }
+    .breadcrumb a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+    .breadcrumb a:hover {
+      color: var(--signal);
+    }
+    .breadcrumb span {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* Article Hero */
+    .article-hero {
+      padding: 10px 0 32px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 36px;
+    }
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      background: rgba(22, 139, 121, 0.12);
+      color: var(--signal);
+      border: 1px solid var(--signal-glow);
+    }
+    .article-title {
+      font-size: clamp(26px, 3.5vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0 0 14px;
+      line-height: 1.3;
+    }
+    .article-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 20px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .article-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Article Layout (Main + Sidebar) */
+    .article-container {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      gap: 48px;
+      margin-bottom: 80px;
+    }
+
+    /* Content Typography */
+    .article-body {
+      font-size: 15.5px;
+      line-height: 1.85;
+      color: var(--text);
+    }
+    .article-body h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 44px 0 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .article-body h3 {
+      font-size: 17.5px;
+      font-weight: 600;
+      margin: 30px 0 12px;
+      color: var(--text);
+    }
+    .article-body p {
+      margin: 0 0 18px;
+      color: var(--text);
+      opacity: 0.95;
+    }
+    .article-body ul,
+    .article-body ol {
+      margin: 0 0 22px 24px;
+      padding: 0;
+    }
+    .article-body li {
+      margin-bottom: 10px;
+    }
+    .article-body strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .article-body code {
+      font-family: var(--font-mono);
+      background: var(--surface-soft);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13.5px;
+      border: 1px solid var(--line);
+    }
+    pre {
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 0 0 20px;
+    }
+
+    /* Comparison Table */
+    .article-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .article-table th,
+    .article-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+    }
+    .article-table th {
+      background: var(--surface-soft);
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* Callout & Alert Box */
+    .callout {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-left: 4px solid var(--signal);
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin: 24px 0;
+      font-size: 14.5px;
+    }
+    .callout.tip {
+      border-left-color: var(--signal);
+    }
+    .callout.warn {
+      border-left-color: var(--amber);
+    }
+    .callout h4 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Step Card */
+    .step-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 24px 0;
+    }
+    .step-box-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .step-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--signal);
+      color: #040907;
+      font-size: 13px;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .step-box-header h3 {
+      margin: 0;
+      font-size: 17px;
+    }
+
+    /* Sidebar / TOC */
+    .sidebar {
+      position: sticky;
+      top: 96px;
+      height: fit-content;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .toc-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 13px;
+    }
+    .toc-list li {
+      margin-bottom: 8px;
+    }
+    .toc-list a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s ease;
+      display: block;
+      line-height: 1.5;
+    }
+    .toc-list a:hover {
+      color: var(--signal);
+    }
+
+    /* Bottom Action Banner */
+    .action-banner {
+      background: linear-gradient(135deg, rgba(22, 139, 121, 0.12), transparent);
+      border: 1px solid var(--signal-glow);
+      border-radius: 12px;
+      padding: 32px;
+      margin-top: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .action-banner-text h3 {
+      margin: 0 0 6px;
+      font-size: 19px;
+    }
+    .action-banner-text p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all .2s ease;
+    }
+    .btn.primary {
+      background: var(--signal);
+      color: #040907;
+    }
+    .btn.primary:hover {
+      filter: brightness(1.1);
+      box-shadow: 0 0 16px var(--signal-glow);
+    }
+    .btn.secondary {
+      background: var(--surface-soft);
+      color: var(--text);
+      border: 1px solid var(--line-strong);
+    }
+    .btn.secondary:hover {
+      border-color: var(--signal);
+    }
+
+    /* Floating Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      right: 28px;
+      bottom: 28px;
+      z-index: 99;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 1px solid var(--line-strong);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(16px);
+      transition: opacity .25s ease, transform .25s ease, border-color .2s ease, background-color .2s ease;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .back-to-top:hover {
+      border-color: var(--signal);
+      color: var(--signal);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .article-container {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+    }
+    @media (max-width: 640px) {
+      .site-nav {
+        display: none;
+      }
+      .action-banner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="../assets/site-navigation.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../index.html" aria-label="BoBo 博客首页">
+        <img class="brand-image" src="../assets/logo.webp" alt="BoBo Logo">
+        <span class="brand-name">BoBo<small>BLOG</small></span>
+      </a>
+
+      <nav class="site-nav" aria-label="页面导航">
+        <a href="../index.html">首页</a>
+        <a href="../recommend.html">机场推荐</a>
+        <a href="../review.html">机场评测</a>
+        <a class="active" aria-current="page" href="../tutorial.html">客户端教程</a>
+        <a href="../tools.html">实用工具</a>
+        <a href="../about.html">关于</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="切换明暗主题" title="切换暗黑/明亮毛玻璃主题">
+          <i data-lucide="moon"></i>
+        </button>
+        <a class="header-cta" href="https://t.me/wanfengzn7" target="_blank" rel="noopener noreferrer" title="Telegram 交流群 / 频道" aria-label="Telegram">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+            <path d="m20.665 3.717-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l-.313 4.671c.458 0 .66-.21.916-.457l2.199-2.138 4.574 3.379c.843.465 1.448.225 1.658-.783l3.003-14.153c.307-1.232-.47-1.79-1.213-1.469z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="../index.html">首页</a> / <a href="../tutorial.html">客户端教程</a> / <span>v2rayN 配置指南</span>
+    </div>
+
+    <!-- Article Hero -->
+    <header class="article-hero">
+      <div class="tag-row">
+        <span class="badge"><i data-lucide="terminal"></i> Windows 开源经典老牌神器</span>
+        <span class="badge"><i data-lucide="refresh-cw"></i> Xray / Sing-box 双核自由切换</span>
+        <span class="badge"><i data-lucide="check-circle-2"></i> 协议兼容度极强</span>
+      </div>
+      <h1 class="article-title">v2rayN 从零搭建到双核心高阶调优深度指南</h1>
+      <div class="article-meta">
+        <span><i data-lucide="calendar"></i> 2026-11-13 更新</span>
+        <span><i data-lucide="shield"></i> 纯净开源无后台残留</span>
+        <span><i data-lucide="cpu"></i> 支持 Vless / Reality / Hy2</span>
+      </div>
+    </header>
+
+    <!-- Article Content Grid -->
+    <div class="article-container">
+      <article class="article-body">
+        
+    <p>
+      在 Windows 桌面代理软件的历史长河中，<strong>v2rayN</strong> 毫无疑问是最受推崇、生命周期最长的经典开源常青树。它由 2dust 团队倾力维护，虽然视觉界面走的是简约扎实的 WinForms 工业风格，但其底层协议兼容性、对新兴内核（Xray、Sing-box）的集成速度以及对批量节点的灵活调度，至今仍是无数开发者的装机首选。
+    </p>
+
+    <div class="callout tip">
+      <h4><i data-lucide="info"></i> 核心功能亮点总结</h4>
+      <p>
+        1. <strong>全协议大一统</strong>：支持 Vmess、Vless (Reality)、Trojan、Shadowsocks、Socks5 以及由 Sing-box 核心驱动的 Hysteria 2 与 TUIC。<br>
+        2. <strong>极简绿色免安装</strong>：解压即用，所有配置全部储存在本地目录，方便放入 U 盘随身携带。<br>
+        3. <strong>双核心架构自由切换</strong>：可以在设置中任意指派默认出站使用 Xray 核心还是 Sing-box 核心，兼得二者之长。
+      </p>
+    </div>
+
+    <h2 id="intro"><i data-lucide="box"></i> 一、v2rayN 核心定位与技术底蕴</h2>
+    <p>
+      v2rayN 本质上是一个“图形界面包装器 (GUI Wrapper)”，其自身负责节点管理、UI 交互与系统代理写入，而真正的网络数据加解密与出海分流，则委托给存放在同目录 <code>bin</code> 文件夹下的独立核心程序。这种高度解耦的架构，使得即便某个新协议刚刚发布，只需更新 <code>bin</code> 目录下的二进制核心即可立刻兼容。
+    </p>
+
+    <h2 id="download"><i data-lucide="download"></i> 二、版本选型与解压避坑规范</h2>
+    <p>
+      前往官方 GitHub Releases 页面下载时，新手最容易在形形色色的发布包中挑花眼：
+    </p>
+    <table class="article-table">
+      <thead>
+        <tr>
+          <th>发布包名称</th>
+          <th>包含内容</th>
+          <th>推荐选型建议</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>v2rayN-With-Core.zip</strong></td>
+          <td>主程序 + Xray 核心 + 常用 Geo 规则文件</td>
+          <td><strong>强烈推荐（小白首选）</strong>，解压后直接能用，免去手动配核心的麻烦</td>
+        </tr>
+        <tr>
+          <td><strong>v2rayN-windows-64.zip</strong></td>
+          <td>仅包含主程序，不含核心二进制</td>
+          <td>适合已有老版本、仅想升级 UI 界面的高阶老玩家</td>
+        </tr>
+        <tr>
+          <td><strong>v2rayN-arm64.zip</strong></td>
+          <td>针对高通骁龙 Snapdragon X Elite 等 ARM 架构芯片</td>
+          <td>适用于新一代 Windows on ARM 掌机与轻薄笔记本</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout warn">
+      <h4><i data-lucide="alert-triangle"></i> 重大避坑规则：解压路径严禁包含中文字符与空格！</h4>
+      <p>
+        由于底层核心为 Go 语言编写，若将软件解压存放在 <code>C:\桌面\新建文件夹\v2rayN</code> 这类含中文路径下，会导致内核启动时无法读取配置文件或报错闪退！<br>
+        <strong>最佳存放路径示范</strong>：<code>D:\Tools\v2rayN\</code> 或 <code>C:\v2rayN\</code>。
+      </p>
+    </div>
+
+    <h2 id="subscription"><i data-lucide="link"></i> 三、订阅分组导入与批量拉取</h2>
+    <div class="step-box">
+      <div class="step-box-header">
+        <span class="step-badge">1</span>
+        <h3>订阅链接导入全流程</h3>
+      </div>
+      <ol>
+        <li>从机场后台复制 <strong>V2Ray 格式订阅链接</strong>。</li>
+        <li>双击打开 <code>v2rayN.exe</code>（若提示缺少 .NET 运行库，请根据弹窗指引安装微软官方 .NET 8 Desktop Runtime）。</li>
+        <li>点击顶部主菜单栏的 <strong>【订阅分组】 -> 【订阅分组设置】</strong>。</li>
+        <li>在弹出的窗口左下角点击 <strong>【添加】</strong>。</li>
+        <li>在“备注”中输入机场名称，在“可选地址 (url)”输入框中粘贴刚才复制的订阅链接。</li>
+        <li>点击【确定】保存。随后在主界面点击顶部 <strong>【订阅分组】 -> 【更新全部订阅(不通过代理)】</strong>。</li>
+        <li>稍候 3～5 秒，软件列表中即可加载出该机场旗下的所有节点。</li>
+      </ol>
+    </div>
+
+    <h2 id="routing"><i data-lucide="shuffle"></i> 四、路由规则模式（绕过大陆 / 全局）</h2>
+    <p>
+      在 v2rayN 底部状态栏，提供了核心路由控制项：
+    </p>
+    <ul>
+      <li><strong>清除系统代理 (白色图标)</strong>：本机所有流量直连，代理核心依然在后台待命。</li>
+      <li><strong>自动配置系统代理 (红色图标)</strong>：客户端接管 Windows 系统代理设置。</li>
+      <li><strong>路由设置推荐</strong>：
+        <ul>
+          <li><strong>绕过大陆 (Bypass Mainland China) - 日常首选</strong>：国内域名与大陆 IP 走 Direct，国外访问走 Proxy。</li>
+          <li><strong>全局 (Global)</strong>：所有网络请求不论境内境外全部强制走节点。</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h2 id="core-switch"><i data-lucide="sliders"></i> 五、Xray 与 Sing-box 双内核切换实战</h2>
+    <p>
+      在顶部菜单栏点击 <strong>【设置】 -> 【选项设置】 -> 【核心类型设置】</strong>：
+    </p>
+    <ul>
+      <li>对于常规的 <code>VLESS Reality</code>、<code>Vmess</code> 与 <code>Trojan</code> 节点，推荐使用 <strong>Xray-core</strong>，握手兼容性极佳。</li>
+      <li>对于包含 <code>Hysteria 2</code> 与 <code>TUIC</code> 的新一代高速 UDP 节点，请在选项中将该协议指定为 <strong>Sing-box-core</strong>。</li>
+    </ul>
+
+    <h2 id="tun-mode"><i data-lucide="shield-check"></i> 六、一键启用 TUN 虚拟网卡</h2>
+    <p>
+      在 v2rayN 顶部勾选 <strong>“启用 TUN 模式”</strong>。Windows 会自动安装并启用虚拟网卡，彻底解决各种命令行终端与 PC 大型端游无法走代理的疑难杂症。
+    </p>
+
+    <h2 id="troubleshooting"><i data-lucide="wrench"></i> 七、高频故障与端口冲突排障</h2>
+    <table class="article-table">
+      <thead>
+        <tr>
+          <th>故障报错</th>
+          <th>诱发根源</th>
+          <th>快速解决办法</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>日志提示 <code>failed to start: bind: address already in use</code></td>
+          <td>默认本地 Socks 端口 <code>10808</code> 或 HTTP 端口 <code>10809</code> 被其他软件占用</td>
+          <td>打开【选项设置 -> 参数设置】，将本地监听端口改为 <code>10818</code> 与 <code>10819</code>。</td>
+        </tr>
+        <tr>
+          <td>真连接延迟全部显示为 -1 或超时</td>
+          <td>电脑系统本地时间与世界标准时间相差超过 90 秒（TLS 证书拒绝校验）</td>
+          <td>打开 Windows【日期和时间设置】，点击“立即同步”网络时钟。</td>
+        </tr>
+        <tr>
+          <td>关闭 v2rayN 后电脑网页无法打开</td>
+          <td>退出时未先将系统代理改为“清除”</td>
+          <td>重新打开软件，将系统代理设为“清除”，或者在 Windows 设置的代理页面中关闭“手动设置代理”。</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="faq"><i data-lucide="help-circle"></i> 八、常见问题解答 (FAQ)</h2>
+    <div class="callout tip">
+      <h4>Q: 批量测速时，“Ping 延迟”和“真连接延迟”看哪个？</h4>
+      <p>
+        请以<strong>“真连接延迟 (Test Connection)”</strong>为准！普通 Ping 只代表你到国内中转入口的延迟，而真连接延迟是向境外真实服务器发送 HTTP 握手得到的往返耗时，只有真连接测试出绿字，才说明该节点真正具备翻越与出海能力。
+      </p>
+    </div>
+    <div class="callout tip">
+      <h4>Q: 为什么节点测速全部超时（-1ms），但手机上能正常连接？</h4>
+      <p>
+        请检查当前电脑的系统时间与国际标准时间偏差是否超过 90 秒（VMess 协议对时间同步要求极严）。打开 Windows 系统设置同步一次时钟，或检查第三方杀毒安全软件是否拦截了核心进程。
+      </p>
+    </div>
+    <div class="callout tip">
+      <h4>Q: v2rayN 如何开启类似 Clash 的自动规则分流？</h4>
+      <p>
+        点击 v2rayN 底部任务栏的【路由】，选择【绕过大陆 (Whitelist)】或导入预设的自定义路由规则。国内网站会自动走直连，仅被墙网站与境外 IP 走代理节点，既节省流量又保证国内网站高速访问。
+      </p>
+    </div>
+  
+
+        <!-- Bottom Banner -->
+        <div class="action-banner">
+          <div class="action-banner-text">
+            <h3>准备好体验顺畅跨境网络了吗？</h3>
+            <p>搭配经过晚高峰实测严选的高速专线，解锁 4K 流媒体与 AI 高频调用。</p>
+          </div>
+          <div class="btn-group">
+            <a class="btn primary" href="https://github.com/2dust/v2rayN/releases" target="_blank" rel="noopener noreferrer">
+              前往 GitHub 官方下载
+            </a>
+            <a class="btn secondary" href="../recommend.html">
+              查看精选机场推荐
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Sidebar Table of Contents -->
+      <aside class="sidebar">
+        <div class="toc-title">
+          <i data-lucide="align-left"></i> 本文目录
+        </div>
+        <ul class="toc-list">
+          <li><a href="#intro">一、v2rayN 核心定位与技术底蕴</a></li>
+          <li><a href="#download">二、版本选型与解压避坑规范</a></li>
+          <li><a href="#subscription">三、订阅分组导入与批量拉取</a></li>
+          <li><a href="#routing">四、路由规则模式（绕过大陆 / 全局）</a></li>
+          <li><a href="#core-switch">五、Xray 与 Sing-box 双内核切换实战</a></li>
+          <li><a href="#tun-mode">六、一键启用 TUN 虚拟网卡</a></li>
+          <li><a href="#troubleshooting">七、高频故障与端口冲突排障</a></li>
+          <li><a href="#faq">八、常见问题解答 (FAQ)</a></li>
+        </ul>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Floating Back to Top Button -->
+  <button id="backToTop" class="back-to-top" aria-label="返回顶部" title="返回顶部">
+    <i data-lucide="chevron-up"></i>
+  </button>
+
+  <script>
+    lucide.createIcons();
+
+    // Theme Toggle
+    const themeBtn = document.getElementById('themeToggle');
+    const htmlEl = document.documentElement;
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    htmlEl.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+
+    themeBtn.addEventListener('click', () => {
+      const current = htmlEl.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      htmlEl.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateThemeIcon(next);
+    });
+
+    function updateThemeIcon(theme) {
+      themeBtn.innerHTML = theme === 'dark' ? '<i data-lucide="sun"></i>' : '<i data-lucide="moon"></i>';
+      lucide.createIcons();
+    }
+
+    // Back to top scroll listener
+    const backToTopBtn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+    }, { passive: true });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BoBo 博客 - 跨境网络实测与常用工具箱：订阅转换、IP 纯净度、DNS 泄露与延迟测速。">
+  <link rel="canonical" href="https://bobo7.cc/tools.html">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="实用工具 | BoBo 博客">
+  <meta property="og:description" content="BoBo 博客 - 跨境网络实测与常用工具箱：订阅转换、IP 纯净度、DNS 泄露与延迟测速。">
+  <meta property="og:url" content="https://bobo7.cc/tools.html">
+  <meta property="og:site_name" content="BoBo 博客">
+  <meta property="og:image" content="https://bobo7.cc/assets/logo.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="实用工具 | BoBo 博客">
+  <meta name="twitter:description" content="BoBo 博客 - 跨境网络实测与常用工具箱：订阅转换、IP 纯净度、DNS 泄露与延迟测速。">
+  <meta name="twitter:image" content="https://bobo7.cc/assets/logo.webp">
+
+  <title>实用工具 | BoBo 博客</title>
+  <link rel="icon" href="assets/logo.webp">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root,
+    [data-theme="light"] {
+      --bg: #f5f7fb;
+      --bg-deep: #e9eef6;
+      --surface: rgba(255, 255, 255, 0.85);
+      --surface-soft: rgba(255, 255, 255, 0.6);
+      --surface-glass: rgba(250, 252, 255, 0.82);
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --card-border: rgba(38, 55, 83, 0.14);
+      --line: rgba(38, 55, 83, 0.12);
+      --line-strong: rgba(38, 55, 83, 0.22);
+      --text: #172235;
+      --muted: #627087;
+      --dim: #8a96a8;
+      --signal: #168b79;
+      --signal-bright: #0b6e61;
+      --signal-glow: rgba(22, 139, 121, 0.2);
+      --amber: #b07d1a;
+      --violet: #6c63d8;
+      --max: 1200px;
+      --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      --font-serif: Georgia, "Noto Serif SC", serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --header-bg: rgba(245, 247, 251, 0.85);
+    }
+
+    [data-theme="dark"] {
+      --bg: #07110f;
+      --bg-deep: #040907;
+      --surface: #0b1714;
+      --surface-soft: #0e1e1a;
+      --surface-glass: rgba(11, 23, 20, 0.72);
+      --card-bg: rgba(14, 30, 26, 0.65);
+      --card-border: rgba(194, 230, 217, 0.12);
+      --line: rgba(194, 230, 217, 0.14);
+      --line-strong: rgba(194, 230, 217, 0.28);
+      --text: #edf5f0;
+      --muted: #94a8a0;
+      --dim: #5f746c;
+      --signal: #9ff0c9;
+      --signal-bright: #d1ffe5;
+      --signal-glow: rgba(159, 240, 201, 0.25);
+      --amber: #ebd88e;
+      --violet: #8999ff;
+      --max: 1200px;
+      --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      --font-serif: Georgia, "Noto Serif SC", serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --header-bg: rgba(7, 17, 15, 0.82);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--bg-deep); }
+    body {
+      min-width: 320px;
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--text);
+      background: var(--bg);
+      font-family: var(--font-sans);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    a, button { font: inherit; }
+    h1, h2, h3, h4, p { margin: 0; }
+    .wrap { width: min(var(--max), calc(100% - 48px)); margin: 0 auto; }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid var(--line);
+      background: var(--header-bg);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      transition: all 0.25s ease;
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 74px;
+      gap: 24px;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 12px; white-space: nowrap; }
+    .brand-image { width: 34px; height: 34px; object-fit: cover; border-radius: 8px; }
+    .brand-name { font-family: var(--font-serif); font-size: 18px; font-weight: 700; line-height: 1.1; }
+    .brand-name small { display: block; margin-top: 2px; color: var(--muted); font-family: var(--font-sans); font-size: 9px; font-weight: 600; letter-spacing: .16em; }
+
+    .site-nav { display: flex; align-items: center; gap: 28px; margin-left: auto; }
+    .site-nav a {
+      position: relative;
+      padding: 6px 0;
+      color: var(--muted);
+      font-size: 13.5px;
+      font-weight: 500;
+      transition: color .2s ease;
+    }
+    .site-nav a::after {
+      content: "";
+      position: absolute;
+      right: 0; bottom: 0; left: 0;
+      height: 1.5px;
+      background: var(--signal);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform .24s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .site-nav a:hover, .site-nav a.active { color: var(--text); }
+    .site-nav a:hover::after, .site-nav a.active::after { transform: scaleX(1); transform-origin: left; }
+
+    .header-actions { display: flex; align-items: center; gap: 12px; }
+    .theme-toggle, .header-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      border: 1px solid var(--line-strong);
+      background: var(--surface-soft);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .theme-toggle:hover, .header-cta:hover { color: var(--signal); border-color: var(--signal); transform: translateY(-2px); }
+
+    /* Page Hero */
+    .page-hero { padding: 64px 0 36px; text-align: center; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      background: var(--surface-soft);
+      color: var(--signal);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      margin-bottom: 20px;
+    }
+    .eyebrow i { width: 6px; height: 6px; border-radius: 50%; background: var(--signal); display: inline-block; }
+    .page-title {
+      font-family: var(--font-serif);
+      font-size: clamp(30px, 4vw, 44px);
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    .page-desc { max-width: 680px; margin: 0 auto; font-size: 15px; color: var(--muted); line-height: 1.7; }
+
+    /* Tools Grid */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 24px;
+      margin: 40px 0 80px;
+    }
+    .tool-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform .2s ease, border-color .2s ease;
+    }
+    .tool-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--signal);
+    }
+    .tool-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+    .tool-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: rgba(22, 139, 121, 0.1);
+      color: var(--signal);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .tool-title { font-size: 17px; font-weight: 700; color: var(--text); }
+    .tool-tag { font-size: 12px; color: var(--dim); margin-top: 2px; }
+    .tool-desc { font-size: 13.5px; color: var(--muted); line-height: 1.6; margin-bottom: 20px; }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 38px;
+      padding: 0 16px;
+      border-radius: 8px;
+      border: 1px solid var(--line-strong);
+      color: var(--text);
+      background: var(--surface-soft);
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s ease;
+      width: 100%;
+    }
+    .button.primary {
+      border-color: var(--signal);
+      background: var(--signal);
+      color: #040907;
+    }
+    .button.primary:hover {
+      background: var(--signal-bright);
+      transform: translateY(-2px);
+    }
+
+    .card-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .tutorial-link {
+      display: block;
+      text-align: center;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 4px 0;
+      transition: color 0.2s ease;
+    }
+
+    .tutorial-link:hover {
+      color: var(--signal);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--line);
+      background: var(--surface-soft);
+      padding: 38px 0;
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .footer-brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; }
+    .footer-brand img { width: 22px; height: 22px; border-radius: 6px; }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; font-size: 13.5px; color: var(--muted); }
+    .footer-links a:hover { color: var(--text); }
+  </style>
+  <link rel="stylesheet" href="assets/site-navigation.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "实用出海工具与网络诊断教程 - BoBo 博客",
+  "url": "https://bobo7.cc/tools.html",
+  "description": "精选 IP 纯净度检测、WebRTC 泄漏排查、节点延迟与丢包测试工具教程合集。",
+  "publisher": {
+    "@type": "Organization",
+    "name": "BoBo 博客"
+  }
+}
+  </script>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html" aria-label="BoBo 博客首页">
+        <img class="brand-image" src="assets/logo.webp" alt="BoBo Logo">
+        <span class="brand-name">BoBo<small>BLOG</small></span>
+      </a>
+
+      <nav class="site-nav" aria-label="页面导航">
+        <a href="index.html">首页</a>
+        <a href="recommend.html">机场推荐</a>
+        <a href="review.html">机场评测</a>
+        <a href="tutorial.html">客户端教程</a>
+        <a class="active" aria-current="page" href="tools.html">实用工具</a>
+        <a href="about.html">关于</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="切换明暗主题" title="切换暗黑/明亮毛玻璃主题">
+          <i data-lucide="moon"></i>
+        </button>
+        <a class="header-cta" href="https://t.me/wanfengzn7" target="_blank" rel="noopener noreferrer" title="Telegram 交流群 / 频道" aria-label="Telegram">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+            <path d="m20.665 3.717-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l-.313 4.671c.458 0 .66-.21.916-.457l2.199-2.138 4.574 3.379c.843.465 1.448.225 1.658-.783l3.003-14.153c.307-1.232-.47-1.79-1.213-1.469z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="page-hero">
+      <div class="eyebrow"><i></i> NETWORK TOOLBOX / 跨境实用工具箱</div>
+      <h1 class="page-title">网络实测与订阅常用在线工具</h1>
+      <p class="page-desc">
+        这里汇总了跨境网络常用的优质实用工具：从在线订阅格式转换、原生 IP 纯净度欺诈分析，到 WebRTC 泄露检测与全国多节点延迟测速，助你轻松排查各类网络问题。
+      </p>
+    </div>
+
+    <!-- Tools Grid -->
+    <div class="tools-grid">
+      <!-- Subconverter -->
+      <article class="tool-card">
+        <div>
+          <div class="tool-header">
+            <div class="tool-icon"><i data-lucide="shuffle"></i></div>
+            <div>
+              <div class="tool-title">在线订阅转换 (Subconverter)</div>
+              <div class="tool-tag">格式转换 · 多平台规则增强</div>
+            </div>
+          </div>
+          <p class="tool-desc">
+            支持将各种不同协议的单节点链接或旧版订阅，一键转换为 Clash、Sing-box、Surge、Quantumult X 专用的智能分流配置，自动剔除无效节点。
+          </p>
+        </div>
+        <div class="card-actions">
+          <a class="tutorial-link" href="实用工具教程/subconverter.html">查看详细图文教程</a>
+          <a class="button primary" href="https://sub-web.qingsay.com/" target="_blank" rel="noopener noreferrer">
+            打开在线转换工具
+          </a>
+        </div>
+      </article>
+
+      <!-- ScamAnalytics / IPInfo -->
+      <article class="tool-card">
+        <div>
+          <div class="tool-header">
+            <div class="tool-icon"><i data-lucide="shield-check"></i></div>
+            <div>
+              <div class="tool-title">原生 IP 纯净度检测</div>
+              <div class="tool-tag">风控分值 · 住宅家宽属性检测</div>
+            </div>
+          </div>
+          <p class="tool-desc">
+            检测当前节点 IP 是否被识别为数据中心机房（DataCenter）或原生住宅（Residential），查询欺诈分（Fraud Score），保障 ChatGPT 与流媒体不被风控封锁。
+          </p>
+        </div>
+        <div class="card-actions">
+          <a class="tutorial-link" href="实用工具教程/scamalytics.html">查看详细图文教程</a>
+          <a class="button primary" href="https://scamalytics.com/ip" target="_blank" rel="noopener noreferrer">
+            查询 IP 纯净度
+          </a>
+        </div>
+      </article>
+
+      <!-- BrowserLeaks -->
+      <article class="tool-card">
+        <div>
+          <div class="tool-header">
+            <div class="tool-icon"><i data-lucide="eye-off"></i></div>
+            <div>
+              <div class="tool-title">WebRTC & DNS 泄露检测</div>
+              <div class="tool-tag">隐私安全 · 真实 IP 防泄漏</div>
+            </div>
+          </div>
+          <p class="tool-desc">
+            检测浏览器在使用代理时是否通过 WebRTC 接口悄悄暴露你的国内真实物理 IP 地址，以及 DNS 查询是否被本地 ISP 运营商监控截获。
+          </p>
+        </div>
+        <div class="card-actions">
+          <a class="tutorial-link" href="实用工具教程/browserleaks.html">查看详细图文教程</a>
+          <a class="button primary" href="https://browserleaks.com/webrtc" target="_blank" rel="noopener noreferrer">
+            立即检测隐私泄露
+          </a>
+        </div>
+      </article>
+
+      <!-- ITDog -->
+      <article class="tool-card">
+        <div>
+          <div class="tool-header">
+            <div class="tool-icon"><i data-lucide="activity"></i></div>
+            <div>
+              <div class="tool-title">ITDog 全国三网 Ping 测速</div>
+              <div class="tool-tag">丢包率测试 · 路由追踪 (MTR)</div>
+            </div>
+          </div>
+          <p class="tool-desc">
+            调用国内电信、联通、移动 100+ 重点城市探针节点，对机场入口服务器进行全方位的 TCP/ICMP 晚高峰丢包与网络延迟追踪测试。
+          </p>
+        </div>
+        <div class="card-actions">
+          <a class="tutorial-link" href="实用工具教程/itdog.html">查看详细图文教程</a>
+          <a class="button primary" href="https://www.itdog.cn/ping/" target="_blank" rel="noopener noreferrer">
+            打开 ITDog 测速平台
+          </a>
+        </div>
+      </article>
+
+      <!-- Fast / Speedtest -->
+      <article class="tool-card">
+        <div>
+          <div class="tool-header">
+            <div class="tool-icon"><i data-lucide="gauge"></i></div>
+            <div>
+              <div class="tool-title">Fast.com 奈飞带宽测试</div>
+              <div class="tool-tag">Netflix 官方 · 国际流媒体直测</div>
+            </div>
+          </div>
+          <p class="tool-desc">
+            由 Netflix 官方提供的国际测速工具，直接测试节点到达奈飞 CDN 服务器的真实下行带宽与网络连接稳定性。
+          </p>
+        </div>
+        <div class="card-actions">
+          <a class="tutorial-link" href="实用工具教程/fast-com.html">查看详细图文教程</a>
+          <a class="button primary" href="https://fast.com/" target="_blank" rel="noopener noreferrer">
+            开始 Fast 测速
+          </a>
+        </div>
+      </article>
+
+      <!-- IP125 -->
+      <article class="tool-card">
+        <div>
+          <div class="tool-header">
+            <div class="tool-icon"><i data-lucide="map-pin"></i></div>
+            <div>
+              <div class="tool-title">IP 归属与国家地理定位</div>
+              <div class="tool-tag">出口诊断 · 节点地理位置核验</div>
+            </div>
+          </div>
+          <p class="tool-desc">
+            快速查看你当前访问海外网络所展现的公网 IP 详情、ISP 运营商名称、自治系统编号 (ASN) 以及地理位置定位。
+          </p>
+        </div>
+        <div class="card-actions">
+          <a class="tutorial-link" href="实用工具教程/ip-check.html">查看详细图文教程</a>
+          <a class="button primary" href="https://ip125.com/" target="_blank" rel="noopener noreferrer">
+            查看我的当前 IP
+          </a>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="wrap footer-inner">
+      <div class="footer-brand">
+        <img src="assets/logo.webp" alt="BoBo Logo"> BoBo
+      </div>
+      <div class="footer-links">
+        <a href="recommend.html">机场推荐</a>
+        <a href="review.html">机场评测</a>
+        <a href="tutorial.html">客户端教程</a>
+        <a href="tools.html">实用工具</a>
+        <a href="about.html">关于我们</a>
+        <a href="https://t.me/wanfengzn7" target="_blank" rel="noopener noreferrer">联系支持</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop" aria-label="返回顶部" title="返回顶部">
+    <i data-lucide="arrow-up"></i>
+  </button>
+
+  <script>
+    const themeToggleBtn = document.getElementById("themeToggle");
+    themeToggleBtn.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme") || "light";
+      const next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      themeToggleBtn.innerHTML = next === "dark" ? '<i data-lucide="sun"></i>' : '<i data-lucide="moon"></i>';
+      if (window.lucide) window.lucide.createIcons();
+    });
+
+    // Back to Top Logic
+    const backToTopBtn = document.getElementById("backToTop");
+    if (backToTopBtn) {
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+          backToTopBtn.classList.add("visible");
+        } else {
+          backToTopBtn.classList.remove("visible");
+        }
+      }, { passive: true });
+
+      backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      });
+    }
+
+    if (window.lucide) window.lucide.createIcons();
+  </script>
+</body>
+
+</html>
+

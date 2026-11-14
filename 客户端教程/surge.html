@@ -1,0 +1,921 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Surge 深度保姆级图文教程：涵盖 macOS 与 iOS 托管配置一键导入、策略组高阶定制、增强模式 TUN 接管、MitM HTTPS 抓包证书安装以及家庭网关软路由实战。">
+  <link rel="canonical" href="https://bobo7.cc/%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%95%99%E7%A8%8B/surge.html">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Surge Mac / iOS 终极网络调试与智能分流深度配置指南 | BoBo 博客">
+  <meta property="og:description" content="Surge 深度保姆级图文教程：涵盖 macOS 与 iOS 托管配置一键导入、策略组高阶定制、增强模式 TUN 接管、MitM HTTPS 抓包证书安装以及家庭网关软路由实战。">
+  <meta property="og:url" content="https://bobo7.cc/%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%95%99%E7%A8%8B/surge.html">
+  <meta property="og:site_name" content="BoBo 博客">
+  <meta property="og:image" content="https://bobo7.cc/assets/logo.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Surge Mac / iOS 终极网络调试与智能分流深度配置指南 | BoBo 博客">
+  <meta name="twitter:description" content="Surge 深度保姆级图文教程：涵盖 macOS 与 iOS 托管配置一键导入、策略组高阶定制、增强模式 TUN 接管、MitM HTTPS 抓包证书安装以及家庭网关软路由实战。">
+  <meta name="twitter:image" content="https://bobo7.cc/assets/logo.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Surge Mac / iOS 终极网络调试与智能分流深度配置指南 | BoBo 博客",
+  "description": "Surge 深度保姆级图文教程：涵盖 macOS 与 iOS 托管配置一键导入、策略组高阶定制、增强模式 TUN 接管、MitM HTTPS 抓包证书安装以及家庭网关软路由实战。",
+  "url": "https://bobo7.cc/%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%95%99%E7%A8%8B/surge.html",
+  "datePublished": "2026-11-13T08:00:00+08:00",
+  "dateModified": "2026-11-14T15:00:00+08:00",
+  "author": {
+    "@type": "Organization",
+    "name": "BoBo 博客",
+    "url": "https://bobo7.cc/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "BoBo 博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://bobo7.cc/assets/logo.webp"
+    }
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://bobo7.cc/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "客户端教程",
+      "item": "https://bobo7.cc/tutorial.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Surge Mac / iOS 终极网络调试与智能分流深度配置指南 | BoBo 博客",
+      "item": "https://bobo7.cc/%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%95%99%E7%A8%8B/surge.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Q: Surge 这么贵，比起免费开源的 Clash Verge Rev 值得买吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "如果你只是日常翻看网页或刷视频，Clash Verge Rev 完全够用且体验优秀；但如果你深度身处苹果多设备生态（Mac + iPhone + Apple TV），且非常看重系统电量开销、网络开发抓包、或希望将 Mac 变成全家网关，Surge 依然是目前无可挑剔的顶级存在。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Q: Surge 提示“Enhanced Mode 增强模式安装失败”怎么办？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "在 macOS 下，Surge 增强模式需要向系统注入 Network Extension 网络虚拟网卡。请打开 macOS【系统设置】→【隐私与安全性】，在页面下方找到被拦截的 Surge 系统扩展并点击【允许】，输入管理员密码后重启客户端即可生效。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Q: Surge 的 PONTE 远程跨设备互联有什么用？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "PONTE 是 Surge 独有的点对点私有通道协议。在家庭 Mac 上常驻 Surge 网关后，出门在外的 iPhone/MacBook 只要开启 PONTE，即可无感直接访问家庭局域网内的 NAS、个人服务器与智能家居，无需配置任何公网公网 IP 与端口映射。"
+      }
+    }
+  ]
+}
+  </script>
+
+  <title>Surge Mac / iOS 终极网络调试与智能分流深度配置指南 | BoBo 博客</title>
+  <link rel="icon" href="../assets/logo.webp">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root,
+    [data-theme="light"] {
+      --bg: #f5f7fb;
+      --bg-deep: #e9eef6;
+      --surface: rgba(255, 255, 255, 0.85);
+      --surface-soft: rgba(255, 255, 255, 0.6);
+      --surface-glass: rgba(250, 252, 255, 0.82);
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --card-border: rgba(38, 55, 83, 0.14);
+      --line: rgba(38, 55, 83, 0.12);
+      --line-strong: rgba(38, 55, 83, 0.22);
+      --text: #172235;
+      --muted: #627087;
+      --dim: #8a96a8;
+      --signal: #168b79;
+      --signal-bright: #0b6e61;
+      --signal-glow: rgba(22, 139, 121, 0.2);
+      --amber: #b07d1a;
+      --violet: #6c63d8;
+      --max: 1200px;
+      --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --header-bg: rgba(245, 247, 251, 0.85);
+    }
+
+    [data-theme="dark"] {
+      --bg: #07110f;
+      --bg-deep: #040907;
+      --surface: #0b1714;
+      --surface-soft: #0e1e1a;
+      --surface-glass: rgba(11, 23, 20, 0.72);
+      --card-bg: rgba(14, 30, 26, 0.65);
+      --card-border: rgba(194, 230, 217, 0.12);
+      --line: rgba(194, 230, 217, 0.14);
+      --line-strong: rgba(194, 230, 217, 0.28);
+      --text: #edf5f0;
+      --muted: #94a8a0;
+      --dim: #5f746c;
+      --signal: #9ff0c9;
+      --signal-bright: #d1ffe5;
+      --signal-glow: rgba(159, 240, 201, 0.25);
+      --amber: #ebd88e;
+      --violet: #8999ff;
+      --max: 1200px;
+      --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --header-bg: rgba(7, 17, 15, 0.82);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--bg-deep); }
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      font-family: var(--font-sans);
+      line-height: 1.75;
+      transition: background .3s ease, color .3s ease;
+    }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--header-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: -0.02em;
+    }
+    .brand-image {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    .brand-name small {
+      margin-left: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      color: var(--signal);
+      border: 1px solid var(--line-strong);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      margin-left: auto;
+    }
+    .site-nav a {
+      position: relative;
+      padding: 6px 0;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 500;
+      transition: color .2s ease;
+    }
+    .site-nav a:hover,
+    .site-nav a.active {
+      color: var(--text);
+    }
+    .site-nav a::after {
+      content: "";
+      position: absolute;
+      right: 0; bottom: 0; left: 0;
+      height: 1.5px;
+      background: var(--signal);
+      transform: scaleX(0);
+      transition: transform .2s ease;
+    }
+    .site-nav a:hover::after,
+    .site-nav a.active::after {
+      transform: scaleX(1);
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .theme-toggle,
+    .header-cta {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      border: 1px solid var(--line-strong);
+      background: var(--surface-soft);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color .2s ease;
+    }
+    .theme-toggle:hover,
+    .header-cta:hover {
+      border-color: var(--signal);
+    }
+
+    /* Breadcrumbs */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 28px 0 16px;
+    }
+    .breadcrumb a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+    .breadcrumb a:hover {
+      color: var(--signal);
+    }
+    .breadcrumb span {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* Article Hero */
+    .article-hero {
+      padding: 10px 0 32px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 36px;
+    }
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      background: rgba(22, 139, 121, 0.12);
+      color: var(--signal);
+      border: 1px solid var(--signal-glow);
+    }
+    .article-title {
+      font-size: clamp(26px, 3.5vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0 0 14px;
+      line-height: 1.3;
+    }
+    .article-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 20px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .article-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Article Layout (Main + Sidebar) */
+    .article-container {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      gap: 48px;
+      margin-bottom: 80px;
+    }
+
+    /* Content Typography */
+    .article-body {
+      font-size: 15.5px;
+      line-height: 1.85;
+      color: var(--text);
+    }
+    .article-body h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 44px 0 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .article-body h3 {
+      font-size: 17.5px;
+      font-weight: 600;
+      margin: 30px 0 12px;
+      color: var(--text);
+    }
+    .article-body p {
+      margin: 0 0 18px;
+      color: var(--text);
+      opacity: 0.95;
+    }
+    .article-body ul,
+    .article-body ol {
+      margin: 0 0 22px 24px;
+      padding: 0;
+    }
+    .article-body li {
+      margin-bottom: 10px;
+    }
+    .article-body strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .article-body code {
+      font-family: var(--font-mono);
+      background: var(--surface-soft);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13.5px;
+      border: 1px solid var(--line);
+    }
+    pre {
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 0 0 20px;
+    }
+
+    /* Comparison Table */
+    .article-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .article-table th,
+    .article-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+    }
+    .article-table th {
+      background: var(--surface-soft);
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* Callout & Alert Box */
+    .callout {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-left: 4px solid var(--signal);
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin: 24px 0;
+      font-size: 14.5px;
+    }
+    .callout.tip {
+      border-left-color: var(--signal);
+    }
+    .callout.warn {
+      border-left-color: var(--amber);
+    }
+    .callout h4 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Step Card */
+    .step-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 24px 0;
+    }
+    .step-box-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .step-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--signal);
+      color: #040907;
+      font-size: 13px;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .step-box-header h3 {
+      margin: 0;
+      font-size: 17px;
+    }
+
+    /* Sidebar / TOC */
+    .sidebar {
+      position: sticky;
+      top: 96px;
+      height: fit-content;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .toc-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 13px;
+    }
+    .toc-list li {
+      margin-bottom: 8px;
+    }
+    .toc-list a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s ease;
+      display: block;
+      line-height: 1.5;
+    }
+    .toc-list a:hover {
+      color: var(--signal);
+    }
+
+    /* Bottom Action Banner */
+    .action-banner {
+      background: linear-gradient(135deg, rgba(22, 139, 121, 0.12), transparent);
+      border: 1px solid var(--signal-glow);
+      border-radius: 12px;
+      padding: 32px;
+      margin-top: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .action-banner-text h3 {
+      margin: 0 0 6px;
+      font-size: 19px;
+    }
+    .action-banner-text p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all .2s ease;
+    }
+    .btn.primary {
+      background: var(--signal);
+      color: #040907;
+    }
+    .btn.primary:hover {
+      filter: brightness(1.1);
+      box-shadow: 0 0 16px var(--signal-glow);
+    }
+    .btn.secondary {
+      background: var(--surface-soft);
+      color: var(--text);
+      border: 1px solid var(--line-strong);
+    }
+    .btn.secondary:hover {
+      border-color: var(--signal);
+    }
+
+    /* Floating Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      right: 28px;
+      bottom: 28px;
+      z-index: 99;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 1px solid var(--line-strong);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(16px);
+      transition: opacity .25s ease, transform .25s ease, border-color .2s ease, background-color .2s ease;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .back-to-top:hover {
+      border-color: var(--signal);
+      color: var(--signal);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .article-container {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+    }
+    @media (max-width: 640px) {
+      .site-nav {
+        display: none;
+      }
+      .action-banner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="../assets/site-navigation.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../index.html" aria-label="BoBo 博客首页">
+        <img class="brand-image" src="../assets/logo.webp" alt="BoBo Logo">
+        <span class="brand-name">BoBo<small>BLOG</small></span>
+      </a>
+
+      <nav class="site-nav" aria-label="页面导航">
+        <a href="../index.html">首页</a>
+        <a href="../recommend.html">机场推荐</a>
+        <a href="../review.html">机场评测</a>
+        <a class="active" aria-current="page" href="../tutorial.html">客户端教程</a>
+        <a href="../tools.html">实用工具</a>
+        <a href="../about.html">关于</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="切换明暗主题" title="切换暗黑/明亮毛玻璃主题">
+          <i data-lucide="moon"></i>
+        </button>
+        <a class="header-cta" href="https://t.me/wanfengzn7" target="_blank" rel="noopener noreferrer" title="Telegram 交流群 / 频道" aria-label="Telegram">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+            <path d="m20.665 3.717-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l-.313 4.671c.458 0 .66-.21.916-.457l2.199-2.138 4.574 3.379c.843.465 1.448.225 1.658-.783l3.003-14.153c.307-1.232-.47-1.79-1.213-1.469z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="../index.html">首页</a> / <a href="../tutorial.html">客户端教程</a> / <span>Surge 配置指南</span>
+    </div>
+
+    <!-- Article Hero -->
+    <header class="article-hero">
+      <div class="tag-row">
+        <span class="badge"><i data-lucide="zap"></i> macOS / iOS 苹果生态天花板</span>
+        <span class="badge"><i data-lucide="shield"></i> 工业级稳定性与零延迟切换</span>
+        <span class="badge"><i data-lucide="code"></i> 支持自定义规则与 JavaScript 脚本</span>
+      </div>
+      <h1 class="article-title">Surge 终极网络开发与智能分流高阶全景指南</h1>
+      <div class="article-meta">
+        <span><i data-lucide="calendar"></i> 2026-11-13 更新</span>
+        <span><i data-lucide="shield"></i> 专业网络开发调试</span>
+        <span><i data-lucide="sliders"></i> 策略组与增强模式</span>
+      </div>
+    </header>
+
+    <!-- Article Content Grid -->
+    <div class="article-container">
+      <article class="article-body">
+        
+    <p>
+      在所有网络代理与抓包开发工具中，<strong>Surge</strong> 始终稳坐苹果生态的“天花板”王座。它由专业开发者精心打磨，兼具极其优雅的原生 UI 设计与工业级网络性能。无论是日常高要求跨洋办公、4K/8K 视频流媒体无感漫游，还是专业网络工程师的 HTTP/HTTPS 抓包调试与脚本 Mock，Surge 都能提供教科书级的稳定表现。
+    </p>
+
+    <div class="callout tip">
+      <h4><i data-lucide="info"></i> 核心优势提炼</h4>
+      <p>
+        1. <strong>零感故障切换</strong>：独家基于 TCP 握手 RTT 的 URL-Test 与 Fallback 机制，某节点突发丢包时毫秒级自动切换，完全不中断正在播放的视频或下载任务。<br>
+        2. <strong>系统级网络驱动</strong>：采用苹果官方 Network Extension 深度优化驱动，内存占用极少，在 Mac 上全天挂载耗电几乎为零。<br>
+        3. <strong>全功能开发调试器</strong>：内置强大的 MitM（中间人解密）、Rewrite 重定向、本地 Mock 以及 JavaScript 规则脚本执行引擎。
+      </p>
+    </div>
+
+    <h2 id="intro"><i data-lucide="cpu"></i> 一、Surge 架构定位与天花板优势</h2>
+    <p>
+      与普通面向大众的“傻瓜式代理”不同，Surge 本质上是一套“高级网络开发与调试套件”。它将网络流量明确划分为请求抓取 (Snell/Shadowsocks/Trojan/Vmess/HTTP)、规则引擎 (Rule Engine)、策略调度 (Policy Groups) 以及出站转发 (Outbounds)。其配置语法极其工整规范，被业界誉为所有规则分流客户端的语法鼻祖。
+    </p>
+
+    <h2 id="versions"><i data-lucide="credit-card"></i> 二、版本授权与购买选型</h2>
+    <p>
+      Surge 采用买断制与功能订阅结合的商业模式：
+    </p>
+    <ul>
+      <li><strong>Surge for Mac</strong>：官方提供标准版（Standard，支持 3 台 Mac）与专业版（Pro，支持更多并发与网关功能）。购买后永久买断当前大版本并享受 1 年内所有新功能更新；1 年后即使不再付费续订，已有版本仍可永久正常运行。</li>
+      <li><strong>Surge for iOS</strong>：通过海外 App Store 免费下载，提供 14 天全功能免费试用，随后可在应用内订阅或一次性买断。</li>
+    </ul>
+
+    <h2 id="import"><i data-lucide="link"></i> 三、托管配置 (Managed Profile) 导入</h2>
+    <div class="step-box">
+      <div class="step-box-header">
+        <span class="step-badge">1</span>
+        <h3>Surge 托管订阅一键导入</h3>
+      </div>
+      <ol>
+        <li>登录你的机场服务商面板，找到 <strong>“一键导入 Surge”</strong> 按钮，或者复制 <strong>“Surge 托管订阅链接”</strong>。</li>
+        <li><strong>在 Mac 端</strong>：点击屏幕顶部菜单栏的 Surge 图标，选择 <strong>【配置文件 (Profiles)】 -> 【从 URL 下载 (Download from URL)】</strong>，粘贴链接后命名保存。</li>
+        <li><strong>在 iOS 端</strong>：打开 Surge App，点击左上角的配置名称，选择 <strong>【从 URL 安装托管配置】</strong>，粘贴链接后点击完成。</li>
+        <li>导入成功后，Surge 会自动定时拉取远端节点的更新与变动，完全无需手动维护节点 IP。</li>
+      </ol>
+    </div>
+
+    <h2 id="policy-groups"><i data-lucide="layers"></i> 四、策略组深度剖析 (URL-Test / Fallback)</h2>
+    <p>
+      Surge 的策略组功能极为强大，常见的策略类型包括：
+    </p>
+    <table class="article-table">
+      <thead>
+        <tr>
+          <th>策略组类型</th>
+          <th>工作机制</th>
+          <th>最佳应用场景</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>select (手动选择)</strong></td>
+          <td>由用户在 UI 界面手动点选指定节点</td>
+          <td>固定指向特定节点（如 ChatGPT 专属美国住宅 IP）</td>
+        </tr>
+        <tr>
+          <td><strong>url-test (自动测速)</strong></td>
+          <td>定时向探针地址发送并发测速，自动选出延迟最低节点</td>
+          <td>日常网页浏览、YouTube 视频秒开、轻度出海办公</td>
+        </tr>
+        <tr>
+          <td><strong>fallback (可用性回退)</strong></td>
+          <td>按列表顺序依次使用主节点，主节点挂掉时无感降级备用</td>
+          <td>对稳定性要求极高的金融交易、远程 SSH 服务器维护</td>
+        </tr>
+        <tr>
+          <td><strong>ssid (网络感知)</strong></td>
+          <td>根据当前连接的 Wi-Fi 名称或蜂窝网络自动选不同策略</td>
+          <td>家庭 Wi-Fi 自动直连，外勤 5G 自动开启专线</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="enhanced-mode"><i data-lucide="shield-check"></i> 五、增强模式 (Enhanced Mode) 全局接管</h2>
+    <p>
+      在 Surge Mac 版中，强烈建议在设置中开启 <strong>“增强模式 (Enhanced Mode)”</strong>。
+    </p>
+    <p>
+      开启后，Surge 会在系统内核层加载一个虚拟网络接口（TUN），并将默认路由指向该接口。它不仅可以无视系统代理配置，全面接管 macOS 终端（Terminal）、Docker、Git Clone、VS Code 远程扩展以及各种不遵循系统代理协议的复杂应用，还能精准捕获并统计每一个进程的瞬时上传下载速率。
+    </p>
+
+    <h2 id="mitm-script"><i data-lucide="terminal"></i> 六、MitM 证书安装与网络抓包解密</h2>
+    <p>
+      作为网络开发利器，Surge 支持中间人解密（Man-in-the-Middle）：
+    </p>
+    <ol>
+      <li>在 Surge 中开启 <strong>【MitM (中间人攻击解密)】</strong>。</li>
+      <li>点击“生成 CA 根证书”并将其添加到 macOS 的【钥匙串访问】。</li>
+      <li>在钥匙串中找到该根证书，右键选择“显示简介”，将信任策略改为 <strong>【始终信任】</strong>。</li>
+      <li>配置解密域名白名单（如 <code>*.google.com</code>、<code>*.openai.com</code>），即可在 Surge 的实时请求日志中查看完整的 HTTP/HTTPS Header、Cookie 及 Payload 报文。</li>
+    </ol>
+
+    <h2 id="gateway"><i data-lucide="server"></i> 七、Surge Mac 作为局域网网关软路由</h2>
+    <p>
+      如果你有一台常开的 Mac mini 或 iMac，可以将其打造成全家的“超级软路由”：
+    </p>
+    <ul>
+      <li>在 Surge Mac 中勾选开启 <strong>“作为网关使用 (Gateway Mode)”</strong>。</li>
+      <li>在其他局域网设备（如电视盒子 Apple TV、PlayStation 游戏机、手机）的网络设置中，将“默认路由器 (网关)”与“DNS 地址”均填入这台 Mac 的局域网 IP。</li>
+      <li>全屋所有设备无需安装任何客户端，即可直接享受 Surge 的智能分流与高速专线加速！</li>
+    </ul>
+
+    <h2 id="troubleshooting"><i data-lucide="wrench"></i> 八、常见故障与排错速查</h2>
+    <table class="article-table">
+      <thead>
+        <tr>
+          <th>现象</th>
+          <th>排查方向</th>
+          <th>解决方案</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>开启增强模式后无法连接 Wi-Fi</td>
+          <td>网络扩展与第三方法火墙（如 Little Snitch）产生冲突</td>
+          <td>在系统设置的【隐私与安全性 -> 扩展】中重新授权 Surge Network Extension。</td>
+        </tr>
+        <tr>
+          <td>托管配置更新失败 (Status 403 / 500)</td>
+          <td>机场订阅 Token 过期或订阅地址被本地封锁</td>
+          <td>在浏览器中直接打开托管链接测试；若打不开，向机场客服获取最新备用订阅地址。</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="faq"><i data-lucide="help-circle"></i> 九、常见问题解答 (FAQ)</h2>
+    <div class="callout tip">
+      <h4>Q: Surge 这么贵，比起免费开源的 Clash Verge Rev 值得买吗？</h4>
+      <p>
+        如果你只是日常翻看网页或刷视频，Clash Verge Rev 完全够用且体验优秀；但如果你深度身处苹果多设备生态（Mac + iPhone + Apple TV），且非常看重系统电量开销、网络开发抓包、或希望将 Mac 变成全家网关，Surge 依然是目前无可挑剔的顶级存在。
+      </p>
+    </div>
+    <div class="callout tip">
+      <h4>Q: Surge 提示“Enhanced Mode 增强模式安装失败”怎么办？</h4>
+      <p>
+        在 macOS 下，Surge 增强模式需要向系统注入 Network Extension 网络虚拟网卡。请打开 macOS【系统设置】→【隐私与安全性】，在页面下方找到被拦截的 Surge 系统扩展并点击【允许】，输入管理员密码后重启客户端即可生效。
+      </p>
+    </div>
+    <div class="callout tip">
+      <h4>Q: Surge 的 PONTE 远程跨设备互联有什么用？</h4>
+      <p>
+        PONTE 是 Surge 独有的点对点私有通道协议。在家庭 Mac 上常驻 Surge 网关后，出门在外的 iPhone/MacBook 只要开启 PONTE，即可无感直接访问家庭局域网内的 NAS、个人服务器与智能家居，无需配置任何公网公网 IP 与端口映射。
+      </p>
+    </div>
+  
+
+        <!-- Bottom Banner -->
+        <div class="action-banner">
+          <div class="action-banner-text">
+            <h3>准备好体验顺畅跨境网络了吗？</h3>
+            <p>搭配经过晚高峰实测严选的高速专线，解锁 4K 流媒体与 AI 高频调用。</p>
+          </div>
+          <div class="btn-group">
+            <a class="btn primary" href="https://nssurge.com/" target="_blank" rel="noopener noreferrer">
+              前往 Surge 官方站点
+            </a>
+            <a class="btn secondary" href="../recommend.html">
+              查看精选机场推荐
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Sidebar Table of Contents -->
+      <aside class="sidebar">
+        <div class="toc-title">
+          <i data-lucide="align-left"></i> 本文目录
+        </div>
+        <ul class="toc-list">
+          <li><a href="#intro">一、Surge 架构定位与天花板优势</a></li>
+          <li><a href="#versions">二、版本授权与购买选型</a></li>
+          <li><a href="#import">三、托管配置 (Managed Profile) 导入</a></li>
+          <li><a href="#policy-groups">四、策略组深度剖析 (URL-Test / Fallback)</a></li>
+          <li><a href="#enhanced-mode">五、增强模式 (Enhanced Mode) 全局接管</a></li>
+          <li><a href="#mitm-script">六、MitM 证书安装与网络抓包解密</a></li>
+          <li><a href="#gateway">七、Surge Mac 作为局域网网关软路由</a></li>
+          <li><a href="#troubleshooting">八、常见故障与排错速查</a></li>
+          <li><a href="#faq">九、常见问题解答 (FAQ)</a></li>
+        </ul>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Floating Back to Top Button -->
+  <button id="backToTop" class="back-to-top" aria-label="返回顶部" title="返回顶部">
+    <i data-lucide="chevron-up"></i>
+  </button>
+
+  <script>
+    lucide.createIcons();
+
+    // Theme Toggle
+    const themeBtn = document.getElementById('themeToggle');
+    const htmlEl = document.documentElement;
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    htmlEl.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+
+    themeBtn.addEventListener('click', () => {
+      const current = htmlEl.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      htmlEl.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateThemeIcon(next);
+    });
+
+    function updateThemeIcon(theme) {
+      themeBtn.innerHTML = theme === 'dark' ? '<i data-lucide="sun"></i>' : '<i data-lucide="moon"></i>';
+      lucide.createIcons();
+    }
+
+    // Back to top scroll listener
+    const backToTopBtn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+    }, { passive: true });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

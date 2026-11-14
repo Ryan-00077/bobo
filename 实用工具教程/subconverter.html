@@ -1,0 +1,908 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Subconverter 订阅转换全景教程：涵盖单节点与订阅转换原理、ACL4SSR 规则定制、关键 URL 参数解析、Docker 私有化一键部署及防止节点泄露安全策略。">
+  <link rel="canonical" href="https://bobo7.cc/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/subconverter.html">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Subconverter 订阅转换深度实战指南与自建防泄漏教程 | BoBo 博客">
+  <meta property="og:description" content="Subconverter 订阅转换全景教程：涵盖单节点与订阅转换原理、ACL4SSR 规则定制、关键 URL 参数解析、Docker 私有化一键部署及防止节点泄露安全策略。">
+  <meta property="og:url" content="https://bobo7.cc/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/subconverter.html">
+  <meta property="og:site_name" content="BoBo 博客">
+  <meta property="og:image" content="https://bobo7.cc/assets/logo.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Subconverter 订阅转换深度实战指南与自建防泄漏教程 | BoBo 博客">
+  <meta name="twitter:description" content="Subconverter 订阅转换全景教程：涵盖单节点与订阅转换原理、ACL4SSR 规则定制、关键 URL 参数解析、Docker 私有化一键部署及防止节点泄露安全策略。">
+  <meta name="twitter:image" content="https://bobo7.cc/assets/logo.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Subconverter 订阅转换深度实战指南与自建防泄漏教程 | BoBo 博客",
+  "description": "Subconverter 订阅转换全景教程：涵盖单节点与订阅转换原理、ACL4SSR 规则定制、关键 URL 参数解析、Docker 私有化一键部署及防止节点泄露安全策略。",
+  "url": "https://bobo7.cc/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/subconverter.html",
+  "datePublished": "2026-11-13T08:00:00+08:00",
+  "dateModified": "2026-11-14T15:00:00+08:00",
+  "author": {
+    "@type": "Organization",
+    "name": "BoBo 博客",
+    "url": "https://bobo7.cc/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "BoBo 博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://bobo7.cc/assets/logo.webp"
+    }
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://bobo7.cc/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "实用工具",
+      "item": "https://bobo7.cc/tools.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Subconverter 订阅转换深度实战指南与自建防泄漏教程 | BoBo 博客",
+      "item": "https://bobo7.cc/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/subconverter.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Q: 订阅转换后，原机场节点增加或删除了，需要重新转换吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不需要！转换生成的链接是一个“动态生成接口”，每次你在客户端内点击“更新订阅”，转换后端就会实时从机场重新抓取最新的节点列表并重新组装。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Q: 使用第三方公开的 Subconverter Web 转换网站安全吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "存在订阅泄漏风险。若使用不知名个人搭建的公共后端，可能会在后台留存你的订阅 Token 导致流量被盗刷。推荐使用知名开源维护的后端，或自行通过 Docker 在本地一分钟搭建专属轻量容器。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Q: 为什么订阅转换后部分 Hysteria 2 或 VLESS 节点丢失了？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "通常是因为目标客户端类型或转换核心版本过旧。建议在转换设置中将目标客户端选为支持现代协议的 Clash.Meta (Mihomo) 或 Sing-box，确保协议参数无损映射。"
+      }
+    }
+  ]
+}
+  </script>
+
+  <title>Subconverter 订阅转换深度实战指南与自建防泄漏教程 | BoBo 博客</title>
+  <link rel="icon" href="../assets/logo.webp">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root,
+    [data-theme="light"] {
+      --bg: #f5f7fb;
+      --bg-deep: #e9eef6;
+      --surface: rgba(255, 255, 255, 0.85);
+      --surface-soft: rgba(255, 255, 255, 0.6);
+      --surface-glass: rgba(250, 252, 255, 0.82);
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --card-border: rgba(38, 55, 83, 0.14);
+      --line: rgba(38, 55, 83, 0.12);
+      --line-strong: rgba(38, 55, 83, 0.22);
+      --text: #172235;
+      --muted: #627087;
+      --dim: #8a96a8;
+      --signal: #168b79;
+      --signal-bright: #0b6e61;
+      --signal-glow: rgba(22, 139, 121, 0.2);
+      --amber: #b07d1a;
+      --violet: #6c63d8;
+      --max: 1200px;
+      --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --header-bg: rgba(245, 247, 251, 0.85);
+    }
+
+    [data-theme="dark"] {
+      --bg: #07110f;
+      --bg-deep: #040907;
+      --surface: #0b1714;
+      --surface-soft: #0e1e1a;
+      --surface-glass: rgba(11, 23, 20, 0.72);
+      --card-bg: rgba(14, 30, 26, 0.65);
+      --card-border: rgba(194, 230, 217, 0.12);
+      --line: rgba(194, 230, 217, 0.14);
+      --line-strong: rgba(194, 230, 217, 0.28);
+      --text: #edf5f0;
+      --muted: #94a8a0;
+      --dim: #5f746c;
+      --signal: #9ff0c9;
+      --signal-bright: #d1ffe5;
+      --signal-glow: rgba(159, 240, 201, 0.25);
+      --amber: #ebd88e;
+      --violet: #8999ff;
+      --max: 1200px;
+      --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --header-bg: rgba(7, 17, 15, 0.82);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--bg-deep); }
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      font-family: var(--font-sans);
+      line-height: 1.75;
+      transition: background .3s ease, color .3s ease;
+    }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--header-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: -0.02em;
+    }
+    .brand-image {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    .brand-name small {
+      margin-left: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      color: var(--signal);
+      border: 1px solid var(--line-strong);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      margin-left: auto;
+    }
+    .site-nav a {
+      position: relative;
+      padding: 6px 0;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 500;
+      transition: color .2s ease;
+    }
+    .site-nav a:hover,
+    .site-nav a.active {
+      color: var(--text);
+    }
+    .site-nav a::after {
+      content: "";
+      position: absolute;
+      right: 0; bottom: 0; left: 0;
+      height: 1.5px;
+      background: var(--signal);
+      transform: scaleX(0);
+      transition: transform .2s ease;
+    }
+    .site-nav a:hover::after,
+    .site-nav a.active::after {
+      transform: scaleX(1);
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .theme-toggle,
+    .header-cta {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      border: 1px solid var(--line-strong);
+      background: var(--surface-soft);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color .2s ease;
+    }
+    .theme-toggle:hover,
+    .header-cta:hover {
+      border-color: var(--signal);
+    }
+
+    /* Breadcrumbs */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 28px 0 16px;
+    }
+    .breadcrumb a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+    .breadcrumb a:hover {
+      color: var(--signal);
+    }
+    .breadcrumb span {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* Article Hero */
+    .article-hero {
+      padding: 10px 0 32px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 36px;
+    }
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      background: rgba(22, 139, 121, 0.12);
+      color: var(--signal);
+      border: 1px solid var(--signal-glow);
+    }
+    .article-title {
+      font-size: clamp(26px, 3.5vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0 0 14px;
+      line-height: 1.3;
+    }
+    .article-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 20px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .article-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Article Layout (Main + Sidebar) */
+    .article-container {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      gap: 48px;
+      margin-bottom: 80px;
+    }
+
+    /* Content Typography */
+    .article-body {
+      font-size: 15.5px;
+      line-height: 1.85;
+      color: var(--text);
+    }
+    .article-body h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 44px 0 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .article-body h3 {
+      font-size: 17.5px;
+      font-weight: 600;
+      margin: 30px 0 12px;
+      color: var(--text);
+    }
+    .article-body p {
+      margin: 0 0 18px;
+      color: var(--text);
+      opacity: 0.95;
+    }
+    .article-body ul,
+    .article-body ol {
+      margin: 0 0 22px 24px;
+      padding: 0;
+    }
+    .article-body li {
+      margin-bottom: 10px;
+    }
+    .article-body strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .article-body code {
+      font-family: var(--font-mono);
+      background: var(--surface-soft);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13.5px;
+      border: 1px solid var(--line);
+    }
+    pre {
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 0 0 20px;
+    }
+
+    /* Comparison Table */
+    .article-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .article-table th,
+    .article-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+    }
+    .article-table th {
+      background: var(--surface-soft);
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* Callout & Alert Box */
+    .callout {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-left: 4px solid var(--signal);
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin: 24px 0;
+      font-size: 14.5px;
+    }
+    .callout.tip {
+      border-left-color: var(--signal);
+    }
+    .callout.warn {
+      border-left-color: var(--amber);
+    }
+    .callout h4 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Step Card */
+    .step-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 24px 0;
+    }
+    .step-box-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .step-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--signal);
+      color: #040907;
+      font-size: 13px;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .step-box-header h3 {
+      margin: 0;
+      font-size: 17px;
+    }
+
+    /* Sidebar / TOC */
+    .sidebar {
+      position: sticky;
+      top: 96px;
+      height: fit-content;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .toc-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 13px;
+    }
+    .toc-list li {
+      margin-bottom: 8px;
+    }
+    .toc-list a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s ease;
+      display: block;
+      line-height: 1.5;
+    }
+    .toc-list a:hover {
+      color: var(--signal);
+    }
+
+    /* Bottom Action Banner */
+    .action-banner {
+      background: linear-gradient(135deg, rgba(22, 139, 121, 0.12), transparent);
+      border: 1px solid var(--signal-glow);
+      border-radius: 12px;
+      padding: 32px;
+      margin-top: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .action-banner-text h3 {
+      margin: 0 0 6px;
+      font-size: 19px;
+    }
+    .action-banner-text p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all .2s ease;
+    }
+    .btn.primary {
+      background: var(--signal);
+      color: #040907;
+    }
+    .btn.primary:hover {
+      filter: brightness(1.1);
+      box-shadow: 0 0 16px var(--signal-glow);
+    }
+    .btn.secondary {
+      background: var(--surface-soft);
+      color: var(--text);
+      border: 1px solid var(--line-strong);
+    }
+    .btn.secondary:hover {
+      border-color: var(--signal);
+    }
+
+    /* Floating Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      right: 28px;
+      bottom: 28px;
+      z-index: 99;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 1px solid var(--line-strong);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(16px);
+      transition: opacity .25s ease, transform .25s ease, border-color .2s ease, background-color .2s ease;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .back-to-top:hover {
+      border-color: var(--signal);
+      color: var(--signal);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .article-container {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+    }
+    @media (max-width: 640px) {
+      .site-nav {
+        display: none;
+      }
+      .action-banner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="../assets/site-navigation.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../index.html" aria-label="BoBo 博客首页">
+        <img class="brand-image" src="../assets/logo.webp" alt="BoBo Logo">
+        <span class="brand-name">BoBo<small>BLOG</small></span>
+      </a>
+
+      <nav class="site-nav" aria-label="页面导航">
+        <a href="../index.html">首页</a>
+        <a href="../recommend.html">机场推荐</a>
+        <a href="../review.html">机场评测</a>
+        <a href="../tutorial.html">客户端教程</a>
+        <a class="active" aria-current="page" href="../tools.html">实用工具</a>
+        <a href="../about.html">关于</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="切换明暗主题" title="切换暗黑/明亮毛玻璃主题">
+          <i data-lucide="moon"></i>
+        </button>
+        <a class="header-cta" href="https://t.me/wanfengzn7" target="_blank" rel="noopener noreferrer" title="Telegram 交流群 / 频道" aria-label="Telegram">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+            <path d="m20.665 3.717-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l-.313 4.671c.458 0 .66-.21.916-.457l2.199-2.138 4.574 3.379c.843.465 1.448.225 1.658-.783l3.003-14.153c.307-1.232-.47-1.79-1.213-1.469z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="../index.html">首页</a> / <a href="../tools.html">实用工具</a> / <span>Subconverter 转换教程</span>
+    </div>
+
+    <!-- Article Hero -->
+    <header class="article-hero">
+      <div class="tag-row">
+        <span class="badge"><i data-lucide="shuffle"></i> 全能多协议订阅转换</span>
+        <span class="badge"><i data-lucide="shield-check"></i> 支持自建保护隐私</span>
+        <span class="badge"><i data-lucide="code"></i> ACL4SSR 规则深度定制</span>
+      </div>
+      <h1 class="article-title">Subconverter 订阅转换进阶定制与私密安全全景指南</h1>
+      <div class="article-meta">
+        <span><i data-lucide="calendar"></i> 2026-11-13 更新</span>
+        <span><i data-lucide="shield"></i> 隐私保护与节点去重</span>
+        <span><i data-lucide="terminal"></i> 支持 Docker 一键部署</span>
+      </div>
+    </header>
+
+    <!-- Article Content Grid -->
+    <div class="article-container">
+      <article class="article-body">
+        
+    <p>
+      在日常使用代理的过程中，许多用户常常遇到格式不匹配的痛点：手头有机场提供的 V2Ray/SS 单链接，却想导入 Clash 或 Sing-box 中使用；或者机场默认的分流规则粗糙简陋，导致国内许多应用常常卡顿。<strong>Subconverter（订阅转换）</strong> 正是解决多协议兼容、节点聚合去重与自定义分流规则的核心神器。
+    </p>
+
+    <div class="callout tip">
+      <h4><i data-lucide="info"></i> 核心功能亮点总结</h4>
+      <p>
+        1. <strong>多源格式转换</strong>：支持将 Vmess、Vless、Trojan、Shadowsocks、Hysteria 2 订阅一键转为 Clash、Sing-box、Surge、Quantumult X 等十几种客户端配置文件。<br>
+        2. <strong>细粒度规则注入</strong>：自动匹配并注入国内直连、海外代理、流媒体解锁、广告拦截等多级策略组。<br>
+        3. <strong>节点批量筛选与正则重命名</strong>：支持通过正则表达式排除特定倍率节点或统一添加国旗 Emoji 图标。
+      </p>
+    </div>
+
+    <h2 id="intro"><i data-lucide="layers"></i> 一、订阅转换的核心价值与原理</h2>
+    <p>
+      订阅转换的工作流程本质是一个“中间编译管道”：
+    </p>
+    <ol>
+      <li><strong>拉取源订阅</strong>：Subconverter 请求源节点地址，获取 Base64 编码的单节点链接或旧版配置。</li>
+      <li><strong>解析与标准化</strong>：提取每个节点的服务器地址、端口、密码、加密算法、TLS 证书域名及传输协议。</li>
+      <li><strong>模板套用与组装</strong>：将标准化节点注入用户指定的规则模板中，生成包含自动测速组、分流规则组的目标格式（如 Clash YAML 或 Sing-box JSON）。</li>
+    </ol>
+
+    <h2 id="security"><i data-lucide="shield-alert"></i> 二、公用转换的安全风险与防盗</h2>
+    <p>
+      市面上存在大量公开免费的在线订阅转换网站（Sub-Web）。但请务必注意潜在的<strong>节点泄露与安全隐患</strong>：
+    </p>
+    <ul>
+      <li><strong>订阅链接泄露</strong>：某些不良第三方公共后端可能会在后台日志中留存你的完整订阅 Token，导致别人白嫖你的机场流量。</li>
+      <li><strong>恶意规则注入</strong>：极少数恶意转换平台可能会暗中篡改分流规则，将银行或特定网站重定向到恶意中继节点。</li>
+      <li><strong>防范建议</strong>：优先选用知名大厂或开源社区搭建的可靠前端；对于高价值专线订阅，强烈建议<strong>在本地或自购 VPS 上通过 Docker 自建私有转换器</strong>。</li>
+    </ul>
+
+    <h2 id="rulesets"><i data-lucide="sliders"></i> 三、ACL4SSR 等主流规则集选型</h2>
+    <p>
+      转换工具中最核心的灵魂在于“远程规则模板”。目前业界应用最广泛的是 <code>ACL4SSR</code> 规则系列：
+    </p>
+    <table class="article-table">
+      <thead>
+        <tr>
+          <th>规则模板名称</th>
+          <th>策略组划分深度</th>
+          <th>适用人群与场景</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>ACL4SSR_Online.ini (标准版)</strong></td>
+          <td>区分国内直连、海外代理、常用流媒体、防广告</td>
+          <td><strong>绝大多数用户首选</strong>，兼顾省流与智能</td>
+        </tr>
+        <tr>
+          <td><strong>ACL4SSR_Online_Full.ini (完整版)</strong></td>
+          <td>按国家地区独立建组（香港、日本、美国、新加坡、台湾），细分数十个流媒体平台</td>
+          <td>拥有大量不同区域节点、需要精确指定流媒体解锁路径的高级玩家</td>
+        </tr>
+        <tr>
+          <td><strong>ACL4SSR_Online_Mini.ini (精简版)</strong></td>
+          <td>仅保留“国外媒体、国内媒体、其他国外、其他国内”基础策略</td>
+          <td>希望界面干净、不想要冗长策略组的极简主义者</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="url-params"><i data-lucide="code"></i> 四、关键高阶 URL 转换参数详解</h2>
+    <p>
+      在生成的订阅转换 URL 中，可以通过追加参数实现各种强大行为：
+    </p>
+    <ul>
+      <li><code>udp=true</code>：强制开启所有节点的 UDP 数据包转发（联机对战与语音通话必备）。</li>
+      <li><code>emoji=true</code>：根据节点名称中的国家关键词（如香港、日本、美国），自动在节点前添加对应国旗 Emoji。</li>
+      <li><code>scv=true</code>：跳过证书安全性检查（当节点证书未正确续签或自签名时防止握手失败）。</li>
+      <li><code>list=true</code>：输出纯节点列表（Node List），去除复杂的策略组配置。</li>
+      <li><code>include=(IEPL|专线|0.5x)</code>：使用正则表达式<strong>仅保留</strong>包含指定关键词的节点。</li>
+      <li><code>exclude=(官网|到期|剩余)</code>：使用正则表达式<strong>剔除</strong>机场的提示性公告节点。</li>
+    </ul>
+
+    <h2 id="docker"><i data-lucide="terminal"></i> 五、Docker 一键自建私有转换后端</h2>
+    <p>
+      利用 Docker 容器技术，只需一条命令即可在你的 Linux 服务器或 NAS 上搭建完全属于自己的私有转换引擎，彻底告别流量泄漏：
+    </p>
+    <pre><code>docker run -d \
+  --name subconverter \
+  --restart always \
+  -p 25500:25500 \
+  tindy2013/subconverter:latest</code></pre>
+    <p>
+      容器启动后，即可在浏览器中通过 <code>http://你的服务器IP:25500/sub?target=clash&url=你的订阅</code> 进行完全私密的本地化转换，整个过程没有任何第三方能够接触到你的订阅凭证。
+    </p>
+
+    <h2 id="troubleshooting"><i data-lucide="wrench"></i> 六、转换失败与常见排错速查</h2>
+    <table class="article-table">
+      <thead>
+        <tr>
+          <th>报错现象</th>
+          <th>诱发根源</th>
+          <th>应对方案</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>提示 <code>Download Profile Failed</code></td>
+          <td>原始订阅链接不可达或被本地墙阻断</td>
+          <td>先在浏览器测试原链接是否能下载出文本；若不行，向机场获取最新防封订阅域名。</td>
+        </tr>
+        <tr>
+          <td>转换后的节点数量为 0</td>
+          <td>原始节点包含不受支持的冷门格式，或正则过滤把所有节点都排除了</td>
+          <td>检查 <code>include</code> 正则表达式是否拼写错误；升级 Subconverter 至最新镜像版本。</td>
+        </tr>
+        <tr>
+          <td>客户端提示 YAML 格式错误</td>
+          <td>节点名称中包含英文冒号 <code>:</code> 或非法特殊符号导致缩进崩溃</td>
+          <td>在转换参数中添加 <code>rename</code> 规则过滤掉非法冒号。</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="faq"><i data-lucide="help-circle"></i> 七、常见核心问题解答 (FAQ)</h2>
+    <div class="callout tip">
+      <h4>Q: 订阅转换后，原机场节点增加或删除了，需要重新转换吗？</h4>
+      <p>
+        不需要！转换生成的链接是一个“动态生成接口”，每次你在客户端内点击“更新订阅”，转换后端就会实时从机场重新抓取最新的节点列表并重新组装。
+      </p>
+    </div>
+    <div class="callout tip">
+      <h4>Q: 使用第三方公开的 Subconverter Web 转换网站安全吗？</h4>
+      <p>
+        存在订阅泄漏风险。若使用不知名个人搭建的公共后端，可能会在后台留存你的订阅 Token 导致流量被盗刷。推荐使用知名开源维护的后端，或自行通过 Docker 在本地一分钟搭建专属轻量容器。
+      </p>
+    </div>
+    <div class="callout tip">
+      <h4>Q: 为什么订阅转换后部分 Hysteria 2 或 VLESS 节点丢失了？</h4>
+      <p>
+        通常是因为目标客户端类型或转换核心版本过旧。建议在转换设置中将目标客户端选为支持现代协议的 <code>Clash.Meta (Mihomo)</code> 或 <code>Sing-box</code>，确保协议参数无损映射。
+      </p>
+    </div>
+  
+
+        <!-- Bottom Banner -->
+        <div class="action-banner">
+          <div class="action-banner-text">
+            <h3>探索更多网络检测与优化技巧？</h3>
+            <p>搭配优质专线节点，解决网络卡顿、IP 风控与流媒体无法播放问题。</p>
+          </div>
+          <div class="btn-group">
+            <a class="btn primary" href="https://sub-web.qingsay.com/" target="_blank" rel="noopener noreferrer">
+              打开在线转换工具
+            </a>
+            <a class="btn secondary" href="../tools.html">
+              返回实用工具箱
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Sidebar Table of Contents -->
+      <aside class="sidebar">
+        <div class="toc-title">
+          <i data-lucide="align-left"></i> 本文目录
+        </div>
+        <ul class="toc-list">
+          <li><a href="#intro">一、订阅转换的核心价值与原理</a></li>
+          <li><a href="#security">二、公用转换的安全风险与防盗</a></li>
+          <li><a href="#rulesets">三、ACL4SSR 等主流规则集选型</a></li>
+          <li><a href="#url-params">四、关键高阶 URL 转换参数详解</a></li>
+          <li><a href="#docker">五、Docker 一键自建私有转换后端</a></li>
+          <li><a href="#troubleshooting">六、转换失败与常见排错速查</a></li>
+          <li><a href="#faq">七、常见核心问题解答 (FAQ)</a></li>
+        </ul>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Floating Back to Top Button -->
+  <button id="backToTop" class="back-to-top" aria-label="返回顶部" title="返回顶部">
+    <i data-lucide="chevron-up"></i>
+  </button>
+
+  <script>
+    lucide.createIcons();
+
+    // Theme Toggle
+    const themeBtn = document.getElementById('themeToggle');
+    const htmlEl = document.documentElement;
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    htmlEl.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+
+    themeBtn.addEventListener('click', () => {
+      const current = htmlEl.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      htmlEl.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateThemeIcon(next);
+    });
+
+    function updateThemeIcon(theme) {
+      themeBtn.innerHTML = theme === 'dark' ? '<i data-lucide="sun"></i>' : '<i data-lucide="moon"></i>';
+      lucide.createIcons();
+    }
+
+    // Back to top scroll listener
+    const backToTopBtn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+    }, { passive: true });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

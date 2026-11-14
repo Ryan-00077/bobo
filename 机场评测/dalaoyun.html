@@ -1,0 +1,843 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="大佬云机场深度测评：详解 Trojan 协议节点表现、月付资费方案、流媒体 4K 播放实测及选购验证实用指南。">
+  <link rel="canonical" href="https://bobo7.cc/%E6%9C%BA%E5%9C%BA%E8%AF%84%E6%B5%8B/dalaoyun.html">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="大佬云深度评测：高性价比 BGP 专线与多设备并发实测报告 | BoBo 博客">
+  <meta property="og:description" content="大佬云机场深度测评：详解 Trojan 协议节点表现、月付资费方案、流媒体 4K 播放实测及选购验证实用指南。">
+  <meta property="og:url" content="https://bobo7.cc/%E6%9C%BA%E5%9C%BA%E8%AF%84%E6%B5%8B/dalaoyun.html">
+  <meta property="og:site_name" content="BoBo 博客">
+  <meta property="og:image" content="https://bobo7.cc/assets/logo.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="大佬云深度评测：高性价比 BGP 专线与多设备并发实测报告 | BoBo 博客">
+  <meta name="twitter:description" content="大佬云机场深度测评：详解 Trojan 协议节点表现、月付资费方案、流媒体 4K 播放实测及选购验证实用指南。">
+  <meta name="twitter:image" content="https://bobo7.cc/assets/logo.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "大佬云深度评测：高性价比 BGP 专线与多设备并发实测报告 | BoBo 博客",
+  "description": "大佬云机场深度测评：详解 Trojan 协议节点表现、月付资费方案、流媒体 4K 播放实测及选购验证实用指南。",
+  "url": "https://bobo7.cc/%E6%9C%BA%E5%9C%BA%E8%AF%84%E6%B5%8B/dalaoyun.html",
+  "datePublished": "2026-11-13T08:00:00+08:00",
+  "dateModified": "2026-11-14T15:00:00+08:00",
+  "author": {
+    "@type": "Organization",
+    "name": "BoBo 博客",
+    "url": "https://bobo7.cc/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "BoBo 博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://bobo7.cc/assets/logo.webp"
+    }
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://bobo7.cc/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "机场评测",
+      "item": "https://bobo7.cc/review.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "大佬云深度评测",
+      "item": "https://bobo7.cc/%E6%9C%BA%E5%9C%BA%E8%AF%84%E6%B5%8B/dalaoyun.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Q: 大佬云支持几台设备同时在线？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "该机场官方政策对连接设备数较为宽松，一般不限制个人多台设备（手机、平板、电脑）同时在线，非常适合家庭成员共享使用。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Q: 大佬云不限时随心包的价格和流量是多少？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "闲云·随心包一次性标价 268 元包含 200GB 流量（折约 1.34 元/GB），悠云·长享包标价 498 元包含 500GB 流量（折约 0.996 元/GB）。均为不限时间、用完即止，不按月重置，适合作为防失联备用。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Q: 大佬云有优惠码吗？哪些套餐可用？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "官方公告新人 7 折优惠码为 dly88，适用于财云·福利版、初云·进阶版、御云·高级版等常规周期套餐；年付活动特惠包、福云·限时版与不限时随心包不参与折扣。"
+      }
+    }
+  ]
+}
+  </script>
+
+  <title>大佬云深度评测：高性价比 BGP 专线与多设备并发实测报告 | BoBo 博客</title>
+  <link rel="icon" href="../assets/logo.webp">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root,
+    [data-theme="light"] {
+      --bg: #f5f7fb;
+      --bg-deep: #e9eef6;
+      --surface: rgba(255, 255, 255, 0.85);
+      --surface-soft: rgba(255, 255, 255, 0.6);
+      --surface-glass: rgba(250, 252, 255, 0.82);
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --card-border: rgba(38, 55, 83, 0.14);
+      --line: rgba(38, 55, 83, 0.12);
+      --line-strong: rgba(38, 55, 83, 0.22);
+      --text: #172235;
+      --muted: #627087;
+      --dim: #8a96a8;
+      --signal: #168b79;
+      --signal-bright: #0b6e61;
+      --signal-glow: rgba(22, 139, 121, 0.2);
+      --amber: #b07d1a;
+      --violet: #6c63d8;
+      --max: 1200px;
+      --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --header-bg: rgba(245, 247, 251, 0.85);
+    }
+
+    [data-theme="dark"] {
+      --bg: #07110f;
+      --bg-deep: #040907;
+      --surface: #0b1714;
+      --surface-soft: #0e1e1a;
+      --surface-glass: rgba(11, 23, 20, 0.72);
+      --card-bg: rgba(14, 30, 26, 0.65);
+      --card-border: rgba(194, 230, 217, 0.12);
+      --line: rgba(194, 230, 217, 0.14);
+      --line-strong: rgba(194, 230, 217, 0.28);
+      --text: #edf5f0;
+      --muted: #94a8a0;
+      --dim: #5f746c;
+      --signal: #9ff0c9;
+      --signal-bright: #d1ffe5;
+      --signal-glow: rgba(159, 240, 201, 0.25);
+      --amber: #ebd88e;
+      --violet: #8999ff;
+      --max: 1200px;
+      --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --header-bg: rgba(7, 17, 15, 0.82);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--bg-deep); }
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      font-family: var(--font-sans);
+      line-height: 1.75;
+      transition: background .3s ease, color .3s ease;
+    }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--header-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: -0.02em;
+    }
+    .brand-image {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    .brand-name small {
+      margin-left: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      color: var(--signal);
+      border: 1px solid var(--line-strong);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      margin-left: auto;
+    }
+    .site-nav a {
+      position: relative;
+      padding: 6px 0;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 500;
+      transition: color .2s ease;
+    }
+    .site-nav a:hover,
+    .site-nav a.active {
+      color: var(--text);
+    }
+    .site-nav a::after {
+      content: "";
+      position: absolute;
+      right: 0; bottom: 0; left: 0;
+      height: 1.5px;
+      background: var(--signal);
+      transform: scaleX(0);
+      transition: transform .2s ease;
+    }
+    .site-nav a:hover::after,
+    .site-nav a.active::after {
+      transform: scaleX(1);
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .theme-toggle,
+    .header-cta {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      border: 1px solid var(--line-strong);
+      background: var(--surface-soft);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color .2s ease;
+    }
+    .theme-toggle:hover,
+    .header-cta:hover {
+      border-color: var(--signal);
+    }
+
+    /* Breadcrumbs */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 28px 0 16px;
+    }
+    .breadcrumb a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+    .breadcrumb a:hover {
+      color: var(--signal);
+    }
+    .breadcrumb span {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* Article Hero */
+    .article-hero {
+      padding: 10px 0 32px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 36px;
+    }
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      background: rgba(22, 139, 121, 0.12);
+      color: var(--signal);
+      border: 1px solid var(--signal-glow);
+    }
+    .article-title {
+      font-size: clamp(26px, 3.5vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0 0 14px;
+      line-height: 1.3;
+    }
+    .article-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 20px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .article-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Article Layout (Main + Sidebar) */
+    .article-container {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      gap: 48px;
+      margin-bottom: 80px;
+    }
+
+    /* Content Typography */
+    .article-body {
+      font-size: 15.5px;
+      line-height: 1.85;
+      color: var(--text);
+    }
+    .article-body h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 44px 0 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .article-body h3 {
+      font-size: 17.5px;
+      font-weight: 600;
+      margin: 30px 0 12px;
+      color: var(--text);
+    }
+    .article-body p {
+      margin: 0 0 18px;
+      color: var(--text);
+      opacity: 0.95;
+    }
+    .article-body ul,
+    .article-body ol {
+      margin: 0 0 22px 24px;
+      padding: 0;
+    }
+    .article-body li {
+      margin-bottom: 10px;
+    }
+    .article-body strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .article-body code {
+      font-family: var(--font-mono);
+      background: var(--surface-soft);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13.5px;
+      border: 1px solid var(--line);
+    }
+
+    /* Comparison Table */
+    .article-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .article-table th,
+    .article-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+    }
+    .article-table th {
+      background: var(--surface-soft);
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* Callout & Alert Box */
+    .callout {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-left: 4px solid var(--signal);
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin: 24px 0;
+      font-size: 14.5px;
+    }
+    .callout.tip {
+      border-left-color: var(--signal);
+    }
+    .callout.warn {
+      border-left-color: var(--amber);
+    }
+    .callout h4 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Sidebar / TOC */
+    .sidebar {
+      position: sticky;
+      top: 96px;
+      height: fit-content;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .toc-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 13px;
+    }
+    .toc-list li {
+      margin-bottom: 8px;
+    }
+    .toc-list a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s ease;
+      display: block;
+      line-height: 1.5;
+    }
+    .toc-list a:hover {
+      color: var(--signal);
+    }
+
+    /* Bottom Action Banner */
+    .action-banner {
+      background: linear-gradient(135deg, rgba(22, 139, 121, 0.12), transparent);
+      border: 1px solid var(--signal-glow);
+      border-radius: 12px;
+      padding: 32px;
+      margin-top: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .action-banner-text h3 {
+      margin: 0 0 6px;
+      font-size: 19px;
+    }
+    .action-banner-text p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all .2s ease;
+    }
+    .btn.primary {
+      background: var(--signal);
+      color: #040907;
+    }
+    .btn.primary:hover {
+      filter: brightness(1.1);
+      box-shadow: 0 0 16px var(--signal-glow);
+    }
+    .btn.secondary {
+      background: var(--surface-soft);
+      color: var(--text);
+      border: 1px solid var(--line-strong);
+    }
+    .btn.secondary:hover {
+      border-color: var(--signal);
+    }
+
+    /* Floating Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      right: 28px;
+      bottom: 28px;
+      z-index: 99;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 1px solid var(--line-strong);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(16px);
+      transition: opacity .25s ease, transform .25s ease, border-color .2s ease, background-color .2s ease;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .back-to-top:hover {
+      border-color: var(--signal);
+      color: var(--signal);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .article-container {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+    }
+    @media (max-width: 640px) {
+      .site-nav {
+        display: none;
+      }
+      .action-banner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="../assets/site-navigation.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../index.html" aria-label="BoBo 博客首页">
+        <img class="brand-image" src="../assets/logo.webp" alt="BoBo Logo">
+        <span class="brand-name">BoBo<small>BLOG</small></span>
+      </a>
+
+      <nav class="site-nav" aria-label="页面导航">
+        <a href="../index.html">首页</a>
+        <a href="../recommend.html">机场推荐</a>
+        <a class="active" aria-current="page" href="../review.html">机场评测</a>
+        <a href="../tutorial.html">客户端教程</a>
+        <a href="../tools.html">实用工具</a>
+        <a href="../about.html">关于</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="切换明暗主题" title="切换暗黑/明亮毛玻璃主题">
+          <i data-lucide="moon"></i>
+        </button>
+        <a class="header-cta" href="https://t.me/wanfengzn7" target="_blank" rel="noopener noreferrer" title="Telegram 交流群 / 频道" aria-label="Telegram">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+            <path d="m20.665 3.717-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l-.313 4.671c.458 0 .66-.21.916-.457l2.199-2.138 4.574 3.379c.843.465 1.448.225 1.658-.783l3.003-14.153c.307-1.232-.47-1.79-1.213-1.469z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="../index.html">首页</a> / <a href="../review.html">机场评测</a> / <span>大佬云深度评测</span>
+    </div>
+
+    <!-- Article Hero -->
+    <header class="article-hero">
+      <div class="tag-row">
+        <span class="badge"><i data-lucide="cloud"></i> 优质 BGP 多线中转</span>
+        <span class="badge"><i data-lucide="users"></i> 不限在线设备连接</span>
+        <span class="badge"><i data-lucide="dollar-sign"></i> 极致性价比首选</span>
+      </div>
+      <h1 class="article-title">大佬云深度评测：高性价比 BGP 专线实测与选购指南</h1>
+      <div class="article-meta">
+        <span><i data-lucide="calendar"></i> 2026-11-13 实测</span>
+        <span><i data-lucide="star"></i> 综合评分 9.4 / 10</span>
+        <span><i data-lucide="shield"></i> 建议月付小额验证</span>
+      </div>
+    </header>
+
+    <!-- Article Content Grid -->
+    <div class="article-container">
+      <article class="article-body">
+        
+    <p>
+      在网络代理与跨境连接服务中，<strong>大佬云（DaLaoYun / 大哥云）</strong> 通常被视为偏向大流量与多设备使用场景的选择之一。该服务配备多种容量规格与计费周期，支持常见客户端协议连接，适合用于日常音视频浏览、大文件下载以及多终端协同等常规需求，实际使用效果建议结合本地宽带情况进行体验与评估。
+    </p>
+
+    <div class="callout tip">
+      <h4><i data-lucide="info"></i> 服务特点概览</h4>
+      <ul style="margin: 10px 0 0 18px; padding: 0; line-height: 1.8;">
+        <li><strong>服务定位</strong>：主打大流量配额与多设备日常使用，适合频繁刷视频、大文件传输与常规网页冲浪。</li>
+        <li><strong>协议与兼容</strong>：以成熟通用的 Trojan 协议为主，提供多端简易客户端支持与通用订阅配置。</li>
+        <li><strong>套餐方案</strong>：起步月付门槛亲民，提供多种周期档位与按量随心包，建议新用户先按月测试实际体验。</li>
+      </ul>
+    </div>
+
+    <h2 id="intro"><i data-lucide="layers"></i> 一、大佬云产品定位与架构解析</h2>
+    <p>
+      大佬云定位于“普惠型主力梯队”，通过在上海、广州等核心枢纽部署 BGP 入口，将用户流量汇聚后经由大带宽国际通道送达海外。由于其采购了较大规模的带宽冗余，在日常网页浏览、社交媒体互动以及多任务并发拉取时，吞吐上限表现较为亮眼。
+    </p>
+
+    <h2 id="pricing"><i data-lucide="tag"></i> 二、套餐资费与性价比对比</h2>
+    <table class="article-table">
+      <thead>
+        <tr>
+          <th>套餐档位</th>
+          <th>流量配额</th>
+          <th>价格周期</th>
+          <th>单日折算与说明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>年付活动特惠包</strong></td>
+          <td>60 GB / 月</td>
+          <td>¥96.00 / 年</td>
+          <td>约 0.26 元 / 天，不享受折扣</td>
+        </tr>
+        <tr>
+          <td><strong>福云·限时版</strong></td>
+          <td>50 GB / 月</td>
+          <td>¥15.00 / 月</td>
+          <td>不到 0.5 元 / 天，不享受折扣</td>
+        </tr>
+        <tr>
+          <td><strong>财云·福利版</strong></td>
+          <td>100 GB / 月</td>
+          <td>¥19.99 / 月</td>
+          <td>不到 0.65 元 / 天，主力推荐款</td>
+        </tr>
+        <tr>
+          <td><strong>初云·进阶版</strong></td>
+          <td>150 GB / 月</td>
+          <td>¥25.00 / 月</td>
+          <td>不到 0.84 元 / 天，大流量优选</td>
+        </tr>
+        <tr>
+          <td><strong>御云·高级版</strong></td>
+          <td>600 GB / 月</td>
+          <td>¥73.00 / 月</td>
+          <td>约 2.43 元 / 天，重度团队大额包</td>
+        </tr>
+        <tr>
+          <td><strong>闲云·随心包 (不限时)</strong></td>
+          <td>200 GB</td>
+          <td>¥268.00 / 单次</td>
+          <td>约 1.34 元 / GB，不限时不过期</td>
+        </tr>
+        <tr>
+          <td><strong>悠云·长享包 (不限时)</strong></td>
+          <td>500 GB</td>
+          <td>¥498.00 / 单次</td>
+          <td>约 0.99 元 / GB，超长防失联备用</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="performance"><i data-lucide="activity"></i> 三、节点连接与日常使用体验观察</h2>
+    <p>
+      在不同时段对常见热门节点进行抽样体验，香港与日本等常规节点的下行速率参考区间通常维持在 <strong>80 Mbps ～ 180 Mbps</strong> 左右，能够较好地满足日常高清音视频播放与常规网页浏览需求。在晚高峰骨干网负载较高时，受跨网公网路由影响可能会出现偶发延迟波动，整体连通性处于正常可用范围，实际表现以用户本地网络测试为准。
+    </p>
+
+    <h2 id="unlock"><i data-lucide="tv"></i> 四、流媒体与社交工具解锁情况</h2>
+    <ul>
+      <li><strong>流媒体支持</strong>：常规香港与新加坡节点支持 YouTube 4K、Telegram、Twitter 顺畅加载；主流非自制剧 Netflix 能够正常播放。</li>
+      <li><strong>AI 工具兼容</strong>：支持 ChatGPT Web 界面日常问答。若遇到特定节点跳验证码，在客户端中手动切换至美国备用节点即可顺畅通过。</li>
+    </ul>
+
+    <h2 id="verif-guide"><i data-lucide="shield-alert"></i> 五、网络可用性与选购实操建议</h2>
+    <p>
+      在选购网络加速服务时，通常建议用户：<strong>“先按自身实际网络验证可用性”</strong>。
+    </p>
+    <div class="callout warn">
+      <h4><i data-lucide="alert-triangle"></i> 资深玩家避坑建议</h4>
+      <p>
+        由于每位用户家中的宽带运营商（电信、联通、移动、广电或各地方二级宽带）与各机房入口的网间路由差异较大，<strong>强烈建议新用户先购买 1 个月的最基础套餐进行本地实测</strong>。如果测试 1～2 周确认自己家里的网络与该机场节点匹配良好、晚高峰不卡顿，再考虑续费或升级更长周期。
+      </p>
+    </div>
+
+    <h2 id="faq"><i data-lucide="help-circle"></i> 六、常见问题解答 (FAQ)</h2>
+    <div class="callout tip">
+      <h4>Q: 大佬云支持几台设备同时在线？</h4>
+      <p>
+        该机场官方政策对连接设备数较为宽松，一般不限制个人多台设备（手机、平板、电脑）同时在线，非常适合家庭成员共享使用。
+      </p>
+    </div>
+    <div class="callout tip">
+      <h4>Q: 大佬云不限时随心包的价格和流量是多少？</h4>
+      <p>
+        闲云·随心包一次性标价 268 元包含 200GB 流量（折约 1.34 元/GB），悠云·长享包标价 498 元包含 500GB 流量（折约 0.996 元/GB）。均为不限时间、用完即止，不按月重置，适合作为防失联备用。
+      </p>
+    </div>
+    <div class="callout tip">
+      <h4>Q: 大佬云有优惠码吗？哪些套餐可用？</h4>
+      <p>
+        官方公告新人 7 折优惠码为 <code>dly88</code>，适用于财云·福利版、初云·进阶版、御云·高级版等常规周期套餐；年付活动特惠包、福云·限时版与不限时随心包不参与折扣。
+      </p>
+    </div>
+  
+
+        <!-- Bottom Banner -->
+        <div class="action-banner">
+          <div class="action-banner-text">
+            <h3>准备体验高速稳定的跨境网络？</h3>
+            <p>点击直达官方站点获取最新活动资费与订阅配置。</p>
+          </div>
+          <div class="btn-group">
+            <a class="btn primary" href="../go/dalaoyun.html" target="_blank" rel="noopener noreferrer nofollow sponsored">
+              前往大佬云官网选购
+            </a>
+            <a class="btn secondary" href="../recommend.html">
+              查看全部推荐榜单
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Sidebar Table of Contents -->
+      <aside class="sidebar">
+        <div class="toc-title">
+          <i data-lucide="align-left"></i> 本文目录
+        </div>
+        <ul class="toc-list">
+          <li><a href="#intro">一、大佬云产品定位与架构解析</a></li>
+          <li><a href="#pricing">二、套餐资费与性价比对比</a></li>
+          <li><a href="#performance">三、节点连接与日常使用体验观察</a></li>
+          <li><a href="#unlock">四、流媒体与社交工具解锁情况</a></li>
+          <li><a href="#verif-guide">五、网络可用性与选购实操建议</a></li>
+          <li><a href="#faq">六、常见问题解答 (FAQ)</a></li>
+        </ul>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Floating Back to Top Button -->
+  <button id="backToTop" class="back-to-top" aria-label="返回顶部" title="返回顶部">
+    <i data-lucide="chevron-up"></i>
+  </button>
+
+  <script>
+    lucide.createIcons();
+
+    // Theme Toggle
+    const themeBtn = document.getElementById('themeToggle');
+    const htmlEl = document.documentElement;
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    htmlEl.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+
+    themeBtn.addEventListener('click', () => {
+      const current = htmlEl.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      htmlEl.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateThemeIcon(next);
+    });
+
+    function updateThemeIcon(theme) {
+      themeBtn.innerHTML = theme === 'dark' ? '<i data-lucide="sun"></i>' : '<i data-lucide="moon"></i>';
+      lucide.createIcons();
+    }
+
+    // Back to top scroll listener
+    const backToTopBtn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+    }, { passive: true });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

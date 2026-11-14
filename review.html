@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BoBo 博客 - 独立客观的晚高峰网络测速与节点压测报告，涵盖三网延迟、丢包率与解锁实测。">
+  <link rel="canonical" href="https://bobo7.cc/review.html">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="机场评测 | BoBo 博客">
+  <meta property="og:description" content="BoBo 博客 - 独立客观的晚高峰网络测速与节点压测报告，涵盖三网延迟、丢包率与解锁实测。">
+  <meta property="og:url" content="https://bobo7.cc/review.html">
+  <meta property="og:site_name" content="BoBo 博客">
+  <meta property="og:image" content="https://bobo7.cc/assets/logo.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="机场评测 | BoBo 博客">
+  <meta name="twitter:description" content="BoBo 博客 - 独立客观的晚高峰网络测速与节点压测报告，涵盖三网延迟、丢包率与解锁实测。">
+  <meta name="twitter:image" content="https://bobo7.cc/assets/logo.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "机场评测 | BoBo 博客",
+  "url": "https://bobo7.cc/review.html",
+  "description": "BoBo 博客 - 独立客观的晚高峰网络测速与节点压测报告，涵盖三网延迟、丢包率与解锁实测。",
+  "publisher": {
+    "@type": "Organization",
+    "name": "BoBo 博客"
+  }
+}
+  </script>
+
+  <title>机场评测 | BoBo 博客</title>
+  <link rel="icon" href="assets/logo.webp">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root,
+    [data-theme="light"] {
+      --bg: #f5f7fb;
+      --bg-deep: #e9eef6;
+      --surface: rgba(255, 255, 255, 0.85);
+      --surface-soft: rgba(255, 255, 255, 0.6);
+      --surface-glass: rgba(250, 252, 255, 0.82);
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --card-border: rgba(38, 55, 83, 0.14);
+      --line: rgba(38, 55, 83, 0.12);
+      --line-strong: rgba(38, 55, 83, 0.22);
+      --text: #172235;
+      --muted: #627087;
+      --dim: #8a96a8;
+      --signal: #168b79;
+      --signal-bright: #0b6e61;
+      --signal-glow: rgba(22, 139, 121, 0.2);
+      --amber: #b07d1a;
+      --violet: #6c63d8;
+      --max: 1200px;
+      --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      --font-serif: Georgia, "Noto Serif SC", serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --header-bg: rgba(245, 247, 251, 0.85);
+    }
+
+    [data-theme="dark"] {
+      --bg: #07110f;
+      --bg-deep: #040907;
+      --surface: #0b1714;
+      --surface-soft: #0e1e1a;
+      --surface-glass: rgba(11, 23, 20, 0.72);
+      --card-bg: rgba(14, 30, 26, 0.65);
+      --card-border: rgba(194, 230, 217, 0.12);
+      --line: rgba(194, 230, 217, 0.14);
+      --line-strong: rgba(194, 230, 217, 0.28);
+      --text: #edf5f0;
+      --muted: #94a8a0;
+      --dim: #5f746c;
+      --signal: #9ff0c9;
+      --signal-bright: #d1ffe5;
+      --signal-glow: rgba(159, 240, 201, 0.25);
+      --amber: #ebd88e;
+      --violet: #8999ff;
+      --max: 1200px;
+      --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      --font-serif: Georgia, "Noto Serif SC", serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --header-bg: rgba(7, 17, 15, 0.82);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--bg-deep); }
+    body {
+      min-width: 320px;
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--text);
+      background: var(--bg);
+      font-family: var(--font-sans);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    a, button { font: inherit; }
+    h1, h2, h3, h4, p { margin: 0; }
+    .wrap { width: min(var(--max), calc(100% - 48px)); margin: 0 auto; }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid var(--line);
+      background: var(--header-bg);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      transition: all 0.25s ease;
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 74px;
+      gap: 24px;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 12px; white-space: nowrap; }
+    .brand-image { width: 34px; height: 34px; object-fit: cover; border-radius: 8px; }
+    .brand-name { font-family: var(--font-serif); font-size: 18px; font-weight: 700; line-height: 1.1; }
+    .brand-name small { display: block; margin-top: 2px; color: var(--muted); font-family: var(--font-sans); font-size: 9px; font-weight: 600; letter-spacing: .16em; }
+
+    .site-nav { display: flex; align-items: center; gap: 28px; margin-left: auto; }
+    .site-nav a {
+      position: relative;
+      padding: 6px 0;
+      color: var(--muted);
+      font-size: 13.5px;
+      font-weight: 500;
+      transition: color .2s ease;
+    }
+    .site-nav a::after {
+      content: "";
+      position: absolute;
+      right: 0; bottom: 0; left: 0;
+      height: 1.5px;
+      background: var(--signal);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform .24s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .site-nav a:hover, .site-nav a.active { color: var(--text); }
+    .site-nav a:hover::after, .site-nav a.active::after { transform: scaleX(1); transform-origin: left; }
+
+    .header-actions { display: flex; align-items: center; gap: 12px; }
+    .theme-toggle, .header-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      border: 1px solid var(--line-strong);
+      background: var(--surface-soft);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .theme-toggle:hover, .header-cta:hover { color: var(--signal); border-color: var(--signal); transform: translateY(-2px); }
+
+    /* Page Hero */
+    .page-hero { padding: 64px 0 36px; text-align: center; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      background: var(--surface-soft);
+      color: var(--signal);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      margin-bottom: 20px;
+    }
+    .eyebrow i { width: 6px; height: 6px; border-radius: 50%; background: var(--signal); display: inline-block; }
+    .page-title {
+      font-family: var(--font-serif);
+      font-size: clamp(30px, 4vw, 44px);
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    .page-desc { max-width: 680px; margin: 0 auto; font-size: 15px; color: var(--muted); line-height: 1.7; }
+
+    /* Metrics Grid */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin: 40px 0;
+    }
+    .metric-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .metric-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: rgba(22, 139, 121, 0.1);
+      color: var(--signal);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .metric-title { font-size: 14.5px; font-weight: 700; margin-bottom: 4px; }
+    .metric-desc { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+
+    /* Table Container */
+    .table-container {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      overflow-x: auto;
+      margin-bottom: 80px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    }
+    .benchmark-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13.5px;
+      white-space: nowrap;
+    }
+    .benchmark-table th {
+      padding: 16px 20px;
+      background: var(--surface-soft);
+      color: var(--dim);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .05em;
+      border-bottom: 1px solid var(--line);
+    }
+    .benchmark-table td {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      color: var(--text);
+    }
+    .benchmark-table tr:hover td {
+      background: rgba(0, 0, 0, 0.02);
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .badge.iplc { background: rgba(22, 139, 121, 0.12); color: var(--signal); }
+    .badge.bgp { background: rgba(108, 99, 216, 0.12); color: var(--violet); }
+    .rating { color: var(--amber); font-weight: 700; }
+    .speed-tag { color: var(--signal); font-weight: 600; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--line);
+      background: var(--surface-soft);
+      padding: 38px 0;
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .footer-brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; }
+    .footer-brand img { width: 22px; height: 22px; border-radius: 6px; }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; font-size: 13.5px; color: var(--muted); }
+    .footer-links a:hover { color: var(--text); }
+  </style>
+  <link rel="stylesheet" href="assets/site-navigation.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html" aria-label="BoBo 博客首页">
+        <img class="brand-image" src="assets/logo.webp" alt="BoBo Logo">
+        <span class="brand-name">BoBo<small>BLOG</small></span>
+      </a>
+
+      <nav class="site-nav" aria-label="页面导航">
+        <a href="index.html">首页</a>
+        <a href="recommend.html">机场推荐</a>
+        <a class="active" aria-current="page" href="review.html">机场评测</a>
+        <a href="tutorial.html">客户端教程</a>
+        <a href="tools.html">实用工具</a>
+        <a href="about.html">关于</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="切换明暗主题" title="切换暗黑/明亮毛玻璃主题">
+          <i data-lucide="moon"></i>
+        </button>
+        <a class="header-cta" href="https://t.me/wanfengzn7" target="_blank" rel="noopener noreferrer" title="Telegram 交流群 / 频道" aria-label="Telegram">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+            <path d="m20.665 3.717-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l-.313 4.671c.458 0 .66-.21.916-.457l2.199-2.138 4.574 3.379c.843.465 1.448.225 1.658-.783l3.003-14.153c.307-1.232-.47-1.79-1.213-1.469z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="page-hero">
+      <div class="eyebrow"><i></i> BENCHMARK & SPEED TEST / 真实晚高峰测速</div>
+      <h1 class="page-title">全网主流专线机场实测跑分榜</h1>
+      <p class="page-desc">
+        拒绝非高峰时段的虚假跑分。我们基于电信、联通、移动三网真实千兆宽带，持续在 20:00-23:00 晚高峰对各服务商进行全维度压力测试。
+      </p>
+
+      <!-- 4 Core Metrics -->
+      <div class="metrics-row">
+        <div class="metric-card">
+          <div class="metric-icon"><i data-lucide="gauge"></i></div>
+          <div>
+            <div class="metric-title">晚高峰压测</div>
+            <div class="metric-desc">每晚黄金时段真实 4K/8K 视频缓冲速率与网络丢包</div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon"><i data-lucide="unlock"></i></div>
+          <div>
+            <div class="metric-title">全域原生解锁</div>
+            <div class="metric-desc">严格监控 Netflix 非自制剧、ChatGPT 与 Claude 状态</div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon"><i data-lucide="shield-check"></i></div>
+          <div>
+            <div class="metric-title">防跑路安全指数</div>
+            <div class="metric-desc">核实运营年限、主备冗余节点与商誉退费保障机制</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-container">
+      <table class="benchmark-table">
+        <thead>
+          <tr>
+            <th>机场名称</th>
+            <th>服务架构</th>
+            <th>晚高峰延迟参考</th>
+            <th>丢包率参考</th>
+            <th>下行测速参考</th>
+            <th>解锁与场景</th>
+            <th>起步月付</th>
+            <th>综合评分</th>
+            <th>官网直达</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>神行加速 (ShenXing)</strong><br><a href="机场评测/shenxing.html" style="font-size:12px;color:var(--signal);text-decoration:none;">查看评测报告</a></td>
+            <td><span class="badge iplc">IPLC 隧道传输</span></td>
+            <td>28 ~ 45 ms</td>
+            <td>&lt;0.5%</td>
+            <td class="speed-tag">180 ~ 300 Mbps</td>
+            <td>主流流媒体 / 原生双 ISP</td>
+            <td>券后 ¥13.92 / 月</td>
+            <td><span class="rating">9.8 / 10</span></td>
+            <td><a href="go/shenxing.html" target="_blank" rel="noopener noreferrer nofollow sponsored" style="color:var(--signal);font-weight:600">访问官网</a></td>
+          </tr>
+          <tr>
+            <td><strong>大佬云 (DaLaoYun)</strong><br><a href="机场评测/dalaoyun.html" style="font-size:12px;color:var(--signal);text-decoration:none;">查看评测报告</a></td>
+            <td><span class="badge bgp">BGP 多线传输</span></td>
+            <td>35 ~ 55 ms</td>
+            <td>&lt;0.5%</td>
+            <td class="speed-tag">120 ~ 220 Mbps</td>
+            <td>主流流媒体 / 多设备协同</td>
+            <td>¥15.00 / 月</td>
+            <td><span class="rating">9.4 / 10</span></td>
+            <td><a href="go/dalaoyun.html" target="_blank" rel="noopener noreferrer nofollow sponsored" style="color:var(--signal);font-weight:600">访问官网</a></td>
+          </tr>
+          <tr>
+            <td><strong>云界线 (YunJieXian)</strong><br><a href="机场评测/yunjiexian.html" style="font-size:12px;color:var(--signal);text-decoration:none;">查看评测报告</a></td>
+            <td><span class="badge iplc">IPLC 隧道传输</span></td>
+            <td>30 ~ 48 ms</td>
+            <td>&lt;0.5%</td>
+            <td class="speed-tag">150 ~ 260 Mbps</td>
+            <td>主流流媒体 / 2.5G 端口</td>
+            <td>券后 ¥13.92 / 月</td>
+            <td><span class="rating">9.7 / 10</span></td>
+            <td><a href="go/yunjiexian.html" target="_blank" rel="noopener noreferrer nofollow sponsored" style="color:var(--signal);font-weight:600">访问官网</a></td>
+          </tr>
+          <tr>
+            <td><strong>闪电鼠 (ShanDianShu)</strong><br><a href="机场评测/shandianshu.html" style="font-size:12px;color:var(--signal);text-decoration:none;">查看评测报告</a></td>
+            <td><span class="badge iplc">原生双 ISP 住宅</span></td>
+            <td>28 ~ 50 ms</td>
+            <td>&lt;0.5%</td>
+            <td class="speed-tag">140 ~ 240 Mbps</td>
+            <td>住宅属性 / 电商防风控</td>
+            <td>¥15.00 / 月</td>
+            <td><span class="rating">9.8 / 10</span></td>
+            <td><a href="go/shandianshu.html" target="_blank" rel="noopener noreferrer nofollow sponsored" style="color:var(--signal);font-weight:600">访问官网</a></td>
+          </tr>
+          <tr>
+            <td><strong>榴莲云 (LiuLianYun)</strong><br><a href="机场评测/liulianyun.html" style="font-size:12px;color:var(--signal);text-decoration:none;">查看评测报告</a></td>
+            <td><span class="badge iplc">IEPL 隧道传输</span></td>
+            <td>32 ~ 52 ms</td>
+            <td>&lt;0.5%</td>
+            <td class="speed-tag">130 ~ 220 Mbps</td>
+            <td>海外主流流媒体支持</td>
+            <td>¥15.00 / 月</td>
+            <td><span class="rating">9.5 / 10</span></td>
+            <td><a href="go/liulianyun.html" target="_blank" rel="noopener noreferrer nofollow sponsored" style="color:var(--signal);font-weight:600">访问官网</a></td>
+          </tr>
+          <tr>
+            <td><strong>环球梯 (HuanQiuTi)</strong><br><a href="机场评测/huanqiuti.html" style="font-size:12px;color:var(--signal);text-decoration:none;">查看评测报告</a></td>
+            <td><span class="badge rate">多线周期 / 按量</span></td>
+            <td>35 ~ 65 ms</td>
+            <td>&lt;0.8%</td>
+            <td class="speed-tag">100 ~ 180 Mbps</td>
+            <td>常用流媒体 / 丰富国家</td>
+            <td>¥15.00 / 月</td>
+            <td><span class="rating">9.4 / 10</span></td>
+            <td><a href="go/huanqiuti.html" target="_blank" rel="noopener noreferrer nofollow sponsored" style="color:var(--signal);font-weight:600">访问官网</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Affiliate Disclosure -->
+    <div style="margin-top: 36px; padding: 14px 20px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px; font-size: 13px; color: var(--muted); line-height: 1.6;">
+      <i data-lucide="info" style="display:inline-block; vertical-align:middle; width:16px; height:16px; margin-right:6px; color:var(--signal);"></i>
+      <strong>透明度声明</strong>：本站部分链接包含服务商的推广返利。若您通过本站链接选购服务，我们可能会获得一定比例的推荐佣金，这有助于维持本站服务器开销与长线独立测速追踪，但绝不会影响评测客观性与您的实际结账金额。
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="wrap footer-inner">
+      <div class="footer-brand">
+        <img src="assets/logo.webp" alt="BoBo Logo"> BoBo
+      </div>
+      <div class="footer-links">
+        <a href="recommend.html">机场推荐</a>
+        <a href="review.html">机场评测</a>
+        <a href="tutorial.html">客户端教程</a>
+        <a href="tools.html">实用工具</a>
+        <a href="about.html">关于我们</a>
+        <a href="https://t.me/wanfengzn7" target="_blank" rel="noopener noreferrer">联系支持</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop" aria-label="返回顶部" title="返回顶部">
+    <i data-lucide="arrow-up"></i>
+  </button>
+
+  <script>
+    const themeToggleBtn = document.getElementById("themeToggle");
+    themeToggleBtn.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme") || "light";
+      const next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      themeToggleBtn.innerHTML = next === "dark" ? '<i data-lucide="sun"></i>' : '<i data-lucide="moon"></i>';
+      if (window.lucide) window.lucide.createIcons();
+    });
+
+    // Back to Top Logic
+    const backToTopBtn = document.getElementById("backToTop");
+    if (backToTopBtn) {
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+          backToTopBtn.classList.add("visible");
+        } else {
+          backToTopBtn.classList.remove("visible");
+        }
+      }, { passive: true });
+
+      backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      });
+    }
+
+    if (window.lucide) window.lucide.createIcons();
+  </script>
+</body>
+
+</html>
+

@@ -1,0 +1,939 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Sing-box 新一代通用代理内核深度教程：全平台 GUI 选型（SFA / SFW / SFM）、JSON 规则配置全解、Hysteria 2 与 TUIC 协议加速优势、TUN 极速虚拟网卡与网络分流调优。">
+  <link rel="canonical" href="https://bobo7.cc/%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%95%99%E7%A8%8B/sing-box.html">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Sing-box 跨平台全协议新一代核心配置实战指南 | BoBo 博客">
+  <meta property="og:description" content="Sing-box 新一代通用代理内核深度教程：全平台 GUI 选型（SFA / SFW / SFM）、JSON 规则配置全解、Hysteria 2 与 TUIC 协议加速优势、TUN 极速虚拟网卡与网络分流调优。">
+  <meta property="og:url" content="https://bobo7.cc/%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%95%99%E7%A8%8B/sing-box.html">
+  <meta property="og:site_name" content="BoBo 博客">
+  <meta property="og:image" content="https://bobo7.cc/assets/logo.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sing-box 跨平台全协议新一代核心配置实战指南 | BoBo 博客">
+  <meta name="twitter:description" content="Sing-box 新一代通用代理内核深度教程：全平台 GUI 选型（SFA / SFW / SFM）、JSON 规则配置全解、Hysteria 2 与 TUIC 协议加速优势、TUN 极速虚拟网卡与网络分流调优。">
+  <meta name="twitter:image" content="https://bobo7.cc/assets/logo.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Sing-box 跨平台全协议新一代核心配置实战指南 | BoBo 博客",
+  "description": "Sing-box 新一代通用代理内核深度教程：全平台 GUI 选型（SFA / SFW / SFM）、JSON 规则配置全解、Hysteria 2 与 TUIC 协议加速优势、TUN 极速虚拟网卡与网络分流调优。",
+  "url": "https://bobo7.cc/%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%95%99%E7%A8%8B/sing-box.html",
+  "datePublished": "2026-11-13T08:00:00+08:00",
+  "dateModified": "2026-11-14T15:00:00+08:00",
+  "author": {
+    "@type": "Organization",
+    "name": "BoBo 博客",
+    "url": "https://bobo7.cc/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "BoBo 博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://bobo7.cc/assets/logo.webp"
+    }
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://bobo7.cc/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "客户端教程",
+      "item": "https://bobo7.cc/tutorial.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Sing-box 跨平台全协议新一代核心配置实战指南 | BoBo 博客",
+      "item": "https://bobo7.cc/%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%95%99%E7%A8%8B/sing-box.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Q: Sing-box 是否兼容 Clash 的 YAML 格式配置文件？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sing-box 核心仅直接读取 JSON 格式配置。不过目前主流机场通常已提供原生的 sing-box 订阅链接。若机场未提供，可通过业界成熟的 Subconverter 订阅转换工具 一键转为 Sing-box 格式。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Q: 为什么导入订阅后开启代理提示“缺少必要的内核权限”？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sing-box 开启 TUN 虚拟网卡模式时，在 Windows 上需要管理员权限，在 Android 或 iOS 上需要允许添加 VPN 配置。如果在桌面端使用图形客户端，请在设置中安装 Service 辅助提权服务。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Q: Sing-box 的主要优势是什么？适合哪些人群？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sing-box 核心优势在于极低内存占用（通常仅几十 MB）、更低 CPU 唤醒频率以及对现代前沿协议（如 Hysteria 2、TUIC v5、ShadowTLS）的原生支持。非常适合追求轻量化系统常驻与高吞吐的进阶玩家。"
+      }
+    }
+  ]
+}
+  </script>
+
+  <title>Sing-box 跨平台全协议新一代核心配置实战指南 | BoBo 博客</title>
+  <link rel="icon" href="../assets/logo.webp">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root,
+    [data-theme="light"] {
+      --bg: #f5f7fb;
+      --bg-deep: #e9eef6;
+      --surface: rgba(255, 255, 255, 0.85);
+      --surface-soft: rgba(255, 255, 255, 0.6);
+      --surface-glass: rgba(250, 252, 255, 0.82);
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --card-border: rgba(38, 55, 83, 0.14);
+      --line: rgba(38, 55, 83, 0.12);
+      --line-strong: rgba(38, 55, 83, 0.22);
+      --text: #172235;
+      --muted: #627087;
+      --dim: #8a96a8;
+      --signal: #168b79;
+      --signal-bright: #0b6e61;
+      --signal-glow: rgba(22, 139, 121, 0.2);
+      --amber: #b07d1a;
+      --violet: #6c63d8;
+      --max: 1200px;
+      --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --header-bg: rgba(245, 247, 251, 0.85);
+    }
+
+    [data-theme="dark"] {
+      --bg: #07110f;
+      --bg-deep: #040907;
+      --surface: #0b1714;
+      --surface-soft: #0e1e1a;
+      --surface-glass: rgba(11, 23, 20, 0.72);
+      --card-bg: rgba(14, 30, 26, 0.65);
+      --card-border: rgba(194, 230, 217, 0.12);
+      --line: rgba(194, 230, 217, 0.14);
+      --line-strong: rgba(194, 230, 217, 0.28);
+      --text: #edf5f0;
+      --muted: #94a8a0;
+      --dim: #5f746c;
+      --signal: #9ff0c9;
+      --signal-bright: #d1ffe5;
+      --signal-glow: rgba(159, 240, 201, 0.25);
+      --amber: #ebd88e;
+      --violet: #8999ff;
+      --max: 1200px;
+      --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --header-bg: rgba(7, 17, 15, 0.82);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--bg-deep); }
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      font-family: var(--font-sans);
+      line-height: 1.75;
+      transition: background .3s ease, color .3s ease;
+    }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--header-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: -0.02em;
+    }
+    .brand-image {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    .brand-name small {
+      margin-left: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      color: var(--signal);
+      border: 1px solid var(--line-strong);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      margin-left: auto;
+    }
+    .site-nav a {
+      position: relative;
+      padding: 6px 0;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 500;
+      transition: color .2s ease;
+    }
+    .site-nav a:hover,
+    .site-nav a.active {
+      color: var(--text);
+    }
+    .site-nav a::after {
+      content: "";
+      position: absolute;
+      right: 0; bottom: 0; left: 0;
+      height: 1.5px;
+      background: var(--signal);
+      transform: scaleX(0);
+      transition: transform .2s ease;
+    }
+    .site-nav a:hover::after,
+    .site-nav a.active::after {
+      transform: scaleX(1);
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .theme-toggle,
+    .header-cta {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      border: 1px solid var(--line-strong);
+      background: var(--surface-soft);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color .2s ease;
+    }
+    .theme-toggle:hover,
+    .header-cta:hover {
+      border-color: var(--signal);
+    }
+
+    /* Breadcrumbs */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 28px 0 16px;
+    }
+    .breadcrumb a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+    .breadcrumb a:hover {
+      color: var(--signal);
+    }
+    .breadcrumb span {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* Article Hero */
+    .article-hero {
+      padding: 10px 0 32px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 36px;
+    }
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      background: rgba(22, 139, 121, 0.12);
+      color: var(--signal);
+      border: 1px solid var(--signal-glow);
+    }
+    .article-title {
+      font-size: clamp(26px, 3.5vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0 0 14px;
+      line-height: 1.3;
+    }
+    .article-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 20px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .article-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Article Layout (Main + Sidebar) */
+    .article-container {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      gap: 48px;
+      margin-bottom: 80px;
+    }
+
+    /* Content Typography */
+    .article-body {
+      font-size: 15.5px;
+      line-height: 1.85;
+      color: var(--text);
+    }
+    .article-body h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 44px 0 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .article-body h3 {
+      font-size: 17.5px;
+      font-weight: 600;
+      margin: 30px 0 12px;
+      color: var(--text);
+    }
+    .article-body p {
+      margin: 0 0 18px;
+      color: var(--text);
+      opacity: 0.95;
+    }
+    .article-body ul,
+    .article-body ol {
+      margin: 0 0 22px 24px;
+      padding: 0;
+    }
+    .article-body li {
+      margin-bottom: 10px;
+    }
+    .article-body strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .article-body code {
+      font-family: var(--font-mono);
+      background: var(--surface-soft);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13.5px;
+      border: 1px solid var(--line);
+    }
+    pre {
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 0 0 20px;
+    }
+
+    /* Comparison Table */
+    .article-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .article-table th,
+    .article-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+    }
+    .article-table th {
+      background: var(--surface-soft);
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* Callout & Alert Box */
+    .callout {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-left: 4px solid var(--signal);
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin: 24px 0;
+      font-size: 14.5px;
+    }
+    .callout.tip {
+      border-left-color: var(--signal);
+    }
+    .callout.warn {
+      border-left-color: var(--amber);
+    }
+    .callout h4 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Step Card */
+    .step-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 24px 0;
+    }
+    .step-box-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .step-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--signal);
+      color: #040907;
+      font-size: 13px;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .step-box-header h3 {
+      margin: 0;
+      font-size: 17px;
+    }
+
+    /* Sidebar / TOC */
+    .sidebar {
+      position: sticky;
+      top: 96px;
+      height: fit-content;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .toc-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 13px;
+    }
+    .toc-list li {
+      margin-bottom: 8px;
+    }
+    .toc-list a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s ease;
+      display: block;
+      line-height: 1.5;
+    }
+    .toc-list a:hover {
+      color: var(--signal);
+    }
+
+    /* Bottom Action Banner */
+    .action-banner {
+      background: linear-gradient(135deg, rgba(22, 139, 121, 0.12), transparent);
+      border: 1px solid var(--signal-glow);
+      border-radius: 12px;
+      padding: 32px;
+      margin-top: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .action-banner-text h3 {
+      margin: 0 0 6px;
+      font-size: 19px;
+    }
+    .action-banner-text p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all .2s ease;
+    }
+    .btn.primary {
+      background: var(--signal);
+      color: #040907;
+    }
+    .btn.primary:hover {
+      filter: brightness(1.1);
+      box-shadow: 0 0 16px var(--signal-glow);
+    }
+    .btn.secondary {
+      background: var(--surface-soft);
+      color: var(--text);
+      border: 1px solid var(--line-strong);
+    }
+    .btn.secondary:hover {
+      border-color: var(--signal);
+    }
+
+    /* Floating Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      right: 28px;
+      bottom: 28px;
+      z-index: 99;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 1px solid var(--line-strong);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(16px);
+      transition: opacity .25s ease, transform .25s ease, border-color .2s ease, background-color .2s ease;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .back-to-top:hover {
+      border-color: var(--signal);
+      color: var(--signal);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .article-container {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+    }
+    @media (max-width: 640px) {
+      .site-nav {
+        display: none;
+      }
+      .action-banner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="../assets/site-navigation.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../index.html" aria-label="BoBo 博客首页">
+        <img class="brand-image" src="../assets/logo.webp" alt="BoBo Logo">
+        <span class="brand-name">BoBo<small>BLOG</small></span>
+      </a>
+
+      <nav class="site-nav" aria-label="页面导航">
+        <a href="../index.html">首页</a>
+        <a href="../recommend.html">机场推荐</a>
+        <a href="../review.html">机场评测</a>
+        <a class="active" aria-current="page" href="../tutorial.html">客户端教程</a>
+        <a href="../tools.html">实用工具</a>
+        <a href="../about.html">关于</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="切换明暗主题" title="切换暗黑/明亮毛玻璃主题">
+          <i data-lucide="moon"></i>
+        </button>
+        <a class="header-cta" href="https://t.me/wanfengzn7" target="_blank" rel="noopener noreferrer" title="Telegram 交流群 / 频道" aria-label="Telegram">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+            <path d="m20.665 3.717-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l-.313 4.671c.458 0 .66-.21.916-.457l2.199-2.138 4.574 3.379c.843.465 1.448.225 1.658-.783l3.003-14.153c.307-1.232-.47-1.79-1.213-1.469z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="../index.html">首页</a> / <a href="../tutorial.html">客户端教程</a> / <span>Sing-box 配置指南</span>
+    </div>
+
+    <!-- Article Hero -->
+    <header class="article-hero">
+      <div class="tag-row">
+        <span class="badge"><i data-lucide="box"></i> 全平台新一代通用核心</span>
+        <span class="badge"><i data-lucide="zap"></i> 原生支持 Hy2 / TUIC / Reality</span>
+        <span class="badge"><i data-lucide="cpu"></i> Go 语言极致性能与低内存</span>
+      </div>
+      <h1 class="article-title">Sing-box 跨平台通用代理内核从入门到专家级配置</h1>
+      <div class="article-meta">
+        <span><i data-lucide="calendar"></i> 2026-11-13 更新</span>
+        <span><i data-lucide="shield"></i> 纯正开源协议先锋</span>
+        <span><i data-lucide="code"></i> 模块化 JSON 路由引擎</span>
+      </div>
+    </header>
+
+    <!-- Article Content Grid -->
+    <div class="article-container">
+      <article class="article-body">
+        
+    <p>
+      在当今代理工具领域，由 SagerNet 核心开发团队操刀的 <strong>Sing-box</strong> 正以惊人的迭代速度重塑整个生态。它不仅是一个跨平台的网络框架，更是目前对新一代 UDP 协议（Hysteria 2、TUIC v5）以及现代 TLS 伪装协议（VLESS Reality、ShadowTLS）支持最纯正、性能最极致的底层核心。
+    </p>
+
+    <div class="callout tip">
+      <h4><i data-lucide="info"></i> 为什么技术极客都在转向 Sing-box？</h4>
+      <p>
+        1. <strong>全平台统一内核</strong>：无论是 Android、iOS、macOS、Windows 还是 Linux 嵌入式路由器，底层均运行相同的 Go 语言核心代码，规则语法高度一致。<br>
+        2. <strong>极低的内存与 CPU 消耗</strong>：重写了整个网络栈，内存常驻开销远低于传统 Java/Electron 方案，在低配服务器与移动端续航表现极其亮眼。<br>
+        3. <strong>现代化 JSON / SRS 规则编译</strong>：摒弃冗长容易出错的 YAML 缩进，支持编译为二进制 <code>.srs</code> 规则集，千万条规则检索也能在毫秒内完成。
+      </p>
+    </div>
+
+    <h2 id="intro"><i data-lucide="layers"></i> 一、Sing-box 诞生背景与架构革新</h2>
+    <p>
+      过去代理工具碎片化严重：V2Ray 核心配置臃肿复杂、Xray 针对特定协议不断修补、传统 Clash 对新协议响应缓慢。Sing-box 在设计之初就立足于“模块化”理念，将入站 (Inbounds)、出站 (Outbounds)、路由 (Route)、实验性功能 (Experimental) 与独立 DNS 系统严格解耦，构建了前所未有的纯净网络管线。
+    </p>
+
+    <h2 id="gui-selection"><i data-lucide="monitor"></i> 二、各平台官方 GUI 客户端选型</h2>
+    <p>
+      官方为各主流操作系统均提供了原生开发的图形界面前端应用：
+    </p>
+    <table class="article-table">
+      <thead>
+        <tr>
+          <th>平台名称</th>
+          <th>官方客户端简称</th>
+          <th>下载与安装渠道</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Android 移动端</td>
+          <td><strong>SFA (Sing-box for Android)</strong></td>
+          <td>Google Play 商店或官方 GitHub Releases 下载 APK 安装包</td>
+        </tr>
+        <tr>
+          <td>Windows 桌面端</td>
+          <td><strong>SFW (Sing-box for Windows)</strong></td>
+          <td>GitHub Releases 下载 <code>.zip</code> 便携版或安装程序</td>
+        </tr>
+        <tr>
+          <td>macOS 苹果电脑</td>
+          <td><strong>SFM (Sing-box for macOS)</strong></td>
+          <td>Mac App Store 或官方发布 <code>.pkg</code> / <code>.dmg</code> 安装包</td>
+        </tr>
+        <tr>
+          <td>iOS / iPadOS</td>
+          <td><strong>Sing-box (App Store)</strong></td>
+          <td>海外区 App Store 搜索免费下载（需非国区 Apple ID）</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="config-structure"><i data-lucide="file-code"></i> 三、JSON 核心配置文件结构解析</h2>
+    <p>
+      Sing-box 采用标准的 JSON 格式组织网络拓扑。一个典型的现代化配置文件包含以下五个核心模块：
+    </p>
+    <pre><code>{
+  "log": { "level": "info", "timestamp": true },
+  "dns": {
+    "servers": [
+      { "tag": "dns-remote", "address": "https://1.1.1.1/dns-query", "detour": "select" },
+      { "tag": "dns-direct", "address": "223.5.5.5", "detour": "direct" }
+    ],
+    "rules": [
+      { "outbound": "any", "server": "dns-direct" },
+      { "geosite": "cn", "server": "dns-direct" }
+    ]
+  },
+  "inbounds": [
+    { "type": "tun", "tag": "tun-in", "interface_name": "tun0", "inet4_address": "172.19.0.1/30", "auto_route": true, "strict_route": true }
+  ],
+  "outbounds": [
+    { "type": "selector", "tag": "select", "outbounds": ["node-hk", "node-jp", "direct"] },
+    { "type": "direct", "tag": "direct" },
+    { "type": "block", "tag": "block" }
+  ],
+  "route": {
+    "rules": [
+      { "geosite": "category-ads-all", "outbound": "block" },
+      { "geosite": "cn", "outbound": "direct" },
+      { "geoip": "cn", "outbound": "direct" }
+    ],
+    "auto_detect_interface": true
+  }
+}</code></pre>
+
+    <h2 id="hy2-tuic"><i data-lucide="zap"></i> 四、Hysteria 2 与 TUIC 协议优势</h2>
+    <p>
+      在晚高峰跨洋骨干网严重拥堵、TCP 丢包率飙升的极端网络环境下，传统 TCP 代理协议往往出现严重的队头阻塞，带宽断崖式下滑。
+    </p>
+    <ul>
+      <li><strong>Hysteria 2</strong>：基于标准 QUIC 协议并重新定制了极其强悍的 Brutal 拥塞控制算法。即便在 20%～40% 恶劣丢包率下，依然能强行跑满本地物理带宽，是 4K/8K 视频与海外直播的“起死回生”神器。</li>
+      <li><strong>TUIC v5</strong>：专为高并发短连接量身优化的 QUIC 协议，极大幅度缩短 TLS 握手 RTT 轮次，网页点开秒加载。</li>
+    </ul>
+    <p>
+      Sing-box 是首个将这两个协议作为“一等公民”深度整合进主线架构的工具，兼容性与性能远超其它包装层。
+    </p>
+
+    <h2 id="tun-engine"><i data-lucide="hard-drive"></i> 五、高性能 TUN 网卡模式实战</h2>
+    <p>
+      在 Sing-box 中，启用 TUN 网卡只需在配置的 <code>inbounds</code> 中引入 <code>type: "tun"</code>。它支持：
+    </p>
+    <ul>
+      <li><strong>auto_route: true</strong>：客户端启动时自动修改主机默认网关路由表，退出时自动复原，彻底防止断网。</li>
+      <li><strong>strict_route: true</strong>：开启严格路由模式，防止 DNS 泄漏或特定流量从旧的物理网卡边缘旁路溢出。</li>
+      <li><strong>endpoint_independent_mapping (Full Cone NAT)</strong>：支持完整 Full Cone NAT 映射，对 Nintendo Switch、Steam 联机对战以及 P2P 下载极其友好。</li>
+    </ul>
+
+    <h2 id="advanced-dns"><i data-lucide="shield"></i> 六、独立 DNS 路由引擎与防泄漏</h2>
+    <p>
+      传统代理软件常常因为操作系统本地 DNS 缓存而导致“访问国内网站走海外”、“访问海外服务被运营商污染”。Sing-box 的内部 DNS 引擎具备独立的入站与出站路由：
+    </p>
+    <ol>
+      <li>当发起网络访问时，Sing-box 先通过 GeoSite 规则匹配。</li>
+      <li>属于中国大陆的域名，直接经由阿里 DNS (<code>223.5.5.5</code>) 或腾讯 DNSPod 解析，获得国内 CDN 最佳就近节点。</li>
+      <li>海外受限域名，完全封包经由加密代理通道送往 Cloudflare / Google DoH 境外远端解析，彻底杜绝任何形式的 DNS 污染与泄露。</li>
+    </ol>
+
+    <h2 id="troubleshooting"><i data-lucide="alert-octagon"></i> 七、启动失败与连接报错速查</h2>
+    <table class="article-table">
+      <thead>
+        <tr>
+          <th>错误日志提示</th>
+          <th>故障诱因</th>
+          <th>排查与修复步骤</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>parse config error: invalid character</code></td>
+          <td>JSON 语法错误（如缺少逗号或末尾多余逗号）</td>
+          <td>使用在线 JSON 校验工具核对配置文件格式，确保双引号与大括号成对闭合。</td>
+        </tr>
+        <tr>
+          <td><code>configure tun interface: access denied</code></td>
+          <td>创建虚拟网卡时系统权限不足</td>
+          <td>Windows 下请以“管理员身份运行”；Linux 下需给予二进制文件 <code>CAP_NET_ADMIN</code> 权限。</td>
+        </tr>
+        <tr>
+          <td><code>inbound/tun: dial tcp: i/o timeout</code></td>
+          <td>outbounds 出站节点全部失效或端口不通</td>
+          <td>测试服务器 IP 与端口连通性，检查订阅链接是否已过期。</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="faq"><i data-lucide="help-circle"></i> 八、常见问题解答 (FAQ)</h2>
+    <div class="callout tip">
+      <h4>Q: Sing-box 是否兼容 Clash 的 YAML 格式配置文件？</h4>
+      <p>
+        Sing-box 核心仅直接读取 JSON 格式配置。不过目前主流机场通常已提供原生的 <code>sing-box 订阅链接</code>。若机场未提供，可通过业界成熟的 <a href="../实用工具教程/subconverter.html" style="color:var(--signal);font-weight:600">Subconverter 订阅转换工具</a> 一键转为 Sing-box 格式。
+      </p>
+    </div>
+    <div class="callout tip">
+      <h4>Q: 为什么导入订阅后开启代理提示“缺少必要的内核权限”？</h4>
+      <p>
+        Sing-box 开启 TUN 虚拟网卡模式时，在 Windows 上需要管理员权限，在 Android 或 iOS 上需要允许添加 VPN 配置。如果在桌面端使用图形客户端，请在设置中安装 Service 辅助提权服务。
+      </p>
+    </div>
+    <div class="callout tip">
+      <h4>Q: Sing-box 的主要优势是什么？适合哪些人群？</h4>
+      <p>
+        Sing-box 核心优势在于极低内存占用（通常仅几十 MB）、更低 CPU 唤醒频率以及对现代前沿协议（如 Hysteria 2、TUIC v5、ShadowTLS）的原生支持。非常适合追求轻量化系统常驻与高吞吐的进阶玩家。
+      </p>
+    </div>
+  
+
+        <!-- Bottom Banner -->
+        <div class="action-banner">
+          <div class="action-banner-text">
+            <h3>准备好体验顺畅跨境网络了吗？</h3>
+            <p>搭配经过晚高峰实测严选的高速专线，解锁 4K 流媒体与 AI 高频调用。</p>
+          </div>
+          <div class="btn-group">
+            <a class="btn primary" href="https://sing-box.sagernet.org/" target="_blank" rel="noopener noreferrer">
+              前往 Sing-box 官方站点
+            </a>
+            <a class="btn secondary" href="../recommend.html">
+              查看精选机场推荐
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Sidebar Table of Contents -->
+      <aside class="sidebar">
+        <div class="toc-title">
+          <i data-lucide="align-left"></i> 本文目录
+        </div>
+        <ul class="toc-list">
+          <li><a href="#intro">一、Sing-box 诞生背景与架构革新</a></li>
+          <li><a href="#gui-selection">二、各平台官方 GUI 客户端选型</a></li>
+          <li><a href="#config-structure">三、JSON 核心配置文件结构解析</a></li>
+          <li><a href="#hy2-tuic">四、Hysteria 2 与 TUIC 协议优势</a></li>
+          <li><a href="#tun-engine">五、高性能 TUN 网卡模式实战</a></li>
+          <li><a href="#advanced-dns">六、独立 DNS 路由引擎与防泄漏</a></li>
+          <li><a href="#troubleshooting">七、启动失败与连接报错速查</a></li>
+          <li><a href="#faq">八、常见问题解答 (FAQ)</a></li>
+        </ul>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Floating Back to Top Button -->
+  <button id="backToTop" class="back-to-top" aria-label="返回顶部" title="返回顶部">
+    <i data-lucide="chevron-up"></i>
+  </button>
+
+  <script>
+    lucide.createIcons();
+
+    // Theme Toggle
+    const themeBtn = document.getElementById('themeToggle');
+    const htmlEl = document.documentElement;
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    htmlEl.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+
+    themeBtn.addEventListener('click', () => {
+      const current = htmlEl.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      htmlEl.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateThemeIcon(next);
+    });
+
+    function updateThemeIcon(theme) {
+      themeBtn.innerHTML = theme === 'dark' ? '<i data-lucide="sun"></i>' : '<i data-lucide="moon"></i>';
+      lucide.createIcons();
+    }
+
+    // Back to top scroll listener
+    const backToTopBtn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+    }, { passive: true });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

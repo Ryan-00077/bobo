@@ -3,6 +3,5 @@ Allow: /
 Disallow: /go/
 
 # Sitemaps
-Sitemap: /sitemap.xml
 Sitemap: https://bobo7.cc/sitemap.xml
 
